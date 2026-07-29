@@ -43,7 +43,7 @@ export interface ApiSuccess<T> {
 /**
  * This <a href="#available-types">object</a> represents an incoming update.<br>At most <strong>one</strong> of the optional fields can be present in any given update.
  */
-export interface Update = {
+export interface Update {
 <table class="table">
 <thead>
 <tr>
@@ -190,6 +190,7 @@ export interface Update = {
 </tr>
 </tbody>
 </table>
+}
 export interface ApiMethods {
   /**
    * Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.
@@ -336,7 +337,7 @@ export interface ApiMethods {
 /**
  * Describes the current status of a webhook.
  */
-export interface WebhookInfo = {
+export interface WebhookInfo {
 <table class="table">
 <thead>
 <tr>
@@ -393,6 +394,7 @@ export interface WebhookInfo = {
 </tr>
 </tbody>
 </table>
+}
 // === AVAILABLE TYPES
 <p>All types used in the Bot API responses are represented as JSON-objects.</p>
 <p>It is safe to use 32-bit signed integers for storing all <strong>Integer</strong> fields unless otherwise noted.</p>
@@ -402,7 +404,7 @@ export interface WebhookInfo = {
 /**
  * This object represents a Telegram user or bot.
  */
-export interface User = {
+export interface User {
 <table class="table">
 <thead>
 <tr>
@@ -504,10 +506,11 @@ export interface User = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a chat.
  */
-export interface Chat = {
+export interface Chat {
 <table class="table">
 <thead>
 <tr>
@@ -559,10 +562,11 @@ export interface Chat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains full information about a chat.
  */
-export interface ChatFullInfo = {
+export interface ChatFullInfo {
 <table class="table">
 <thead>
 <tr>
@@ -839,10 +843,11 @@ export interface ChatFullInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a message.
  */
-export interface Message = {
+export interface Message {
 <table class="table">
 <thead>
 <tr>
@@ -1449,10 +1454,11 @@ export interface Message = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a unique message identifier.
  */
-export interface MessageId = {
+export interface MessageId {
 <table class="table">
 <thead>
 <tr>
@@ -1469,10 +1475,11 @@ export interface MessageId = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a message that was deleted or is otherwise inaccessible to the bot.
  */
-export interface InaccessibleMessage = {
+export interface InaccessibleMessage {
 <table class="table">
 <thead>
 <tr>
@@ -1499,6 +1506,7 @@ export interface InaccessibleMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
  *
@@ -1511,7 +1519,7 @@ export type MaybeInaccessibleMessage =
 /**
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
  */
-export interface MessageEntity = {
+export interface MessageEntity {
 <table class="table">
 <thead>
 <tr>
@@ -1568,10 +1576,11 @@ export interface MessageEntity = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about the quoted part of a message that is replied to by the given message.
  */
-export interface TextQuote = {
+export interface TextQuote {
 <table class="table">
 <thead>
 <tr>
@@ -1603,10 +1612,11 @@ export interface TextQuote = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about a message that is being replied to, which may come from another chat or forum topic.
  */
-export interface ExternalReplyInfo = {
+export interface ExternalReplyInfo {
 <table class="table">
 <thead>
 <tr>
@@ -1748,10 +1758,11 @@ export interface ExternalReplyInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes reply parameters for the message that is being sent.
  */
-export interface ReplyParameters = {
+export interface ReplyParameters {
 <table class="table">
 <thead>
 <tr>
@@ -1813,6 +1824,7 @@ export interface ReplyParameters = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the origin of a message. It can be one of
  *
@@ -1829,7 +1841,7 @@ export type MessageOrigin =
 /**
  * The message was originally sent by a known user.
  */
-export interface MessageOriginUser = {
+export interface MessageOriginUser {
 <table class="table">
 <thead>
 <tr>
@@ -1856,10 +1868,11 @@ export interface MessageOriginUser = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The message was originally sent by an unknown user.
  */
-export interface MessageOriginHiddenUser = {
+export interface MessageOriginHiddenUser {
 <table class="table">
 <thead>
 <tr>
@@ -1886,10 +1899,11 @@ export interface MessageOriginHiddenUser = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The message was originally sent on behalf of a chat to a group chat.
  */
-export interface MessageOriginChat = {
+export interface MessageOriginChat {
 <table class="table">
 <thead>
 <tr>
@@ -1921,10 +1935,11 @@ export interface MessageOriginChat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The message was originally sent to a channel chat.
  */
-export interface MessageOriginChannel = {
+export interface MessageOriginChannel {
 <table class="table">
 <thead>
 <tr>
@@ -1961,10 +1976,11 @@ export interface MessageOriginChannel = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents one size of a photo or a <a href="#document">file</a> / <a href="#sticker">sticker</a> thumbnail.
  */
-export interface PhotoSize = {
+export interface PhotoSize {
 <table class="table">
 <thead>
 <tr>
@@ -2001,10 +2017,11 @@ export interface PhotoSize = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
  */
-export interface Animation = {
+export interface Animation {
 <table class="table">
 <thead>
 <tr>
@@ -2061,10 +2078,11 @@ export interface Animation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an audio file to be treated as music by the Telegram clients.
  */
-export interface Audio = {
+export interface Audio {
 <table class="table">
 <thead>
 <tr>
@@ -2121,10 +2139,11 @@ export interface Audio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a general file (as opposed to <a href="#photosize">photos</a>, <a href="#voice">voice messages</a> and <a href="#audio">audio files</a>).
  */
-export interface Document = {
+export interface Document {
 <table class="table">
 <thead>
 <tr>
@@ -2166,10 +2185,11 @@ export interface Document = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a live photo.
  */
-export interface LivePhoto = {
+export interface LivePhoto {
 <table class="table">
 <thead>
 <tr>
@@ -2221,10 +2241,11 @@ export interface LivePhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a story.
  */
-export interface Story = {
+export interface Story {
 <table class="table">
 <thead>
 <tr>
@@ -2246,10 +2267,11 @@ export interface Story = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a video file of a specific quality.
  */
-export interface VideoQuality = {
+export interface VideoQuality {
 <table class="table">
 <thead>
 <tr>
@@ -2291,10 +2313,11 @@ export interface VideoQuality = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a video file.
  */
-export interface Video = {
+export interface Video {
 <table class="table">
 <thead>
 <tr>
@@ -2366,10 +2389,11 @@ export interface Video = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a <a href="https://telegram.org/blog/video-messages-and-telescope">video message</a> (available in Telegram apps as of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>).
  */
-export interface VideoNote = {
+export interface VideoNote {
 <table class="table">
 <thead>
 <tr>
@@ -2411,10 +2435,11 @@ export interface VideoNote = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a voice note.
  */
-export interface Voice = {
+export interface Voice {
 <table class="table">
 <thead>
 <tr>
@@ -2451,10 +2476,11 @@ export interface Voice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the paid media added to a message.
  */
-export interface PaidMediaInfo = {
+export interface PaidMediaInfo {
 <table class="table">
 <thead>
 <tr>
@@ -2476,6 +2502,7 @@ export interface PaidMediaInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes paid media. Currently, it can be one of
  *
@@ -2492,7 +2519,7 @@ export type PaidMedia =
 /**
  * The paid media is a <a href="#livephoto">live photo</a>.
  */
-export interface PaidMediaLivePhoto = {
+export interface PaidMediaLivePhoto {
 <table class="table">
 <thead>
 <tr>
@@ -2514,10 +2541,11 @@ export interface PaidMediaLivePhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The paid media is a photo.
  */
-export interface PaidMediaPhoto = {
+export interface PaidMediaPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -2539,10 +2567,11 @@ export interface PaidMediaPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The paid media isn&#39;t available before the payment.
  */
-export interface PaidMediaPreview = {
+export interface PaidMediaPreview {
 <table class="table">
 <thead>
 <tr>
@@ -2574,10 +2603,11 @@ export interface PaidMediaPreview = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The paid media is a video.
  */
-export interface PaidMediaVideo = {
+export interface PaidMediaVideo {
 <table class="table">
 <thead>
 <tr>
@@ -2599,10 +2629,11 @@ export interface PaidMediaVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a phone contact.
  */
-export interface Contact = {
+export interface Contact {
 <table class="table">
 <thead>
 <tr>
@@ -2639,10 +2670,11 @@ export interface Contact = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an animated emoji that displays a random value.
  */
-export interface Dice = {
+export interface Dice {
 <table class="table">
 <thead>
 <tr>
@@ -2664,10 +2696,11 @@ export interface Dice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an HTTP link.
  */
-export interface Link = {
+export interface Link {
 <table class="table">
 <thead>
 <tr>
@@ -2684,10 +2717,11 @@ export interface Link = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * At most <strong>one</strong> of the optional fields can be present in any given object.
  */
-export interface PollMedia = {
+export interface PollMedia {
 <table class="table">
 <thead>
 <tr>
@@ -2749,6 +2783,7 @@ export interface PollMedia = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the content of a poll description or a quiz explanation to be sent. It should be one of
  *
@@ -2794,7 +2829,7 @@ export type InputPollOptionMedia =
 /**
  * This object contains information about one answer option in a poll.
  */
-export interface PollOption = {
+export interface PollOption {
 <table class="table">
 <thead>
 <tr>
@@ -2846,10 +2881,11 @@ export interface PollOption = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about one answer option in a poll to be sent.
  */
-export interface InputPollOption = {
+export interface InputPollOption {
 <table class="table">
 <thead>
 <tr>
@@ -2881,10 +2917,11 @@ export interface InputPollOption = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an answer of a user in a non-anonymous poll.
  */
-export interface PollAnswer = {
+export interface PollAnswer {
 <table class="table">
 <thead>
 <tr>
@@ -2921,10 +2958,11 @@ export interface PollAnswer = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about a poll.
  */
-export interface Poll = {
+export interface Poll {
 <table class="table">
 <thead>
 <tr>
@@ -3041,10 +3079,11 @@ export interface Poll = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a task in a checklist.
  */
-export interface ChecklistTask = {
+export interface ChecklistTask {
 <table class="table">
 <thead>
 <tr>
@@ -3086,10 +3125,11 @@ export interface ChecklistTask = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a checklist.
  */
-export interface Checklist = {
+export interface Checklist {
 <table class="table">
 <thead>
 <tr>
@@ -3126,10 +3166,11 @@ export interface Checklist = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a task to add to a checklist.
  */
-export interface InputChecklistTask = {
+export interface InputChecklistTask {
 <table class="table">
 <thead>
 <tr>
@@ -3161,10 +3202,11 @@ export interface InputChecklistTask = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a checklist to create.
  */
-export interface InputChecklist = {
+export interface InputChecklist {
 <table class="table">
 <thead>
 <tr>
@@ -3206,10 +3248,11 @@ export interface InputChecklist = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a point on the map.
  */
-export interface Location = {
+export interface Location {
 <table class="table">
 <thead>
 <tr>
@@ -3251,10 +3294,11 @@ export interface Location = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a venue.
  */
-export interface Venue = {
+export interface Venue {
 <table class="table">
 <thead>
 <tr>
@@ -3301,10 +3345,11 @@ export interface Venue = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes data sent from a <a href="/bots/webapps">Web App</a> to the bot.
  */
-export interface WebAppData = {
+export interface WebAppData {
 <table class="table">
 <thead>
 <tr>
@@ -3326,10 +3371,11 @@ export interface WebAppData = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
  */
-export interface ProximityAlertTriggered = {
+export interface ProximityAlertTriggered {
 <table class="table">
 <thead>
 <tr>
@@ -3356,10 +3402,11 @@ export interface ProximityAlertTriggered = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a change in auto-delete timer settings.
  */
-export interface MessageAutoDeleteTimerChanged = {
+export interface MessageAutoDeleteTimerChanged {
 <table class="table">
 <thead>
 <tr>
@@ -3376,10 +3423,11 @@ export interface MessageAutoDeleteTimerChanged = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about the bot that was created to be managed by the current bot.
  */
-export interface ManagedBotCreated = {
+export interface ManagedBotCreated {
 <table class="table">
 <thead>
 <tr>
@@ -3396,10 +3444,11 @@ export interface ManagedBotCreated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.
  */
-export interface ManagedBotUpdated = {
+export interface ManagedBotUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -3421,10 +3470,11 @@ export interface ManagedBotUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about changes to a user payment subscription toward the current bot.
  */
-export interface BotSubscriptionUpdated = {
+export interface BotSubscriptionUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -3451,10 +3501,11 @@ export interface BotSubscriptionUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about an option added to a poll.
  */
-export interface PollOptionAdded = {
+export interface PollOptionAdded {
 <table class="table">
 <thead>
 <tr>
@@ -3486,10 +3537,11 @@ export interface PollOptionAdded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about an option deleted from a poll.
  */
-export interface PollOptionDeleted = {
+export interface PollOptionDeleted {
 <table class="table">
 <thead>
 <tr>
@@ -3521,10 +3573,11 @@ export interface PollOptionDeleted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a user boosting a chat.
  */
-export interface ChatBoostAdded = {
+export interface ChatBoostAdded {
 <table class="table">
 <thead>
 <tr>
@@ -3541,6 +3594,7 @@ export interface ChatBoostAdded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the way a background is filled based on the selected colors. Currently, it can be one of
  *
@@ -3555,7 +3609,7 @@ export type BackgroundFill =
 /**
  * The background is filled using the selected color.
  */
-export interface BackgroundFillSolid = {
+export interface BackgroundFillSolid {
 <table class="table">
 <thead>
 <tr>
@@ -3577,10 +3631,11 @@ export interface BackgroundFillSolid = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The background is a gradient fill.
  */
-export interface BackgroundFillGradient = {
+export interface BackgroundFillGradient {
 <table class="table">
 <thead>
 <tr>
@@ -3612,10 +3667,11 @@ export interface BackgroundFillGradient = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The background is a freeform gradient that rotates after every message in the chat.
  */
-export interface BackgroundFillFreeformGradient = {
+export interface BackgroundFillFreeformGradient {
 <table class="table">
 <thead>
 <tr>
@@ -3637,6 +3693,7 @@ export interface BackgroundFillFreeformGradient = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the type of a background. Currently, it can be one of
  *
@@ -3653,7 +3710,7 @@ export type BackgroundType =
 /**
  * The background is automatically filled based on the selected colors.
  */
-export interface BackgroundTypeFill = {
+export interface BackgroundTypeFill {
 <table class="table">
 <thead>
 <tr>
@@ -3680,10 +3737,11 @@ export interface BackgroundTypeFill = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The background is a wallpaper in the JPEG format.
  */
-export interface BackgroundTypeWallpaper = {
+export interface BackgroundTypeWallpaper {
 <table class="table">
 <thead>
 <tr>
@@ -3720,10 +3778,11 @@ export interface BackgroundTypeWallpaper = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The background is a .PNG or .TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user.
  */
-export interface BackgroundTypePattern = {
+export interface BackgroundTypePattern {
 <table class="table">
 <thead>
 <tr>
@@ -3765,10 +3824,11 @@ export interface BackgroundTypePattern = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The background is taken directly from a built-in chat theme.
  */
-export interface BackgroundTypeChatTheme = {
+export interface BackgroundTypeChatTheme {
 <table class="table">
 <thead>
 <tr>
@@ -3790,10 +3850,11 @@ export interface BackgroundTypeChatTheme = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a chat background.
  */
-export interface ChatBackground = {
+export interface ChatBackground {
 <table class="table">
 <thead>
 <tr>
@@ -3810,10 +3871,11 @@ export interface ChatBackground = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about checklist tasks marked as done or not done.
  */
-export interface ChecklistTasksDone = {
+export interface ChecklistTasksDone {
 <table class="table">
 <thead>
 <tr>
@@ -3840,10 +3902,11 @@ export interface ChecklistTasksDone = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about tasks added to a checklist.
  */
-export interface ChecklistTasksAdded = {
+export interface ChecklistTasksAdded {
 <table class="table">
 <thead>
 <tr>
@@ -3865,10 +3928,11 @@ export interface ChecklistTasksAdded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a chat being added to a community.
  */
-export interface CommunityChatAdded = {
+export interface CommunityChatAdded {
 <table class="table">
 <thead>
 <tr>
@@ -3885,14 +3949,15 @@ export interface CommunityChatAdded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a chat being removed from a community. Currently holds no information.
  */
-export interface CommunityChatRemoved = {
+export interface CommunityChatRemoved {}
 /**
  * This object represents a service message about a new forum topic created in the chat.
  */
-export interface ForumTopicCreated = {
+export interface ForumTopicCreated {
 <table class="table">
 <thead>
 <tr>
@@ -3924,14 +3989,15 @@ export interface ForumTopicCreated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a forum topic closed in the chat. Currently holds no information.
  */
-export interface ForumTopicClosed = {
+export interface ForumTopicClosed {}
 /**
  * This object represents a service message about an edited forum topic.
  */
-export interface ForumTopicEdited = {
+export interface ForumTopicEdited {
 <table class="table">
 <thead>
 <tr>
@@ -3953,22 +4019,23 @@ export interface ForumTopicEdited = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a forum topic reopened in the chat. Currently holds no information.
  */
-export interface ForumTopicReopened = {
+export interface ForumTopicReopened {}
 /**
  * This object represents a service message about General forum topic hidden in the chat. Currently holds no information.
  */
-export interface GeneralForumTopicHidden = {
+export interface GeneralForumTopicHidden {}
 /**
  * This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.
  */
-export interface GeneralForumTopicUnhidden = {
+export interface GeneralForumTopicUnhidden {}
 /**
  * This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
  */
-export interface SharedUser = {
+export interface SharedUser {
 <table class="table">
 <thead>
 <tr>
@@ -4005,10 +4072,11 @@ export interface SharedUser = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about the users whose identifiers were shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
  */
-export interface UsersShared = {
+export interface UsersShared {
 <table class="table">
 <thead>
 <tr>
@@ -4030,10 +4098,11 @@ export interface UsersShared = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about a chat that was shared with the bot using a <a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a> button.
  */
-export interface ChatShared = {
+export interface ChatShared {
 <table class="table">
 <thead>
 <tr>
@@ -4070,10 +4139,11 @@ export interface ChatShared = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.
  */
-export interface WriteAccessAllowed = {
+export interface WriteAccessAllowed {
 <table class="table">
 <thead>
 <tr>
@@ -4100,10 +4170,11 @@ export interface WriteAccessAllowed = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a video chat scheduled in the chat.
  */
-export interface VideoChatScheduled = {
+export interface VideoChatScheduled {
 <table class="table">
 <thead>
 <tr>
@@ -4120,14 +4191,15 @@ export interface VideoChatScheduled = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about a video chat started in the chat. Currently holds no information.
  */
-export interface VideoChatStarted = {
+export interface VideoChatStarted {}
 /**
  * This object represents a service message about a video chat ended in the chat.
  */
-export interface VideoChatEnded = {
+export interface VideoChatEnded {
 <table class="table">
 <thead>
 <tr>
@@ -4144,10 +4216,11 @@ export interface VideoChatEnded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about new members invited to a video chat.
  */
-export interface VideoChatParticipantsInvited = {
+export interface VideoChatParticipantsInvited {
 <table class="table">
 <thead>
 <tr>
@@ -4164,10 +4237,11 @@ export interface VideoChatParticipantsInvited = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a change in the price of paid messages within a chat.
  */
-export interface PaidMessagePriceChanged = {
+export interface PaidMessagePriceChanged {
 <table class="table">
 <thead>
 <tr>
@@ -4184,10 +4258,11 @@ export interface PaidMessagePriceChanged = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a change in the price of direct messages sent to a channel chat.
  */
-export interface DirectMessagePriceChanged = {
+export interface DirectMessagePriceChanged {
 <table class="table">
 <thead>
 <tr>
@@ -4209,10 +4284,11 @@ export interface DirectMessagePriceChanged = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about the approval of a suggested post.
  */
-export interface SuggestedPostApproved = {
+export interface SuggestedPostApproved {
 <table class="table">
 <thead>
 <tr>
@@ -4239,10 +4315,11 @@ export interface SuggestedPostApproved = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about the failed approval of a suggested post. Currently, only caused by insufficient user funds at the time of approval.
  */
-export interface SuggestedPostApprovalFailed = {
+export interface SuggestedPostApprovalFailed {
 <table class="table">
 <thead>
 <tr>
@@ -4264,10 +4341,11 @@ export interface SuggestedPostApprovalFailed = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about the rejection of a suggested post.
  */
-export interface SuggestedPostDeclined = {
+export interface SuggestedPostDeclined {
 <table class="table">
 <thead>
 <tr>
@@ -4289,10 +4367,11 @@ export interface SuggestedPostDeclined = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a successful payment for a suggested post.
  */
-export interface SuggestedPostPaid = {
+export interface SuggestedPostPaid {
 <table class="table">
 <thead>
 <tr>
@@ -4324,10 +4403,11 @@ export interface SuggestedPostPaid = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a payment refund for a suggested post.
  */
-export interface SuggestedPostRefunded = {
+export interface SuggestedPostRefunded {
 <table class="table">
 <thead>
 <tr>
@@ -4349,10 +4429,11 @@ export interface SuggestedPostRefunded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about the creation of a scheduled giveaway.
  */
-export interface GiveawayCreated = {
+export interface GiveawayCreated {
 <table class="table">
 <thead>
 <tr>
@@ -4369,10 +4450,11 @@ export interface GiveawayCreated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a message about a scheduled giveaway.
  */
-export interface Giveaway = {
+export interface Giveaway {
 <table class="table">
 <thead>
 <tr>
@@ -4429,10 +4511,11 @@ export interface Giveaway = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a message about the completion of a giveaway with public winners.
  */
-export interface GiveawayWinners = {
+export interface GiveawayWinners {
 <table class="table">
 <thead>
 <tr>
@@ -4504,10 +4587,11 @@ export interface GiveawayWinners = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a service message about the completion of a giveaway without public winners.
  */
-export interface GiveawayCompleted = {
+export interface GiveawayCompleted {
 <table class="table">
 <thead>
 <tr>
@@ -4539,10 +4623,11 @@ export interface GiveawayCompleted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the options used for link preview generation.
  */
-export interface LinkPreviewOptions = {
+export interface LinkPreviewOptions {
 <table class="table">
 <thead>
 <tr>
@@ -4579,10 +4664,11 @@ export interface LinkPreviewOptions = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the price of a suggested post.
  */
-export interface SuggestedPostPrice = {
+export interface SuggestedPostPrice {
 <table class="table">
 <thead>
 <tr>
@@ -4604,10 +4690,11 @@ export interface SuggestedPostPrice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains information about a suggested post.
  */
-export interface SuggestedPostInfo = {
+export interface SuggestedPostInfo {
 <table class="table">
 <thead>
 <tr>
@@ -4634,10 +4721,11 @@ export interface SuggestedPostInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains parameters of a post that is being suggested by the bot.
  */
-export interface SuggestedPostParameters = {
+export interface SuggestedPostParameters {
 <table class="table">
 <thead>
 <tr>
@@ -4659,10 +4747,11 @@ export interface SuggestedPostParameters = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a topic of a direct messages chat.
  */
-export interface DirectMessagesTopic = {
+export interface DirectMessagesTopic {
 <table class="table">
 <thead>
 <tr>
@@ -4684,10 +4773,11 @@ export interface DirectMessagesTopic = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represent a user&#39;s profile pictures.
  */
-export interface UserProfilePhotos = {
+export interface UserProfilePhotos {
 <table class="table">
 <thead>
 <tr>
@@ -4709,10 +4799,11 @@ export interface UserProfilePhotos = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the audios displayed on a user&#39;s profile.
  */
-export interface UserProfileAudios = {
+export interface UserProfileAudios {
 <table class="table">
 <thead>
 <tr>
@@ -4734,12 +4825,13 @@ export interface UserProfileAudios = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a file ready to be downloaded. The file can be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.
  *
  * > The maximum file size to download is 20 MB
  */
-export interface File = {
+export interface File {
 <table class="table">
 <thead>
 <tr>
@@ -4771,10 +4863,11 @@ export interface File = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a <a href="/bots/webapps">Web App</a>.
  */
-export interface WebAppInfo = {
+export interface WebAppInfo {
 <table class="table">
 <thead>
 <tr>
@@ -4791,10 +4884,11 @@ export interface WebAppInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a <a href="/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a business account.
  */
-export interface ReplyKeyboardMarkup = {
+export interface ReplyKeyboardMarkup {
 <table class="table">
 <thead>
 <tr>
@@ -4836,10 +4930,11 @@ export interface ReplyKeyboardMarkup = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents one button of the reply keyboard. At most one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button. For simple text buttons, <em>String</em> can be used instead of this object to specify the button text.
  */
-export interface KeyboardButton = {
+export interface KeyboardButton {
 <table class="table">
 <thead>
 <tr>
@@ -4901,10 +4996,11 @@ export interface KeyboardButton = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a>
  */
-export interface KeyboardButtonRequestUsers = {
+export interface KeyboardButtonRequestUsers {
 <table class="table">
 <thead>
 <tr>
@@ -4951,10 +5047,11 @@ export interface KeyboardButtonRequestUsers = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="/bots/features#chat-and-user-selection">More about requesting chats »</a>.
  */
-export interface KeyboardButtonRequestChat = {
+export interface KeyboardButtonRequestChat {
 <table class="table">
 <thead>
 <tr>
@@ -5021,10 +5118,11 @@ export interface KeyboardButtonRequestChat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update <em>managed_bot</em> and a <a href="#message">Message</a> with the field <em>managed_bot_created</em>.
  */
-export interface KeyboardButtonRequestManagedBot = {
+export interface KeyboardButtonRequestManagedBot {
 <table class="table">
 <thead>
 <tr>
@@ -5051,10 +5149,11 @@ export interface KeyboardButtonRequestManagedBot = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
  */
-export interface KeyboardButtonPollType = {
+export interface KeyboardButtonPollType {
 <table class="table">
 <thead>
 <tr>
@@ -5071,10 +5170,11 @@ export interface KeyboardButtonPollType = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>). Not supported in channels and for messages sent on behalf of a business account.
  */
-export interface ReplyKeyboardRemove = {
+export interface ReplyKeyboardRemove {
 <table class="table">
 <thead>
 <tr>
@@ -5096,10 +5196,11 @@ export interface ReplyKeyboardRemove = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an <a href="/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.
  */
-export interface InlineKeyboardMarkup = {
+export interface InlineKeyboardMarkup {
 <table class="table">
 <thead>
 <tr>
@@ -5116,10 +5217,11 @@ export interface InlineKeyboardMarkup = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents one button of an inline keyboard. Exactly one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button.
  */
-export interface InlineKeyboardButton = {
+export interface InlineKeyboardButton {
 <table class="table">
 <thead>
 <tr>
@@ -5196,6 +5298,7 @@ export interface InlineKeyboardButton = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
  *
@@ -5205,7 +5308,7 @@ export interface InlineKeyboardButton = {
  *
  * > Sample bot: <a href="https://t.me/discussbot">@discussbot</a>
  */
-export interface LoginUrl = {
+export interface LoginUrl {
 <table class="table">
 <thead>
 <tr>
@@ -5237,10 +5340,11 @@ export interface LoginUrl = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query.
  */
-export interface SwitchInlineQueryChosenChat = {
+export interface SwitchInlineQueryChosenChat {
 <table class="table">
 <thead>
 <tr>
@@ -5277,10 +5381,11 @@ export interface SwitchInlineQueryChosenChat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an inline keyboard button that copies specified text to the clipboard.
  */
-export interface CopyTextButton = {
+export interface CopyTextButton {
 <table class="table">
 <thead>
 <tr>
@@ -5297,12 +5402,13 @@ export interface CopyTextButton = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field <em>message</em> will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field <em>inline_message_id</em> will be present. Exactly one of the fields <em>data</em> or <em>game_short_name</em> will be present.
  * 
  * > <strong>NOTE:</strong> After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
  */
-export interface CallbackQuery = {
+export interface CallbackQuery {
 <table class="table">
 <thead>
 <tr>
@@ -5349,6 +5455,7 @@ export interface CallbackQuery = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.
  * 
@@ -5359,7 +5466,7 @@ export interface CallbackQuery = {
  * >
  * > The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.
  */
-export interface ForceReply = {
+export interface ForceReply {
 <table class="table">
 <thead>
 <tr>
@@ -5386,10 +5493,11 @@ export interface ForceReply = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a community (a group of chats).
  */
-export interface Community = {
+export interface Community {
 <table class="table">
 <thead>
 <tr>
@@ -5411,10 +5519,11 @@ export interface Community = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a chat photo.
  */
-export interface ChatPhoto = {
+export interface ChatPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -5446,10 +5555,11 @@ export interface ChatPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an invite link for a chat.
  */
-export interface ChatInviteLink = {
+export interface ChatInviteLink {
 <table class="table">
 <thead>
 <tr>
@@ -5516,10 +5626,11 @@ export interface ChatInviteLink = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the rights of an administrator in a chat.
  */
-export interface ChatAdministratorRights = {
+export interface ChatAdministratorRights {
 <table class="table">
 <thead>
 <tr>
@@ -5616,10 +5727,11 @@ export interface ChatAdministratorRights = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents changes in the status of a chat member.
  */
-export interface ChatMemberUpdated = {
+export interface ChatMemberUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -5671,6 +5783,7 @@ export interface ChatMemberUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
  *
@@ -5691,7 +5804,7 @@ export type ChatMember =
 /**
  * Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.
  */
-export interface ChatMemberOwner = {
+export interface ChatMemberOwner {
 <table class="table">
 <thead>
 <tr>
@@ -5723,10 +5836,11 @@ export interface ChatMemberOwner = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#chatmember">chat member</a> that has some additional privileges.
  */
-export interface ChatMemberAdministrator = {
+export interface ChatMemberAdministrator {
 <table class="table">
 <thead>
 <tr>
@@ -5843,10 +5957,11 @@ export interface ChatMemberAdministrator = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#chatmember">chat member</a> that has no additional privileges or restrictions.
  */
-export interface ChatMemberMember = {
+export interface ChatMemberMember {
 <table class="table">
 <thead>
 <tr>
@@ -5878,10 +5993,11 @@ export interface ChatMemberMember = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#chatmember">chat member</a> that is under certain restrictions in the chat. Supergroups only.
  */
-export interface ChatMemberRestricted = {
+export interface ChatMemberRestricted {
 <table class="table">
 <thead>
 <tr>
@@ -5998,10 +6114,11 @@ export interface ChatMemberRestricted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#chatmember">chat member</a> that isn&#39;t currently a member of the chat, but may join it themselves.
  */
-export interface ChatMemberLeft = {
+export interface ChatMemberLeft {
 <table class="table">
 <thead>
 <tr>
@@ -6023,10 +6140,11 @@ export interface ChatMemberLeft = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#chatmember">chat member</a> that was banned in the chat and can&#39;t return to the chat or view chat messages.
  */
-export interface ChatMemberBanned = {
+export interface ChatMemberBanned {
 <table class="table">
 <thead>
 <tr>
@@ -6053,10 +6171,11 @@ export interface ChatMemberBanned = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a join request sent to a chat.
  */
-export interface ChatJoinRequest = {
+export interface ChatJoinRequest {
 <table class="table">
 <thead>
 <tr>
@@ -6103,10 +6222,11 @@ export interface ChatJoinRequest = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes actions that a non-administrator user is allowed to take in a chat.
  */
-export interface ChatPermissions = {
+export interface ChatPermissions {
 <table class="table">
 <thead>
 <tr>
@@ -6198,10 +6318,11 @@ export interface ChatPermissions = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the birthdate of a user.
  */
-export interface Birthdate = {
+export interface Birthdate {
 <table class="table">
 <thead>
 <tr>
@@ -6228,10 +6349,11 @@ export interface Birthdate = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains information about the start page settings of a Telegram Business account.
  */
-export interface BusinessIntro = {
+export interface BusinessIntro {
 <table class="table">
 <thead>
 <tr>
@@ -6258,10 +6380,11 @@ export interface BusinessIntro = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains information about the location of a Telegram Business account.
  */
-export interface BusinessLocation = {
+export interface BusinessLocation {
 <table class="table">
 <thead>
 <tr>
@@ -6283,10 +6406,11 @@ export interface BusinessLocation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes an interval of time during which a business is open.
  */
-export interface BusinessOpeningHoursInterval = {
+export interface BusinessOpeningHoursInterval {
 <table class="table">
 <thead>
 <tr>
@@ -6308,10 +6432,11 @@ export interface BusinessOpeningHoursInterval = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the opening hours of a business.
  */
-export interface BusinessOpeningHours = {
+export interface BusinessOpeningHours {
 <table class="table">
 <thead>
 <tr>
@@ -6333,10 +6458,11 @@ export interface BusinessOpeningHours = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the rating of a user based on their Telegram Star spendings.
  */
-export interface UserRating = {
+export interface UserRating {
 <table class="table">
 <thead>
 <tr>
@@ -6368,10 +6494,11 @@ export interface UserRating = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the position of a clickable area within a story.
  */
-export interface StoryAreaPosition = {
+export interface StoryAreaPosition {
 <table class="table">
 <thead>
 <tr>
@@ -6413,10 +6540,11 @@ export interface StoryAreaPosition = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the physical address of a location.
  */
-export interface LocationAddress = {
+export interface LocationAddress {
 <table class="table">
 <thead>
 <tr>
@@ -6448,6 +6576,7 @@ export interface LocationAddress = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the type of a clickable area on a story. Currently, it can be one of
  *
@@ -6466,7 +6595,7 @@ export type StoryAreaType =
 /**
  * Describes a story area pointing to a location. Currently, a story can have up to 10 location areas.
  */
-export interface StoryAreaTypeLocation = {
+export interface StoryAreaTypeLocation {
 <table class="table">
 <thead>
 <tr>
@@ -6498,10 +6627,11 @@ export interface StoryAreaTypeLocation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a story area pointing to a suggested reaction. Currently, a story can have up to 5 suggested reaction areas.
  */
-export interface StoryAreaTypeSuggestedReaction = {
+export interface StoryAreaTypeSuggestedReaction {
 <table class="table">
 <thead>
 <tr>
@@ -6533,10 +6663,11 @@ export interface StoryAreaTypeSuggestedReaction = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a story area pointing to an HTTP or tg:// link. Currently, a story can have up to 3 link areas.
  */
-export interface StoryAreaTypeLink = {
+export interface StoryAreaTypeLink {
 <table class="table">
 <thead>
 <tr>
@@ -6558,10 +6689,11 @@ export interface StoryAreaTypeLink = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a story area containing weather information. Currently, a story can have up to 3 weather areas.
  */
-export interface StoryAreaTypeWeather = {
+export interface StoryAreaTypeWeather {
 <table class="table">
 <thead>
 <tr>
@@ -6593,10 +6725,11 @@ export interface StoryAreaTypeWeather = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a story area pointing to a unique gift. Currently, a story can have at most 1 unique gift area.
  */
-export interface StoryAreaTypeUniqueGift = {
+export interface StoryAreaTypeUniqueGift {
 <table class="table">
 <thead>
 <tr>
@@ -6618,10 +6751,11 @@ export interface StoryAreaTypeUniqueGift = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a clickable area on a story media.
  */
-export interface StoryArea = {
+export interface StoryArea {
 <table class="table">
 <thead>
 <tr>
@@ -6643,10 +6777,11 @@ export interface StoryArea = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a location to which a chat is connected.
  */
-export interface ChatLocation = {
+export interface ChatLocation {
 <table class="table">
 <thead>
 <tr>
@@ -6668,6 +6803,7 @@ export interface ChatLocation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the type of a reaction. Currently, it can be one of
  *
@@ -6682,7 +6818,7 @@ export type ReactionType =
 /**
  * The reaction is based on an emoji.
  */
-export interface ReactionTypeEmoji = {
+export interface ReactionTypeEmoji {
 <table class="table">
 <thead>
 <tr>
@@ -6704,10 +6840,11 @@ export interface ReactionTypeEmoji = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The reaction is based on a custom emoji.
  */
-export interface ReactionTypeCustomEmoji = {
+export interface ReactionTypeCustomEmoji {
 <table class="table">
 <thead>
 <tr>
@@ -6729,10 +6866,11 @@ export interface ReactionTypeCustomEmoji = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The reaction is paid.
  */
-export interface ReactionTypePaid = {
+export interface ReactionTypePaid {
 <table class="table">
 <thead>
 <tr>
@@ -6749,10 +6887,11 @@ export interface ReactionTypePaid = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a reaction added to a message along with the number of times it was added.
  */
-export interface ReactionCount = {
+export interface ReactionCount {
 <table class="table">
 <thead>
 <tr>
@@ -6774,10 +6913,11 @@ export interface ReactionCount = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a change of a reaction on a message performed by a user.
  */
-export interface MessageReactionUpdated = {
+export interface MessageReactionUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -6824,10 +6964,11 @@ export interface MessageReactionUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents reaction changes on a message with anonymous reactions.
  */
-export interface MessageReactionCountUpdated = {
+export interface MessageReactionCountUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -6859,10 +7000,11 @@ export interface MessageReactionCountUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a forum topic.
  */
-export interface ForumTopic = {
+export interface ForumTopic {
 <table class="table">
 <thead>
 <tr>
@@ -6899,10 +7041,11 @@ export interface ForumTopic = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the background of a gift.
  */
-export interface GiftBackground = {
+export interface GiftBackground {
 <table class="table">
 <thead>
 <tr>
@@ -6929,10 +7072,11 @@ export interface GiftBackground = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a gift that can be sent by the bot.
  */
-export interface Gift = {
+export interface Gift {
 <table class="table">
 <thead>
 <tr>
@@ -7009,10 +7153,11 @@ export interface Gift = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represent a list of gifts.
  */
-export interface Gifts = {
+export interface Gifts {
 <table class="table">
 <thead>
 <tr>
@@ -7029,10 +7174,11 @@ export interface Gifts = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the model of a unique gift.
  */
-export interface UniqueGiftModel = {
+export interface UniqueGiftModel {
 <table class="table">
 <thead>
 <tr>
@@ -7064,10 +7210,11 @@ export interface UniqueGiftModel = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the symbol shown on the pattern of a unique gift.
  */
-export interface UniqueGiftSymbol = {
+export interface UniqueGiftSymbol {
 <table class="table">
 <thead>
 <tr>
@@ -7094,10 +7241,11 @@ export interface UniqueGiftSymbol = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the colors of the backdrop of a unique gift.
  */
-export interface UniqueGiftBackdropColors = {
+export interface UniqueGiftBackdropColors {
 <table class="table">
 <thead>
 <tr>
@@ -7129,10 +7277,11 @@ export interface UniqueGiftBackdropColors = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the backdrop of a unique gift.
  */
-export interface UniqueGiftBackdrop = {
+export interface UniqueGiftBackdrop {
 <table class="table">
 <thead>
 <tr>
@@ -7159,10 +7308,11 @@ export interface UniqueGiftBackdrop = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about the color scheme for a user&#39;s name, message replies and link previews based on a unique gift.
  */
-export interface UniqueGiftColors = {
+export interface UniqueGiftColors {
 <table class="table">
 <thead>
 <tr>
@@ -7204,10 +7354,11 @@ export interface UniqueGiftColors = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a unique gift that was upgraded from a regular gift.
  */
-export interface UniqueGift = {
+export interface UniqueGift {
 <table class="table">
 <thead>
 <tr>
@@ -7279,10 +7430,11 @@ export interface UniqueGift = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a regular gift that was sent or received.
  */
-export interface GiftInfo = {
+export interface GiftInfo {
 <table class="table">
 <thead>
 <tr>
@@ -7344,10 +7496,11 @@ export interface GiftInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about a unique gift that was sent or received.
  */
-export interface UniqueGiftInfo = {
+export interface UniqueGiftInfo {
 <table class="table">
 <thead>
 <tr>
@@ -7394,6 +7547,7 @@ export interface UniqueGiftInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a gift received and owned by a user or a chat. Currently, it can be one of
  *
@@ -7406,7 +7560,7 @@ export type OwnedGift =
 /**
  * Describes a regular gift owned by a user or a chat.
  */
-export interface OwnedGiftRegular = {
+export interface OwnedGiftRegular {
 <table class="table">
 <thead>
 <tr>
@@ -7493,10 +7647,11 @@ export interface OwnedGiftRegular = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a unique gift received and owned by a user or a chat.
  */
-export interface OwnedGiftUnique = {
+export interface OwnedGiftUnique {
 <table class="table">
 <thead>
 <tr>
@@ -7553,10 +7708,11 @@ export interface OwnedGiftUnique = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains the list of gifts received and owned by a user or a chat.
  */
-export interface OwnedGifts = {
+export interface OwnedGifts {
 <table class="table">
 <thead>
 <tr>
@@ -7583,10 +7739,11 @@ export interface OwnedGifts = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the access settings of a bot.
  */
-export interface BotAccessSettings = {
+export interface BotAccessSettings {
 <table class="table">
 <thead>
 <tr>
@@ -7608,10 +7765,11 @@ export interface BotAccessSettings = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the types of gifts that can be gifted to a user or a chat.
  */
-export interface AcceptedGiftTypes = {
+export interface AcceptedGiftTypes {
 <table class="table">
 <thead>
 <tr>
@@ -7648,10 +7806,11 @@ export interface AcceptedGiftTypes = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes an amount of Telegram Stars.
  */
-export interface StarAmount = {
+export interface StarAmount {
 <table class="table">
 <thead>
 <tr>
@@ -7673,10 +7832,11 @@ export interface StarAmount = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a bot command.
  */
-export interface BotCommand = {
+export interface BotCommand {
 <table class="table">
 <thead>
 <tr>
@@ -7703,6 +7863,7 @@ export interface BotCommand = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
  *
@@ -7751,7 +7912,7 @@ export type BotCommandScope =
 /**
  * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.
  */
-export interface BotCommandScopeDefault = {
+export interface BotCommandScopeDefault {
 <table class="table">
 <thead>
 <tr>
@@ -7768,10 +7929,11 @@ export interface BotCommandScopeDefault = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all private chats.
  */
-export interface BotCommandScopeAllPrivateChats = {
+export interface BotCommandScopeAllPrivateChats {
 <table class="table">
 <thead>
 <tr>
@@ -7788,10 +7950,11 @@ export interface BotCommandScopeAllPrivateChats = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chats.
  */
-export interface BotCommandScopeAllGroupChats = {
+export interface BotCommandScopeAllGroupChats {
 <table class="table">
 <thead>
 <tr>
@@ -7808,10 +7971,11 @@ export interface BotCommandScopeAllGroupChats = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chat administrators.
  */
-export interface BotCommandScopeAllChatAdministrators = {
+export interface BotCommandScopeAllChatAdministrators {
 <table class="table">
 <thead>
 <tr>
@@ -7828,10 +7992,11 @@ export interface BotCommandScopeAllChatAdministrators = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific chat.
  */
-export interface BotCommandScopeChat = {
+export interface BotCommandScopeChat {
 <table class="table">
 <thead>
 <tr>
@@ -7853,10 +8018,11 @@ export interface BotCommandScopeChat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all administrators of a specific group or supergroup chat.
  */
-export interface BotCommandScopeChatAdministrators = {
+export interface BotCommandScopeChatAdministrators {
 <table class="table">
 <thead>
 <tr>
@@ -7878,10 +8044,11 @@ export interface BotCommandScopeChatAdministrators = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific member of a group or supergroup chat.
  */
-export interface BotCommandScopeChatMember = {
+export interface BotCommandScopeChatMember {
 <table class="table">
 <thead>
 <tr>
@@ -7908,10 +8075,11 @@ export interface BotCommandScopeChatMember = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the bot&#39;s name.
  */
-export interface BotName = {
+export interface BotName {
 <table class="table">
 <thead>
 <tr>
@@ -7928,10 +8096,11 @@ export interface BotName = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the bot&#39;s description.
  */
-export interface BotDescription = {
+export interface BotDescription {
 <table class="table">
 <thead>
 <tr>
@@ -7948,10 +8117,11 @@ export interface BotDescription = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the bot&#39;s short description.
  */
-export interface BotShortDescription = {
+export interface BotShortDescription {
 <table class="table">
 <thead>
 <tr>
@@ -7968,6 +8138,7 @@ export interface BotShortDescription = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the bot&#39;s menu button in a private chat. It should be one of
  *
@@ -7983,7 +8154,7 @@ export type MenuButton =
 /**
  * Represents a menu button, which opens the bot&#39;s list of commands.
  */
-export interface MenuButtonCommands = {
+export interface MenuButtonCommands {
 <table class="table">
 <thead>
 <tr>
@@ -8000,10 +8171,11 @@ export interface MenuButtonCommands = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a menu button, which launches a <a href="/bots/webapps">Web App</a>.
  */
-export interface MenuButtonWebApp = {
+export interface MenuButtonWebApp {
 <table class="table">
 <thead>
 <tr>
@@ -8030,10 +8202,11 @@ export interface MenuButtonWebApp = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes that no specific value for the menu button was set.
  */
-export interface MenuButtonDefault = {
+export interface MenuButtonDefault {
 <table class="table">
 <thead>
 <tr>
@@ -8050,6 +8223,7 @@ export interface MenuButtonDefault = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the source of a chat boost. It can be one of
  *
@@ -8064,7 +8238,7 @@ export type ChatBoostSource =
 /**
  * The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium subscription to another user.
  */
-export interface ChatBoostSourcePremium = {
+export interface ChatBoostSourcePremium {
 <table class="table">
 <thead>
 <tr>
@@ -8086,10 +8260,11 @@ export interface ChatBoostSourcePremium = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The boost was obtained by the creation of Telegram Premium gift codes to boost a chat. Each such code boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription.
  */
-export interface ChatBoostSourceGiftCode = {
+export interface ChatBoostSourceGiftCode {
 <table class="table">
 <thead>
 <tr>
@@ -8111,10 +8286,11 @@ export interface ChatBoostSourceGiftCode = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and <em>prize_star_count</em> / 500 times for one year for Telegram Star giveaways.
  */
-export interface ChatBoostSourceGiveaway = {
+export interface ChatBoostSourceGiveaway {
 <table class="table">
 <thead>
 <tr>
@@ -8151,10 +8327,11 @@ export interface ChatBoostSourceGiveaway = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about a chat boost.
  */
-export interface ChatBoost = {
+export interface ChatBoost {
 <table class="table">
 <thead>
 <tr>
@@ -8186,10 +8363,11 @@ export interface ChatBoost = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a boost added to a chat or changed.
  */
-export interface ChatBoostUpdated = {
+export interface ChatBoostUpdated {
 <table class="table">
 <thead>
 <tr>
@@ -8211,10 +8389,11 @@ export interface ChatBoostUpdated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a boost removed from a chat.
  */
-export interface ChatBoostRemoved = {
+export interface ChatBoostRemoved {
 <table class="table">
 <thead>
 <tr>
@@ -8246,10 +8425,11 @@ export interface ChatBoostRemoved = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about the chat owner leaving the chat.
  */
-export interface ChatOwnerLeft = {
+export interface ChatOwnerLeft {
 <table class="table">
 <thead>
 <tr>
@@ -8266,10 +8446,11 @@ export interface ChatOwnerLeft = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a service message about an ownership change in the chat.
  */
-export interface ChatOwnerChanged = {
+export interface ChatOwnerChanged {
 <table class="table">
 <thead>
 <tr>
@@ -8286,10 +8467,11 @@ export interface ChatOwnerChanged = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a list of boosts added to a chat by a user.
  */
-export interface UserChatBoosts = {
+export interface UserChatBoosts {
 <table class="table">
 <thead>
 <tr>
@@ -8306,10 +8488,11 @@ export interface UserChatBoosts = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the rights of a business bot.
  */
-export interface BusinessBotRights = {
+export interface BusinessBotRights {
 <table class="table">
 <thead>
 <tr>
@@ -8391,10 +8574,11 @@ export interface BusinessBotRights = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the connection of the bot with a business account.
  */
-export interface BusinessConnection = {
+export interface BusinessConnection {
 <table class="table">
 <thead>
 <tr>
@@ -8436,10 +8620,11 @@ export interface BusinessConnection = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object is received when messages are deleted from a connected business account.
  */
-export interface BusinessMessagesDeleted = {
+export interface BusinessMessagesDeleted {
 <table class="table">
 <thead>
 <tr>
@@ -8466,10 +8651,11 @@ export interface BusinessMessagesDeleted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.
  */
-export interface SentWebAppMessage = {
+export interface SentWebAppMessage {
 <table class="table">
 <thead>
 <tr>
@@ -8486,10 +8672,11 @@ export interface SentWebAppMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes an inline message sent by a guest bot.
  */
-export interface SentGuestMessage = {
+export interface SentGuestMessage {
 <table class="table">
 <thead>
 <tr>
@@ -8506,10 +8693,11 @@ export interface SentGuestMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes an inline message to be sent by a user of a Mini App.
  */
-export interface PreparedInlineMessage = {
+export interface PreparedInlineMessage {
 <table class="table">
 <thead>
 <tr>
@@ -8531,10 +8719,11 @@ export interface PreparedInlineMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a keyboard button to be used by a user of a Mini App.
  */
-export interface PreparedKeyboardButton = {
+export interface PreparedKeyboardButton {
 <table class="table">
 <thead>
 <tr>
@@ -8551,10 +8740,11 @@ export interface PreparedKeyboardButton = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes why a request was unsuccessful.
  */
-export interface ResponseParameters = {
+export interface ResponseParameters {
 <table class="table">
 <thead>
 <tr>
@@ -8576,6 +8766,7 @@ export interface ResponseParameters = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the content of a media message to be sent. It should be one of
  *
@@ -8596,7 +8787,7 @@ export type InputMedia =
 /**
  * Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
  */
-export interface InputMediaAnimation = {
+export interface InputMediaAnimation {
 <table class="table">
 <thead>
 <tr>
@@ -8663,10 +8854,11 @@ export interface InputMediaAnimation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an audio file to be treated as music to be sent.
  */
-export interface InputMediaAudio = {
+export interface InputMediaAudio {
 <table class="table">
 <thead>
 <tr>
@@ -8723,10 +8915,11 @@ export interface InputMediaAudio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a general file to be sent.
  */
-export interface InputMediaDocument = {
+export interface InputMediaDocument {
 <table class="table">
 <thead>
 <tr>
@@ -8773,10 +8966,11 @@ export interface InputMediaDocument = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an HTTP link to be sent.
  */
-export interface InputMediaLink = {
+export interface InputMediaLink {
 <table class="table">
 <thead>
 <tr>
@@ -8798,10 +8992,11 @@ export interface InputMediaLink = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a live photo to be sent.
  */
-export interface InputMediaLivePhoto = {
+export interface InputMediaLivePhoto {
 <table class="table">
 <thead>
 <tr>
@@ -8853,10 +9048,11 @@ export interface InputMediaLivePhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a location to be sent.
  */
-export interface InputMediaLocation = {
+export interface InputMediaLocation {
 <table class="table">
 <thead>
 <tr>
@@ -8888,10 +9084,11 @@ export interface InputMediaLocation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a photo to be sent.
  */
-export interface InputMediaPhoto = {
+export interface InputMediaPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -8938,10 +9135,11 @@ export interface InputMediaPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a sticker file to be sent.
  */
-export interface InputMediaSticker = {
+export interface InputMediaSticker {
 <table class="table">
 <thead>
 <tr>
@@ -8968,10 +9166,11 @@ export interface InputMediaSticker = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a venue to be sent.
  */
-export interface InputMediaVenue = {
+export interface InputMediaVenue {
 <table class="table">
 <thead>
 <tr>
@@ -9028,10 +9227,11 @@ export interface InputMediaVenue = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a video to be sent.
  */
-export interface InputMediaVideo = {
+export interface InputMediaVideo {
 <table class="table">
 <thead>
 <tr>
@@ -9113,10 +9313,11 @@ export interface InputMediaVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a voice message file to be sent.
  */
-export interface InputMediaVoiceNote = {
+export interface InputMediaVoiceNote {
 <table class="table">
 <thead>
 <tr>
@@ -9158,10 +9359,11 @@ export interface InputMediaVoiceNote = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.
  */
-export interface InputFile = {
+export interface InputFile {}
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
  *
@@ -9176,7 +9378,7 @@ export type InputPaidMedia =
 /**
  * The paid media to send is a live photo.
  */
-export interface InputPaidMediaLivePhoto = {
+export interface InputPaidMediaLivePhoto {
 <table class="table">
 <thead>
 <tr>
@@ -9203,10 +9405,11 @@ export interface InputPaidMediaLivePhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The paid media to send is a photo.
  */
-export interface InputPaidMediaPhoto = {
+export interface InputPaidMediaPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -9228,10 +9431,11 @@ export interface InputPaidMediaPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The paid media to send is a video.
  */
-export interface InputPaidMediaVideo = {
+export interface InputPaidMediaVideo {
 <table class="table">
 <thead>
 <tr>
@@ -9288,6 +9492,7 @@ export interface InputPaidMediaVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a profile photo to set. Currently, it can be one of
  *
@@ -9300,7 +9505,7 @@ export type InputProfilePhoto =
 /**
  * A static profile photo in the .JPG format.
  */
-export interface InputProfilePhotoStatic = {
+export interface InputProfilePhotoStatic {
 <table class="table">
 <thead>
 <tr>
@@ -9322,10 +9527,11 @@ export interface InputProfilePhotoStatic = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An animated profile photo in the MPEG4 format.
  */
-export interface InputProfilePhotoAnimated = {
+export interface InputProfilePhotoAnimated {
 <table class="table">
 <thead>
 <tr>
@@ -9352,6 +9558,7 @@ export interface InputProfilePhotoAnimated = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the content of a story to post. Currently, it can be one of
  *
@@ -9364,7 +9571,7 @@ export type InputStoryContent =
 /**
  * Describes a photo to post as a story.
  */
-export interface InputStoryContentPhoto = {
+export interface InputStoryContentPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -9386,10 +9593,11 @@ export interface InputStoryContentPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a video to post as a story.
  */
-export interface InputStoryContentVideo = {
+export interface InputStoryContentVideo {
 <table class="table">
 <thead>
 <tr>
@@ -9426,6 +9634,7 @@ export interface InputStoryContentVideo = {
 </tr>
 </tbody>
 </table>
+}
 <h4><a class="anchor" name="sending-files" href="#sending-files"><i class="anchor-icon"></i></a>Sending files</h4>
 <p>There are three ways to send files (photos, stickers, audio, media, etc.):</p>
 <ol>
@@ -17013,7 +17222,7 @@ export interface ApiMethods {
 /**
  * This object represents a sticker.
  */
-export interface Sticker = {
+export interface Sticker {
 <table class="table">
 <thead>
 <tr>
@@ -17100,10 +17309,11 @@ export interface Sticker = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a sticker set.
  */
-export interface StickerSet = {
+export interface StickerSet {
 <table class="table">
 <thead>
 <tr>
@@ -17140,10 +17350,11 @@ export interface StickerSet = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the position on faces where a mask should be placed by default.
  */
-export interface MaskPosition = {
+export interface MaskPosition {
 <table class="table">
 <thead>
 <tr>
@@ -17175,10 +17386,11 @@ export interface MaskPosition = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes a sticker to be added to a sticker set.
  */
-export interface InputSticker = {
+export interface InputSticker {
 <table class="table">
 <thead>
 <tr>
@@ -17215,6 +17427,7 @@ export interface InputSticker = {
 </tr>
 </tbody>
 </table>
+}
 export interface ApiMethods {
   /**
    * Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.
@@ -18096,7 +18309,7 @@ all the text above was on the same line
 /**
  * Rich formatted message.
  */
-export interface RichMessage = {
+export interface RichMessage {
 <table class="table">
 <thead>
 <tr>
@@ -18118,10 +18331,11 @@ export interface RichMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a rich message to be sent. Exactly <strong>one</strong> of the fields <em>html</em>, <em>markdown</em>, or <em>blocks</em> must be used.
  */
-export interface InputRichMessage = {
+export interface InputRichMessage {
 <table class="table">
 <thead>
 <tr>
@@ -18163,10 +18377,11 @@ export interface InputRichMessage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a media element embedded in an outgoing rich message.
  */
-export interface InputRichMessageMedia = {
+export interface InputRichMessageMedia {
 <table class="table">
 <thead>
 <tr>
@@ -18188,6 +18403,7 @@ export interface InputRichMessageMedia = {
 </tr>
 </tbody>
 </table>
+}
 export interface ApiMethods {
   /**
    * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.
@@ -18380,7 +18596,7 @@ export type RichText =
 /**
  * A bold text.
  */
-export interface RichTextBold = {
+export interface RichTextBold {
 <table class="table">
 <thead>
 <tr>
@@ -18402,10 +18618,11 @@ export interface RichTextBold = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An italicized text.
  */
-export interface RichTextItalic = {
+export interface RichTextItalic {
 <table class="table">
 <thead>
 <tr>
@@ -18427,10 +18644,11 @@ export interface RichTextItalic = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An underlined text.
  */
-export interface RichTextUnderline = {
+export interface RichTextUnderline {
 <table class="table">
 <thead>
 <tr>
@@ -18452,10 +18670,11 @@ export interface RichTextUnderline = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A strikethrough text.
  */
-export interface RichTextStrikethrough = {
+export interface RichTextStrikethrough {
 <table class="table">
 <thead>
 <tr>
@@ -18477,10 +18696,11 @@ export interface RichTextStrikethrough = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A text covered by a spoiler.
  */
-export interface RichTextSpoiler = {
+export interface RichTextSpoiler {
 <table class="table">
 <thead>
 <tr>
@@ -18502,10 +18722,11 @@ export interface RichTextSpoiler = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Formatted date and time.
  */
-export interface RichTextDateTime = {
+export interface RichTextDateTime {
 <table class="table">
 <thead>
 <tr>
@@ -18537,10 +18758,11 @@ export interface RichTextDateTime = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A mention of a Telegram user by their identifier.
  */
-export interface RichTextTextMention = {
+export interface RichTextTextMention {
 <table class="table">
 <thead>
 <tr>
@@ -18567,10 +18789,11 @@ export interface RichTextTextMention = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A subscript text.
  */
-export interface RichTextSubscript = {
+export interface RichTextSubscript {
 <table class="table">
 <thead>
 <tr>
@@ -18592,10 +18815,11 @@ export interface RichTextSubscript = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A superscript text.
  */
-export interface RichTextSuperscript = {
+export interface RichTextSuperscript {
 <table class="table">
 <thead>
 <tr>
@@ -18617,10 +18841,11 @@ export interface RichTextSuperscript = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A marked text.
  */
-export interface RichTextMarked = {
+export interface RichTextMarked {
 <table class="table">
 <thead>
 <tr>
@@ -18642,10 +18867,11 @@ export interface RichTextMarked = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A monowidth text.
  */
-export interface RichTextCode = {
+export interface RichTextCode {
 <table class="table">
 <thead>
 <tr>
@@ -18667,10 +18893,11 @@ export interface RichTextCode = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A custom emoji.
  */
-export interface RichTextCustomEmoji = {
+export interface RichTextCustomEmoji {
 <table class="table">
 <thead>
 <tr>
@@ -18697,10 +18924,11 @@ export interface RichTextCustomEmoji = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A mathematical expression.
  */
-export interface RichTextMathematicalExpression = {
+export interface RichTextMathematicalExpression {
 <table class="table">
 <thead>
 <tr>
@@ -18722,10 +18950,11 @@ export interface RichTextMathematicalExpression = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A text with a link.
  */
-export interface RichTextUrl = {
+export interface RichTextUrl {
 <table class="table">
 <thead>
 <tr>
@@ -18752,10 +18981,11 @@ export interface RichTextUrl = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A text with an email address.
  */
-export interface RichTextEmailAddress = {
+export interface RichTextEmailAddress {
 <table class="table">
 <thead>
 <tr>
@@ -18782,10 +19012,11 @@ export interface RichTextEmailAddress = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A text with a phone number.
  */
-export interface RichTextPhoneNumber = {
+export interface RichTextPhoneNumber {
 <table class="table">
 <thead>
 <tr>
@@ -18812,10 +19043,11 @@ export interface RichTextPhoneNumber = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A text with a bank card number.
  */
-export interface RichTextBankCardNumber = {
+export interface RichTextBankCardNumber {
 <table class="table">
 <thead>
 <tr>
@@ -18842,10 +19074,11 @@ export interface RichTextBankCardNumber = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A mention by a username.
  */
-export interface RichTextMention = {
+export interface RichTextMention {
 <table class="table">
 <thead>
 <tr>
@@ -18872,10 +19105,11 @@ export interface RichTextMention = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A hashtag.
  */
-export interface RichTextHashtag = {
+export interface RichTextHashtag {
 <table class="table">
 <thead>
 <tr>
@@ -18902,10 +19136,11 @@ export interface RichTextHashtag = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A cashtag.
  */
-export interface RichTextCashtag = {
+export interface RichTextCashtag {
 <table class="table">
 <thead>
 <tr>
@@ -18932,10 +19167,11 @@ export interface RichTextCashtag = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A bot command.
  */
-export interface RichTextBotCommand = {
+export interface RichTextBotCommand {
 <table class="table">
 <thead>
 <tr>
@@ -18962,10 +19198,11 @@ export interface RichTextBotCommand = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An anchor.
  */
-export interface RichTextAnchor = {
+export interface RichTextAnchor {
 <table class="table">
 <thead>
 <tr>
@@ -18987,10 +19224,11 @@ export interface RichTextAnchor = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A link to an anchor.
  */
-export interface RichTextAnchorLink = {
+export interface RichTextAnchorLink {
 <table class="table">
 <thead>
 <tr>
@@ -19017,10 +19255,11 @@ export interface RichTextAnchorLink = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A reference.
  */
-export interface RichTextReference = {
+export interface RichTextReference {
 <table class="table">
 <thead>
 <tr>
@@ -19047,10 +19286,11 @@ export interface RichTextReference = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A link to a reference.
  */
-export interface RichTextReferenceLink = {
+export interface RichTextReferenceLink {
 <table class="table">
 <thead>
 <tr>
@@ -19077,10 +19317,11 @@ export interface RichTextReferenceLink = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Caption of a rich formatted block.
  */
-export interface RichBlockCaption = {
+export interface RichBlockCaption {
 <table class="table">
 <thead>
 <tr>
@@ -19102,10 +19343,11 @@ export interface RichBlockCaption = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Cell in a table.
  */
-export interface RichBlockTableCell = {
+export interface RichBlockTableCell {
 <table class="table">
 <thead>
 <tr>
@@ -19147,10 +19389,11 @@ export interface RichBlockTableCell = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An item of a list.
  */
-export interface RichBlockListItem = {
+export interface RichBlockListItem {
 <table class="table">
 <thead>
 <tr>
@@ -19192,6 +19435,7 @@ export interface RichBlockListItem = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a block in a rich formatted message. Currently, it can be any of the following types:
  *
@@ -19242,7 +19486,7 @@ export type RichBlock =
 /**
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
-export interface RichBlockParagraph = {
+export interface RichBlockParagraph {
 <table class="table">
 <thead>
 <tr>
@@ -19264,10 +19508,11 @@ export interface RichBlockParagraph = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
  */
-export interface RichBlockSectionHeading = {
+export interface RichBlockSectionHeading {
 <table class="table">
 <thead>
 <tr>
@@ -19294,10 +19539,11 @@ export interface RichBlockSectionHeading = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
  */
-export interface RichBlockPreformatted = {
+export interface RichBlockPreformatted {
 <table class="table">
 <thead>
 <tr>
@@ -19324,10 +19570,11 @@ export interface RichBlockPreformatted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
  */
-export interface RichBlockFooter = {
+export interface RichBlockFooter {
 <table class="table">
 <thead>
 <tr>
@@ -19349,10 +19596,11 @@ export interface RichBlockFooter = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
  */
-export interface RichBlockDivider = {
+export interface RichBlockDivider {
 <table class="table">
 <thead>
 <tr>
@@ -19369,10 +19617,11 @@ export interface RichBlockDivider = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
  */
-export interface RichBlockMathematicalExpression = {
+export interface RichBlockMathematicalExpression {
 <table class="table">
 <thead>
 <tr>
@@ -19394,10 +19643,11 @@ export interface RichBlockMathematicalExpression = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
  */
-export interface RichBlockAnchor = {
+export interface RichBlockAnchor {
 <table class="table">
 <thead>
 <tr>
@@ -19419,10 +19669,11 @@ export interface RichBlockAnchor = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
  */
-export interface RichBlockList = {
+export interface RichBlockList {
 <table class="table">
 <thead>
 <tr>
@@ -19444,10 +19695,11 @@ export interface RichBlockList = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
  */
-export interface RichBlockBlockQuotation = {
+export interface RichBlockBlockQuotation {
 <table class="table">
 <thead>
 <tr>
@@ -19474,10 +19726,11 @@ export interface RichBlockBlockQuotation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
  */
-export interface RichBlockPullQuotation = {
+export interface RichBlockPullQuotation {
 <table class="table">
 <thead>
 <tr>
@@ -19504,10 +19757,11 @@ export interface RichBlockPullQuotation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
  */
-export interface RichBlockCollage = {
+export interface RichBlockCollage {
 <table class="table">
 <thead>
 <tr>
@@ -19534,10 +19788,11 @@ export interface RichBlockCollage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
  */
-export interface RichBlockSlideshow = {
+export interface RichBlockSlideshow {
 <table class="table">
 <thead>
 <tr>
@@ -19564,10 +19819,11 @@ export interface RichBlockSlideshow = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
  */
-export interface RichBlockTable = {
+export interface RichBlockTable {
 <table class="table">
 <thead>
 <tr>
@@ -19604,10 +19860,11 @@ export interface RichBlockTable = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
  */
-export interface RichBlockDetails = {
+export interface RichBlockDetails {
 <table class="table">
 <thead>
 <tr>
@@ -19639,10 +19896,11 @@ export interface RichBlockDetails = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>.
  */
-export interface RichBlockMap = {
+export interface RichBlockMap {
 <table class="table">
 <thead>
 <tr>
@@ -19684,10 +19942,11 @@ export interface RichBlockMap = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
-export interface RichBlockAnimation = {
+export interface RichBlockAnimation {
 <table class="table">
 <thead>
 <tr>
@@ -19719,10 +19978,11 @@ export interface RichBlockAnimation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
-export interface RichBlockAudio = {
+export interface RichBlockAudio {
 <table class="table">
 <thead>
 <tr>
@@ -19749,10 +20009,11 @@ export interface RichBlockAudio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
  */
-export interface RichBlockPhoto = {
+export interface RichBlockPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -19784,10 +20045,11 @@ export interface RichBlockPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
-export interface RichBlockVideo = {
+export interface RichBlockVideo {
 <table class="table">
 <thead>
 <tr>
@@ -19819,10 +20081,11 @@ export interface RichBlockVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
-export interface RichBlockVoiceNote = {
+export interface RichBlockVoiceNote {
 <table class="table">
 <thead>
 <tr>
@@ -19849,10 +20112,11 @@ export interface RichBlockVoiceNote = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  */
-export interface RichBlockThinking = {
+export interface RichBlockThinking {
 <table class="table">
 <thead>
 <tr>
@@ -19874,10 +20138,11 @@ export interface RichBlockThinking = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An item of a list to be sent.
  */
-export interface InputRichBlockListItem = {
+export interface InputRichBlockListItem {
 <table class="table">
 <thead>
 <tr>
@@ -19914,6 +20179,7 @@ export interface InputRichBlockListItem = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:
  *
@@ -19964,7 +20230,7 @@ export type InputRichBlock =
 /**
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
-export interface InputRichBlockParagraph = {
+export interface InputRichBlockParagraph {
 <table class="table">
 <thead>
 <tr>
@@ -19986,10 +20252,11 @@ export interface InputRichBlockParagraph = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
  */
-export interface InputRichBlockSectionHeading = {
+export interface InputRichBlockSectionHeading {
 <table class="table">
 <thead>
 <tr>
@@ -20016,10 +20283,11 @@ export interface InputRichBlockSectionHeading = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
  */
-export interface InputRichBlockPreformatted = {
+export interface InputRichBlockPreformatted {
 <table class="table">
 <thead>
 <tr>
@@ -20046,10 +20314,11 @@ export interface InputRichBlockPreformatted = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
  */
-export interface InputRichBlockFooter = {
+export interface InputRichBlockFooter {
 <table class="table">
 <thead>
 <tr>
@@ -20071,10 +20340,11 @@ export interface InputRichBlockFooter = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
  */
-export interface InputRichBlockDivider = {
+export interface InputRichBlockDivider {
 <table class="table">
 <thead>
 <tr>
@@ -20091,10 +20361,11 @@ export interface InputRichBlockDivider = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
  */
-export interface InputRichBlockMathematicalExpression = {
+export interface InputRichBlockMathematicalExpression {
 <table class="table">
 <thead>
 <tr>
@@ -20116,10 +20387,11 @@ export interface InputRichBlockMathematicalExpression = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
  */
-export interface InputRichBlockAnchor = {
+export interface InputRichBlockAnchor {
 <table class="table">
 <thead>
 <tr>
@@ -20141,10 +20413,11 @@ export interface InputRichBlockAnchor = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
  */
-export interface InputRichBlockList = {
+export interface InputRichBlockList {
 <table class="table">
 <thead>
 <tr>
@@ -20166,10 +20439,11 @@ export interface InputRichBlockList = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
  */
-export interface InputRichBlockBlockQuotation = {
+export interface InputRichBlockBlockQuotation {
 <table class="table">
 <thead>
 <tr>
@@ -20196,10 +20470,11 @@ export interface InputRichBlockBlockQuotation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
  */
-export interface InputRichBlockPullQuotation = {
+export interface InputRichBlockPullQuotation {
 <table class="table">
 <thead>
 <tr>
@@ -20226,10 +20501,11 @@ export interface InputRichBlockPullQuotation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
  */
-export interface InputRichBlockCollage = {
+export interface InputRichBlockCollage {
 <table class="table">
 <thead>
 <tr>
@@ -20256,10 +20532,11 @@ export interface InputRichBlockCollage = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
  */
-export interface InputRichBlockSlideshow = {
+export interface InputRichBlockSlideshow {
 <table class="table">
 <thead>
 <tr>
@@ -20286,10 +20563,11 @@ export interface InputRichBlockSlideshow = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
  */
-export interface InputRichBlockTable = {
+export interface InputRichBlockTable {
 <table class="table">
 <thead>
 <tr>
@@ -20326,10 +20604,11 @@ export interface InputRichBlockTable = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
  */
-export interface InputRichBlockDetails = {
+export interface InputRichBlockDetails {
 <table class="table">
 <thead>
 <tr>
@@ -20361,10 +20640,11 @@ export interface InputRichBlockDetails = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
  */
-export interface InputRichBlockMap = {
+export interface InputRichBlockMap {
 <table class="table">
 <thead>
 <tr>
@@ -20406,10 +20686,11 @@ export interface InputRichBlockMap = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
-export interface InputRichBlockAnimation = {
+export interface InputRichBlockAnimation {
 <table class="table">
 <thead>
 <tr>
@@ -20436,10 +20717,11 @@ export interface InputRichBlockAnimation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
-export interface InputRichBlockAudio = {
+export interface InputRichBlockAudio {
 <table class="table">
 <thead>
 <tr>
@@ -20466,10 +20748,11 @@ export interface InputRichBlockAudio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
  */
-export interface InputRichBlockPhoto = {
+export interface InputRichBlockPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -20496,10 +20779,11 @@ export interface InputRichBlockPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
-export interface InputRichBlockVideo = {
+export interface InputRichBlockVideo {
 <table class="table">
 <thead>
 <tr>
@@ -20526,10 +20810,11 @@ export interface InputRichBlockVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
-export interface InputRichBlockVoiceNote = {
+export interface InputRichBlockVoiceNote {
 <table class="table">
 <thead>
 <tr>
@@ -20556,10 +20841,11 @@ export interface InputRichBlockVoiceNote = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  */
-export interface InputRichBlockThinking = {
+export interface InputRichBlockThinking {
 <table class="table">
 <thead>
 <tr>
@@ -20581,13 +20867,14 @@ export interface InputRichBlockThinking = {
 </tr>
 </tbody>
 </table>
+}
 // === INLINE MODE
 <p>The following methods and objects allow your bot to work in <a href="/bots/inline">inline mode</a>.<br>Please see our <a href="/bots/inline">Introduction to Inline bots</a> for more details.</p>
 <p>To enable this option, send the <code>/setinline</code> command to <a href="https://t.me/botfather">@BotFather</a> and provide the placeholder text that the user will see in the input field after typing your bot&#39;s name.</p>
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  */
-export interface InlineQuery = {
+export interface InlineQuery {
 <table class="table">
 <thead>
 <tr>
@@ -20629,6 +20916,7 @@ export interface InlineQuery = {
 </tr>
 </tbody>
 </table>
+}
 export interface ApiMethods {
   /**
    * Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.
@@ -20687,7 +20975,7 @@ export interface ApiMethods {
 /**
  * This object represents a button to be shown above inline query results. You <strong>must</strong> use exactly one of the optional fields.
  */
-export interface InlineQueryResultsButton = {
+export interface InlineQueryResultsButton {
 <table class="table">
 <thead>
 <tr>
@@ -20714,6 +21002,7 @@ export interface InlineQueryResultsButton = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
  *
@@ -20763,7 +21052,7 @@ export type InlineQueryResult =
 /**
  * Represents a link to an article or web page.
  */
-export interface InlineQueryResultArticle = {
+export interface InlineQueryResultArticle {
 <table class="table">
 <thead>
 <tr>
@@ -20825,10 +21114,11 @@ export interface InlineQueryResultArticle = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.
  */
-export interface InlineQueryResultPhoto = {
+export interface InlineQueryResultPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -20910,10 +21200,11 @@ export interface InlineQueryResultPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
-export interface InlineQueryResultGif = {
+export interface InlineQueryResultGif {
 <table class="table">
 <thead>
 <tr>
@@ -21000,10 +21291,11 @@ export interface InlineQueryResultGif = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
-export interface InlineQueryResultMpeg4Gif = {
+export interface InlineQueryResultMpeg4Gif {
 <table class="table">
 <thead>
 <tr>
@@ -21090,12 +21382,13 @@ export interface InlineQueryResultMpeg4Gif = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.
  *
  * > If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace its content using <em>input_message_content</em>.
  */
-export interface InlineQueryResultVideo = {
+export interface InlineQueryResultVideo {
 <table class="table">
 <thead>
 <tr>
@@ -21187,10 +21480,11 @@ export interface InlineQueryResultVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.
  */
-export interface InlineQueryResultAudio = {
+export interface InlineQueryResultAudio {
 <table class="table">
 <thead>
 <tr>
@@ -21257,10 +21551,11 @@ export interface InlineQueryResultAudio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the the voice message.
  */
-export interface InlineQueryResultVoice = {
+export interface InlineQueryResultVoice {
 <table class="table">
 <thead>
 <tr>
@@ -21322,10 +21617,11 @@ export interface InlineQueryResultVoice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file. Currently, only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.
  */
-export interface InlineQueryResultDocument = {
+export interface InlineQueryResultDocument {
 <table class="table">
 <thead>
 <tr>
@@ -21407,10 +21703,11 @@ export interface InlineQueryResultDocument = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the location.
  */
-export interface InlineQueryResultLocation = {
+export interface InlineQueryResultLocation {
 <table class="table">
 <thead>
 <tr>
@@ -21492,10 +21789,11 @@ export interface InlineQueryResultLocation = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the venue.
  */
-export interface InlineQueryResultVenue = {
+export interface InlineQueryResultVenue {
 <table class="table">
 <thead>
 <tr>
@@ -21582,10 +21880,11 @@ export interface InlineQueryResultVenue = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the contact.
  */
-export interface InlineQueryResultContact = {
+export interface InlineQueryResultContact {
 <table class="table">
 <thead>
 <tr>
@@ -21652,10 +21951,11 @@ export interface InlineQueryResultContact = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#games">Game</a>.
  */
-export interface InlineQueryResultGame = {
+export interface InlineQueryResultGame {
 <table class="table">
 <thead>
 <tr>
@@ -21687,10 +21987,11 @@ export interface InlineQueryResultGame = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.
  */
-export interface InlineQueryResultCachedPhoto = {
+export interface InlineQueryResultCachedPhoto {
 <table class="table">
 <thead>
 <tr>
@@ -21757,10 +22058,11 @@ export interface InlineQueryResultCachedPhoto = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with specified content instead of the animation.
  */
-export interface InlineQueryResultCachedGif = {
+export interface InlineQueryResultCachedGif {
 <table class="table">
 <thead>
 <tr>
@@ -21822,10 +22124,11 @@ export interface InlineQueryResultCachedGif = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
-export interface InlineQueryResultCachedMpeg4Gif = {
+export interface InlineQueryResultCachedMpeg4Gif {
 <table class="table">
 <thead>
 <tr>
@@ -21887,10 +22190,11 @@ export interface InlineQueryResultCachedMpeg4Gif = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the sticker.
  */
-export interface InlineQueryResultCachedSticker = {
+export interface InlineQueryResultCachedSticker {
 <table class="table">
 <thead>
 <tr>
@@ -21927,10 +22231,11 @@ export interface InlineQueryResultCachedSticker = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file.
  */
-export interface InlineQueryResultCachedDocument = {
+export interface InlineQueryResultCachedDocument {
 <table class="table">
 <thead>
 <tr>
@@ -21992,10 +22297,11 @@ export interface InlineQueryResultCachedDocument = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.
  */
-export interface InlineQueryResultCachedVideo = {
+export interface InlineQueryResultCachedVideo {
 <table class="table">
 <thead>
 <tr>
@@ -22062,10 +22368,11 @@ export interface InlineQueryResultCachedVideo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the voice message.
  */
-export interface InlineQueryResultCachedVoice = {
+export interface InlineQueryResultCachedVoice {
 <table class="table">
 <thead>
 <tr>
@@ -22122,10 +22429,11 @@ export interface InlineQueryResultCachedVoice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.
  */
-export interface InlineQueryResultCachedAudio = {
+export interface InlineQueryResultCachedAudio {
 <table class="table">
 <thead>
 <tr>
@@ -22177,6 +22485,7 @@ export interface InlineQueryResultCachedAudio = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
  *
@@ -22197,7 +22506,7 @@ export type InputMessageContent =
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.
  */
-export interface InputTextMessageContent = {
+export interface InputTextMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22229,10 +22538,11 @@ export interface InputTextMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a rich message to be sent as the result of an inline query.
  */
-export interface InputRichMessageContent = {
+export interface InputRichMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22249,10 +22559,11 @@ export interface InputRichMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a location message to be sent as the result of an inline query.
  */
-export interface InputLocationMessageContent = {
+export interface InputLocationMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22294,10 +22605,11 @@ export interface InputLocationMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a venue message to be sent as the result of an inline query.
  */
-export interface InputVenueMessageContent = {
+export interface InputVenueMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22349,10 +22661,11 @@ export interface InputVenueMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a contact message to be sent as the result of an inline query.
  */
-export interface InputContactMessageContent = {
+export interface InputContactMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22384,10 +22697,11 @@ export interface InputContactMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of an invoice message to be sent as the result of an inline query.
  */
-export interface InputInvoiceMessageContent = {
+export interface InputInvoiceMessageContent {
 <table class="table">
 <thead>
 <tr>
@@ -22499,12 +22813,13 @@ export interface InputInvoiceMessageContent = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
  * 
  * <strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.
  */
-export interface ChosenInlineResult = {
+export interface ChosenInlineResult {
 <table class="table">
 <thead>
 <tr>
@@ -22541,6 +22856,7 @@ export interface ChosenInlineResult = {
 </tr>
 </tbody>
 </table>
+}
 // === PAYMENTS
 <p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
 export interface ApiMethods {
@@ -23087,7 +23403,7 @@ export interface ApiMethods {
 /**
  * This object represents a portion of the price for goods or services.
  */
-export interface LabeledPrice = {
+export interface LabeledPrice {
 <table class="table">
 <thead>
 <tr>
@@ -23109,10 +23425,11 @@ export interface LabeledPrice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains basic information about an invoice.
  */
-export interface Invoice = {
+export interface Invoice {
 <table class="table">
 <thead>
 <tr>
@@ -23149,10 +23466,11 @@ export interface Invoice = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a shipping address.
  */
-export interface ShippingAddress = {
+export interface ShippingAddress {
 <table class="table">
 <thead>
 <tr>
@@ -23194,10 +23512,11 @@ export interface ShippingAddress = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents information about an order.
  */
-export interface OrderInfo = {
+export interface OrderInfo {
 <table class="table">
 <thead>
 <tr>
@@ -23229,10 +23548,11 @@ export interface OrderInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents one shipping option.
  */
-export interface ShippingOption = {
+export interface ShippingOption {
 <table class="table">
 <thead>
 <tr>
@@ -23259,10 +23579,11 @@ export interface ShippingOption = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside of Telegram&#39;s control.
  */
-export interface SuccessfulPayment = {
+export interface SuccessfulPayment {
 <table class="table">
 <thead>
 <tr>
@@ -23324,10 +23645,11 @@ export interface SuccessfulPayment = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains basic information about a refunded payment.
  */
-export interface RefundedPayment = {
+export interface RefundedPayment {
 <table class="table">
 <thead>
 <tr>
@@ -23364,10 +23686,11 @@ export interface RefundedPayment = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about an incoming shipping query.
  */
-export interface ShippingQuery = {
+export interface ShippingQuery {
 <table class="table">
 <thead>
 <tr>
@@ -23399,10 +23722,11 @@ export interface ShippingQuery = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about an incoming pre-checkout query.
  */
-export interface PreCheckoutQuery = {
+export interface PreCheckoutQuery {
 <table class="table">
 <thead>
 <tr>
@@ -23449,10 +23773,11 @@ export interface PreCheckoutQuery = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object contains information about a paid media purchase.
  */
-export interface PaidMediaPurchased = {
+export interface PaidMediaPurchased {
 <table class="table">
 <thead>
 <tr>
@@ -23474,6 +23799,7 @@ export interface PaidMediaPurchased = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the state of a revenue withdrawal operation. Currently, it can be one of
  *
@@ -23488,7 +23814,7 @@ export type RevenueWithdrawalState =
 /**
  * The withdrawal is in progress.
  */
-export interface RevenueWithdrawalStatePending = {
+export interface RevenueWithdrawalStatePending {
 <table class="table">
 <thead>
 <tr>
@@ -23505,10 +23831,11 @@ export interface RevenueWithdrawalStatePending = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The withdrawal succeeded.
  */
-export interface RevenueWithdrawalStateSucceeded = {
+export interface RevenueWithdrawalStateSucceeded {
 <table class="table">
 <thead>
 <tr>
@@ -23535,10 +23862,11 @@ export interface RevenueWithdrawalStateSucceeded = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * The withdrawal failed and the transaction was refunded.
  */
-export interface RevenueWithdrawalStateFailed = {
+export interface RevenueWithdrawalStateFailed {
 <table class="table">
 <thead>
 <tr>
@@ -23555,10 +23883,11 @@ export interface RevenueWithdrawalStateFailed = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains information about the affiliate that received a commission via this transaction.
  */
-export interface AffiliateInfo = {
+export interface AffiliateInfo {
 <table class="table">
 <thead>
 <tr>
@@ -23595,6 +23924,7 @@ export interface AffiliateInfo = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
  *
@@ -23617,7 +23947,7 @@ export type TransactionPartner =
 /**
  * Describes a transaction with a user.
  */
-export interface TransactionPartnerUser = {
+export interface TransactionPartnerUser {
 <table class="table">
 <thead>
 <tr>
@@ -23679,10 +24009,11 @@ export interface TransactionPartnerUser = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a transaction with a chat.
  */
-export interface TransactionPartnerChat = {
+export interface TransactionPartnerChat {
 <table class="table">
 <thead>
 <tr>
@@ -23709,10 +24040,11 @@ export interface TransactionPartnerChat = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes the affiliate program that issued the affiliate commission received via this transaction.
  */
-export interface TransactionPartnerAffiliateProgram = {
+export interface TransactionPartnerAffiliateProgram {
 <table class="table">
 <thead>
 <tr>
@@ -23739,10 +24071,11 @@ export interface TransactionPartnerAffiliateProgram = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a withdrawal transaction with Fragment.
  */
-export interface TransactionPartnerFragment = {
+export interface TransactionPartnerFragment {
 <table class="table">
 <thead>
 <tr>
@@ -23764,10 +24097,11 @@ export interface TransactionPartnerFragment = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a withdrawal transaction to the Telegram Ads platform.
  */
-export interface TransactionPartnerTelegramAds = {
+export interface TransactionPartnerTelegramAds {
 <table class="table">
 <thead>
 <tr>
@@ -23784,10 +24118,11 @@ export interface TransactionPartnerTelegramAds = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a transaction with payment for <a href="#paid-broadcasts">paid broadcasting</a>.
  */
-export interface TransactionPartnerTelegramApi = {
+export interface TransactionPartnerTelegramApi {
 <table class="table">
 <thead>
 <tr>
@@ -23809,10 +24144,11 @@ export interface TransactionPartnerTelegramApi = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a transaction with an unknown source or recipient.
  */
-export interface TransactionPartnerOther = {
+export interface TransactionPartnerOther {
 <table class="table">
 <thead>
 <tr>
@@ -23829,10 +24165,11 @@ export interface TransactionPartnerOther = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot&#39;s balance. This is outside of Telegram&#39;s control.
  */
-export interface StarTransaction = {
+export interface StarTransaction {
 <table class="table">
 <thead>
 <tr>
@@ -23874,10 +24211,11 @@ export interface StarTransaction = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Contains a list of Telegram Star transactions.
  */
-export interface StarTransactions = {
+export interface StarTransactions {
 <table class="table">
 <thead>
 <tr>
@@ -23894,12 +24232,13 @@ export interface StarTransactions = {
 </tr>
 </tbody>
 </table>
+}
 // === TELEGRAM PASSPORT
 <p><strong>Telegram Passport</strong> is a unified authorization method for services that require personal identification. Users can upload their documents once, then instantly share their data with services that require real-world ID (finance, ICOs, etc.). Please see the <a href="/passport">manual</a> for details.</p>
 /**
  * Describes Telegram Passport data shared with the bot by the user.
  */
-export interface PassportData = {
+export interface PassportData {
 <table class="table">
 <thead>
 <tr>
@@ -23921,10 +24260,11 @@ export interface PassportData = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don&#39;t exceed 10MB.
  */
-export interface PassportFile = {
+export interface PassportFile {
 <table class="table">
 <thead>
 <tr>
@@ -23956,10 +24296,11 @@ export interface PassportFile = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes documents or other Telegram Passport elements shared with the bot by the user.
  */
-export interface EncryptedPassportElement = {
+export interface EncryptedPassportElement {
 <table class="table">
 <thead>
 <tr>
@@ -24021,10 +24362,11 @@ export interface EncryptedPassportElement = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.
  */
-export interface EncryptedCredentials = {
+export interface EncryptedCredentials {
 <table class="table">
 <thead>
 <tr>
@@ -24051,6 +24393,7 @@ export interface EncryptedCredentials = {
 </tr>
 </tbody>
 </table>
+}
 export interface ApiMethods {
   /**
    * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.
@@ -24110,7 +24453,7 @@ export type PassportElementError =
 /**
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.
  */
-export interface PassportElementErrorDataField = {
+export interface PassportElementErrorDataField {
 <table class="table">
 <thead>
 <tr>
@@ -24147,10 +24490,11 @@ export interface PassportElementErrorDataField = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with the front side of a document. The error is considered resolved when the file with the front side of the document changes.
  */
-export interface PassportElementErrorFrontSide = {
+export interface PassportElementErrorFrontSide {
 <table class="table">
 <thead>
 <tr>
@@ -24182,10 +24526,11 @@ export interface PassportElementErrorFrontSide = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with the reverse side of a document. The error is considered resolved when the file with reverse side of the document changes.
  */
-export interface PassportElementErrorReverseSide = {
+export interface PassportElementErrorReverseSide {
 <table class="table">
 <thead>
 <tr>
@@ -24217,10 +24562,11 @@ export interface PassportElementErrorReverseSide = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with the selfie with a document. The error is considered resolved when the file with the selfie changes.
  */
-export interface PassportElementErrorSelfie = {
+export interface PassportElementErrorSelfie {
 <table class="table">
 <thead>
 <tr>
@@ -24252,10 +24598,11 @@ export interface PassportElementErrorSelfie = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with a document scan. The error is considered resolved when the file with the document scan changes.
  */
-export interface PassportElementErrorFile = {
+export interface PassportElementErrorFile {
 <table class="table">
 <thead>
 <tr>
@@ -24287,10 +24634,11 @@ export interface PassportElementErrorFile = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with a list of scans. The error is considered resolved when the list of files containing the scans changes.
  */
-export interface PassportElementErrorFiles = {
+export interface PassportElementErrorFiles {
 <table class="table">
 <thead>
 <tr>
@@ -24322,10 +24670,11 @@ export interface PassportElementErrorFiles = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with one of the files that constitute the translation of a document. The error is considered resolved when the file changes.
  */
-export interface PassportElementErrorTranslationFile = {
+export interface PassportElementErrorTranslationFile {
 <table class="table">
 <thead>
 <tr>
@@ -24357,10 +24706,11 @@ export interface PassportElementErrorTranslationFile = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue with the translated version of a document. The error is considered resolved when a file with the document translation change.
  */
-export interface PassportElementErrorTranslationFiles = {
+export interface PassportElementErrorTranslationFiles {
 <table class="table">
 <thead>
 <tr>
@@ -24392,10 +24742,11 @@ export interface PassportElementErrorTranslationFiles = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * Represents an issue in an unspecified place. The error is considered resolved when new data is added.
  */
-export interface PassportElementErrorUnspecified = {
+export interface PassportElementErrorUnspecified {
 <table class="table">
 <thead>
 <tr>
@@ -24427,6 +24778,7 @@ export interface PassportElementErrorUnspecified = {
 </tr>
 </tbody>
 </table>
+}
 // === GAMES
 <p>Your bot can offer users <strong>HTML5 games</strong> to play solo or to compete against each other in groups and one-on-one chats. Create games via <a href="https://t.me/botfather">@BotFather</a> using the <em>/newgame</em> command. Please note that this kind of power requires responsibility: you will need to accept the terms for each game that your bots will be offering.</p>
 <ul>
@@ -24522,7 +24874,7 @@ export interface ApiMethods {
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
  */
-export interface Game = {
+export interface Game {
 <table class="table">
 <thead>
 <tr>
@@ -24564,10 +24916,11 @@ export interface Game = {
 </tr>
 </tbody>
 </table>
+}
 /**
  * A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.
  */
-export interface CallbackGame = {
+export interface CallbackGame {}
 export interface ApiMethods {
   /**
    * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.
@@ -24677,7 +25030,7 @@ export interface ApiMethods {
 /**
  * This object represents one row of the high scores table for a game.
  */
-export interface GameHighScore = {
+export interface GameHighScore {
 <table class="table">
 <thead>
 <tr>
@@ -24704,6 +25057,7 @@ export interface GameHighScore = {
 </tr>
 </tbody>
 </table>
+}
 <hr>
 <p>And that&#39;s about all we&#39;ve got for now.<br>If you&#39;ve got any questions, please check out our <a href="/bots/faq"><strong>Bot FAQ »</strong></a></p>
 </div>
