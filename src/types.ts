@@ -916,9 +916,9 @@ export interface ChatFullInfo {
      */
     is_direct_messages?: true;
     /**
-     * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See {@link https://core.telegram.org/bots/api#accent-colors | accent colors} for more details.
+     * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See {@link AccentColorId | accent colors} for more details.
      */
-    accent_color_id: number;
+    accent_color_id: AccentColorId;
     /**
      * The maximum number of reactions that can be set on a message in the chat
      */
@@ -964,9 +964,9 @@ export interface ChatFullInfo {
      */
     background_custom_emoji_id?: string;
     /**
-     * Identifier of the accent color for the chat's profile background. See {@link https://core.telegram.org/bots/api#profile-accent-colors | profile accent colors} for more details.
+     * Identifier of the accent color for the chat's profile background. See {@link ProfileAccentColorId | profile accent colors} for more details.
      */
-    profile_accent_color_id?: number;
+    profile_accent_color_id?: ProfileAccentColorId;
     /**
      * Custom emoji identifier of the emoji chosen by the chat for its profile background
      */
@@ -1824,9 +1824,9 @@ export interface ReplyParameters {
      */
     quote?: string;
     /**
-     * Mode for parsing entities in the quote. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the quote. See {@link ParseMode | formatting options} for more details.
      */
-    quote_parse_mode?: string;
+    quote_parse_mode?: ParseMode;
     /**
      * A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.
      */
@@ -2583,9 +2583,9 @@ export interface InputPollOption {
      */
     text: string;
     /**
-     * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed.
+     * Mode for parsing entities in the text. See {@link ParseMode | formatting options} for more details. Currently, only custom emoji entities are allowed.
      */
-    text_parse_mode?: string;
+    text_parse_mode?: ParseMode;
     /**
      * A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_.
      */
@@ -2786,9 +2786,9 @@ export interface InputChecklistTask {
      */
     text: string;
     /**
-     * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the text. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, _custom_emoji_, and _date_time_ entities are allowed.
      */
@@ -2805,9 +2805,9 @@ export interface InputChecklist {
      */
     title: string;
     /**
-     * Mode for parsing entities in the title. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the title. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, _custom_emoji_, and _date_time_ entities are allowed.
      */
@@ -6505,9 +6505,9 @@ export interface InputMediaAnimation {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the animation caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6556,9 +6556,9 @@ export interface InputMediaAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the audio caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6599,9 +6599,9 @@ export interface InputMediaDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the document caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6649,9 +6649,9 @@ export interface InputMediaLivePhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the live photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the live photo caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6707,9 +6707,9 @@ export interface InputMediaPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the photo caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6816,9 +6816,9 @@ export interface InputMediaVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the video caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -6867,9 +6867,9 @@ export interface InputMediaVoiceNote {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the voice message caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -7311,9 +7311,9 @@ export interface ApiMethods {
          */
         text: string;
         /**
-         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message text. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -7633,9 +7633,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the new caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the new caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of _parse_mode_
          */
@@ -7759,9 +7759,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the photo caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -7852,9 +7852,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the video caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -7943,9 +7943,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the audio caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8044,9 +8044,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the document caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8153,9 +8153,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the video caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8262,9 +8262,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the animation caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8351,9 +8351,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the voice message caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8517,9 +8517,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the media caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the media caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8904,9 +8904,9 @@ export interface ApiMethods {
          */
         question: string;
         /**
-         * Mode for parsing entities in the question. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed.
+         * Mode for parsing entities in the question. See {@link ParseMode | formatting options} for more details. Currently, only custom emoji entities are allowed.
          */
-        question_parse_mode?: string;
+        question_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_.
          */
@@ -8960,9 +8960,9 @@ export interface ApiMethods {
          */
         explanation?: string;
         /**
-         * Mode for parsing entities in the explanation. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the explanation. See {@link ParseMode | formatting options} for more details.
          */
-        explanation_parse_mode?: string;
+        explanation_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_.
          */
@@ -8988,9 +8988,9 @@ export interface ApiMethods {
          */
         description?: string;
         /**
-         * Mode for parsing entities in the poll description. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the poll description. See {@link ParseMode | formatting options} for more details.
          */
-        description_parse_mode?: string;
+        description_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of _description_parse_mode_
          */
@@ -9155,9 +9155,9 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message text. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -10614,9 +10614,9 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+         * Mode for parsing entities in the text. See {@link ParseMode | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
-        text_parse_mode?: string;
+        text_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
@@ -10647,9 +10647,9 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+         * Mode for parsing entities in the text. See {@link ParseMode | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
-        text_parse_mode?: string;
+        text_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
@@ -11140,9 +11140,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the story caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -11218,9 +11218,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the story caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -11344,9 +11344,9 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message text. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -11393,9 +11393,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -11632,9 +11632,9 @@ export interface ApiMethods {
          */
         text: string;
         /**
-         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message text. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -11702,9 +11702,9 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         * Mode for parsing entities in the message caption. See {@link ParseMode | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -14553,9 +14553,9 @@ export interface InlineQueryResultPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the photo caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14620,9 +14620,9 @@ export interface InlineQueryResultGif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14687,9 +14687,9 @@ export interface InlineQueryResultMpeg4Gif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14744,9 +14744,9 @@ export interface InlineQueryResultVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the video caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14807,9 +14807,9 @@ export interface InlineQueryResultAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the audio caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14858,9 +14858,9 @@ export interface InlineQueryResultVoice {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the voice message caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -14901,9 +14901,9 @@ export interface InlineQueryResultDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the document caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15176,9 +15176,9 @@ export interface InlineQueryResultCachedPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the photo caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15223,9 +15223,9 @@ export interface InlineQueryResultCachedGif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15270,9 +15270,9 @@ export interface InlineQueryResultCachedMpeg4Gif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15348,9 +15348,9 @@ export interface InlineQueryResultCachedDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the document caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15395,9 +15395,9 @@ export interface InlineQueryResultCachedVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the video caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15442,9 +15442,9 @@ export interface InlineQueryResultCachedVoice {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the voice message caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15481,9 +15481,9 @@ export interface InlineQueryResultCachedAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the audio caption. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -15527,9 +15527,9 @@ export interface InputTextMessageContent {
      */
     message_text: string;
     /**
-     * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the message text. See {@link ParseMode | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in message text, which can be specified instead of _parse_mode_
      */
