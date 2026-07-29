@@ -226,12 +226,10 @@ export interface ApiMethods {
      * HTTPS URL to send updates to. Use an empty string to remove webhook integration.
      */
     url: string;
-<tr>
-<td>certificate</td>
-<td><a href="#inputfile">InputFile</a></td>
-<td>Optional</td>
-<td>Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.</td>
-</tr>
+    /**
+     * Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.
+     */
+    certificate?: InputFile;
     /**
      * The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
      */
@@ -8604,12 +8602,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>Optional</td>
-<td>Link preview generation options for the message</td>
-</tr>
+    /**
+     * Link preview generation options for the message
+     */
+    link_preview_options?: LinkPreviewOptions;
     /**
      * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
@@ -8626,18 +8622,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -8847,12 +8839,10 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; only available when forwarding to private chats
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
     /**
      * Message identifier in the chat specified in <em>from_chat_id</em>
      */
@@ -8989,18 +8979,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; only available when copying to private chats
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9151,18 +9137,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9264,18 +9246,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9383,18 +9361,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9492,18 +9466,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9631,18 +9601,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9756,18 +9722,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9859,18 +9821,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -9958,18 +9916,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10057,18 +10011,14 @@ export interface ApiMethods {
      * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10134,12 +10084,10 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 </tbody>
 </table>
   }): never;
@@ -10225,18 +10173,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10336,18 +10280,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10431,18 +10371,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10556,12 +10492,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of <em>explanation_parse_mode</em>.</td>
 </tr>
-<tr>
-<td>explanation_media</td>
-<td><a href="#inputpollmedia">InputPollMedia</a></td>
-<td>Optional</td>
-<td>Media added to the quiz explanation</td>
-</tr>
+    /**
+     * Media added to the quiz explanation
+     */
+    explanation_media?: InputPollMedia;
     /**
      * Amount of time in seconds the poll will be active after creation, 5-2628000. Can&#39;t be used together with <em>close_date</em>.
      */
@@ -10588,12 +10522,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of <em>description_parse_mode</em></td>
 </tr>
-<tr>
-<td>media</td>
-<td><a href="#inputpollmedia">InputPollMedia</a></td>
-<td>Optional</td>
-<td>Media added to the poll description</td>
-</tr>
+    /**
+     * Media added to the poll description
+     */
+    media?: InputPollMedia;
     /**
      * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
@@ -10610,12 +10542,10 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -10669,18 +10599,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message
      */
     message_effect_id?: string;
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for description of the message to reply to</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -10738,18 +10664,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -12709,12 +12631,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.</td>
 </tr>
-<tr>
-<td>scope</td>
-<td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
-</tr>
+    /**
+     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     */
+    scope?: BotCommandScope;
     /**
      * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
      */
@@ -12738,12 +12658,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>scope</td>
-<td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
-</tr>
+    /**
+     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     */
+    scope?: BotCommandScope;
     /**
      * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
      */
@@ -12767,12 +12685,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>scope</td>
-<td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
-</tr>
+    /**
+     * A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     */
+    scope?: BotCommandScope;
     /**
      * A two-letter ISO 639-1 language code or an empty string
      */
@@ -12981,12 +12897,10 @@ export interface ApiMethods {
      * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be changed.
      */
     chat_id?: number;
-<tr>
-<td>menu_button</td>
-<td><a href="#menubutton">MenuButton</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a>.</td>
-</tr>
+    /**
+     * A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a>.
+     */
+    menu_button?: MenuButton;
 </tbody>
 </table>
   }): never;
@@ -13029,12 +12943,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>rights</td>
-<td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.</td>
-</tr>
+    /**
+     * A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
+     */
+    rights?: ChatAdministratorRights;
     /**
      * Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
      */
@@ -14177,24 +14089,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>Optional</td>
-<td>Link preview generation options for the message</td>
-</tr>
-<tr>
-<td>rich_message</td>
-<td><a href="#inputrichmessage">InputRichMessage</a></td>
-<td>Optional</td>
-<td>New rich content of the message; required if <em>text</em> isn&#39;t specified. Direct upload of new files isn&#39;t supported when an inline message is edited.</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * Link preview generation options for the message
+     */
+    link_preview_options?: LinkPreviewOptions;
+    /**
+     * New rich content of the message; required if <em>text</em> isn&#39;t specified. Direct upload of new files isn&#39;t supported when an inline message is edited.
+     */
+    rich_message?: InputRichMessage;
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14250,12 +14156,10 @@ export interface ApiMethods {
      * Pass <em>True</em> if the caption must be shown above the message media. Supported only for animation, photo and video messages.
      */
     show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14299,12 +14203,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for the new media content of the message</td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14366,12 +14268,10 @@ export interface ApiMethods {
      * The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
      */
     proximity_alert_radius?: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14409,12 +14309,10 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14454,12 +14352,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for the new checklist</td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for the new <a href="/bots/features#inline-keyboards">inline keyboard</a> for the message</td>
-</tr>
+    /**
+     * A JSON-serialized object for the new <a href="/bots/features#inline-keyboards">inline keyboard</a> for the message
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14497,12 +14393,10 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14536,12 +14430,10 @@ export interface ApiMethods {
      * Identifier of the original message with the poll
      */
     message_id: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14589,18 +14481,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>Optional</td>
-<td>Link preview generation options for the message</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * Link preview generation options for the message
+     */
+    link_preview_options?: LinkPreviewOptions;
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14640,12 +14528,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for the new media content of the message. A new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL.</td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14693,12 +14579,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -14732,12 +14616,10 @@ export interface ApiMethods {
      * Identifier of the ephemeral message to edit
      */
     ephemeral_message_id: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a></td>
-</tr>
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -15214,18 +15096,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -15553,12 +15431,10 @@ export interface ApiMethods {
      * File identifier of the sticker
      */
     sticker: string;
-<tr>
-<td>mask_position</td>
-<td><a href="#maskposition">MaskPosition</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.</td>
-</tr>
+    /**
+     * A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
+     */
+    mask_position?: MaskPosition;
 </tbody>
 </table>
   }): never;
@@ -16088,18 +15964,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
@@ -18348,12 +18220,10 @@ export interface ApiMethods {
      * Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.
      */
     next_offset?: string;
-<tr>
-<td>button</td>
-<td><a href="#inlinequeryresultsbutton">InlineQueryResultsButton</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object describing a button to be shown above inline query results</td>
-</tr>
+    /**
+     * A JSON-serialized object describing a button to be shown above inline query results
+     */
+    button?: InlineQueryResultsButton;
 </tbody>
 </table>
   }): never;
@@ -20102,24 +19972,18 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>suggested_post_parameters</td>
-<td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
-</tr>
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay <code>total price</code>&#39; button will be shown. If not empty, the first button must be a Pay button.</td>
-</tr>
+    /**
+     * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay <code>total price</code>&#39; button will be shown. If not empty, the first button must be a Pay button.
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
@@ -21688,18 +21552,14 @@ export interface ApiMethods {
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
     message_effect_id?: string;
-<tr>
-<td>reply_parameters</td>
-<td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
-<td>Description of the message to reply to</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
-<td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.</td>
-</tr>
+    /**
+     * Description of the message to reply to
+     */
+    reply_parameters?: ReplyParameters;
+    /**
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
+     */
+    reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
   }): never;
