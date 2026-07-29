@@ -586,11 +586,10 @@ export interface ChatFullInfo {
    * Information about the corresponding channel chat; for direct messages chats only
    */
   parent_chat?: Chat;
-<tr>
-<td>available_reactions</td>
-<td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td><em>Optional</em>. List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
-</tr>
+  /**
+   * List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.
+   */
+  available_reactions?: ReactionType[];
   /**
    * Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background
    */
@@ -879,11 +878,10 @@ export interface Message {
    * For text messages, the actual UTF-8 text of the message
    */
   text?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
-</tr>
+  /**
+   * For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+   */
+  entities?: MessageEntity[];
   /**
    * Options used for link preview generation for the message, if it is a text message and link preview options were changed
    */
@@ -920,11 +918,10 @@ export interface Message {
    * Message contains paid media; information about the paid media
    */
   paid_media?: PaidMediaInfo;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
-</tr>
+  /**
+   * Message is a photo, available sizes of the photo
+   */
+  photo?: PhotoSize[];
   /**
    * Message is a sticker, information about the sticker
    */
@@ -949,11 +946,10 @@ export interface Message {
    * Caption for the animation, audio, document, paid media, photo, video or voice
    */
   caption?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
-</tr>
+  /**
+   * For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+   */
+  caption_entities?: MessageEntity[];
   /**
    * <em>True</em>, if the caption must be shown above the message media
    */
@@ -990,11 +986,10 @@ export interface Message {
    * Message is a shared location, information about the location
    */
   location?: Location;
-<tr>
-<td>new_chat_members</td>
-<td>Array of <a href="#user">User</a></td>
-<td><em>Optional</em>. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
-</tr>
+  /**
+   * New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+   */
+  new_chat_members?: User[];
   /**
    * A member was removed from the group, information about them (this member may be the bot itself)
    */
@@ -1011,11 +1006,10 @@ export interface Message {
    * A chat title was changed to this value
    */
   new_chat_title?: string;
-<tr>
-<td>new_chat_photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. A chat photo was change to this value</td>
-</tr>
+  /**
+   * A chat photo was change to this value
+   */
+  new_chat_photo?: PhotoSize[];
   /**
    * Service message: the chat photo was deleted
    */
@@ -1353,11 +1347,10 @@ export interface TextQuote {
    * Text of the quoted part of a message that is replied to by the given message
    */
   text: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the quote. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are kept in quotes.</td>
-</tr>
+  /**
+   * Special entities that appear in the quote. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are kept in quotes.
+   */
+  entities?: MessageEntity[];
   /**
    * Approximate quote position in the original message in UTF-16 code units as specified by the sender
    */
@@ -1418,11 +1411,10 @@ export interface ExternalReplyInfo {
    * Message contains paid media; information about the paid media
    */
   paid_media?: PaidMediaInfo;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
-</tr>
+  /**
+   * Message is a photo, available sizes of the photo
+   */
+  photo?: PhotoSize[];
   /**
    * Message is a sticker, information about the sticker
    */
@@ -1528,11 +1520,10 @@ export interface ReplyParameters {
    * Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.
    */
   quote_parse_mode?: string;
-<tr>
-<td>quote_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. A JSON-serialized list of special entities that appear in the quote. It can be specified instead of <em>quote_parse_mode</em>.</td>
-</tr>
+  /**
+   * A JSON-serialized list of special entities that appear in the quote. It can be specified instead of <em>quote_parse_mode</em>.
+   */
+  quote_entities?: MessageEntity[];
   /**
    * Position of the quote in the original message in UTF-16 code units
    */
@@ -1878,11 +1869,10 @@ export interface LivePhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the corresponding static photo</td>
-</tr>
+  /**
+   * Available sizes of the corresponding static photo
+   */
+  photo?: PhotoSize[];
   /**
    * Identifier for the video file which can be used to download or reuse the file
    */
@@ -2015,20 +2005,18 @@ export interface Video {
    * Video thumbnail
    */
   thumbnail?: PhotoSize;
-<tr>
-<td>cover</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the cover of the video in the message</td>
-</tr>
+  /**
+   * Available sizes of the cover of the video in the message
+   */
+  cover?: PhotoSize[];
   /**
    * Timestamp in seconds from which the video will play in the message
    */
   start_timestamp?: number;
-<tr>
-<td>qualities</td>
-<td>Array of <a href="#videoquality">VideoQuality</a></td>
-<td><em>Optional</em>. List of available qualities of the video</td>
-</tr>
+  /**
+   * List of available qualities of the video
+   */
+  qualities?: VideoQuality[];
   /**
    * Original filename as defined by the sender
    */
@@ -2380,11 +2368,10 @@ export interface PollMedia {
    * Media is a shared location, information about the location
    */
   location?: Location;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Media is a photo, available sizes of the photo</td>
-</tr>
+  /**
+   * Media is a photo, available sizes of the photo
+   */
+  photo?: PhotoSize[];
   /**
    * Media is a sticker, information about the sticker; currently, for poll options only
    */
@@ -2463,11 +2450,10 @@ export interface PollOption {
    * Option text, 1-100 characters
    */
   text: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the option <em>text</em>. Currently, only custom emoji entities are allowed in poll option texts</td>
-</tr>
+  /**
+   * Special entities that appear in the option <em>text</em>. Currently, only custom emoji entities are allowed in poll option texts
+   */
+  text_entities?: MessageEntity[];
   /**
    * Media added to the poll option
    */
@@ -2512,11 +2498,10 @@ export interface InputPollOption {
    * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
    */
   text_parse_mode?: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of <em>text_parse_mode</em>.</td>
-</tr>
+  /**
+   * A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of <em>text_parse_mode</em>.
+   */
+  text_entities?: MessageEntity[];
   /**
    * Media added to the poll option
    */
@@ -2581,11 +2566,10 @@ export interface Poll {
    * Poll question, 1-300 characters
    */
   question: string;
-<tr>
-<td>question_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the <em>question</em>. Currently, only custom emoji entities are allowed in poll questions</td>
-</tr>
+  /**
+   * Special entities that appear in the <em>question</em>. Currently, only custom emoji entities are allowed in poll questions
+   */
+  question_entities?: MessageEntity[];
 <tr>
 <td>options</td>
 <td>Array of <a href="#polloption">PollOption</a></td>
@@ -2631,11 +2615,10 @@ export interface Poll {
    * Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
    */
   explanation?: string;
-<tr>
-<td>explanation_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities like usernames, URLs, bot commands, etc. that appear in the <em>explanation</em></td>
-</tr>
+  /**
+   * Special entities like usernames, URLs, bot commands, etc. that appear in the <em>explanation</em>
+   */
+  explanation_entities?: MessageEntity[];
   /**
    * Media added to the quiz explanation
    */
@@ -2652,11 +2635,10 @@ export interface Poll {
    * Description of the poll; for polls inside the <a href="#message">Message</a> object only
    */
   description?: string;
-<tr>
-<td>description_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities like usernames, URLs, bot commands, etc. that appear in the description</td>
-</tr>
+  /**
+   * Special entities like usernames, URLs, bot commands, etc. that appear in the description
+   */
+  description_entities?: MessageEntity[];
   /**
    * Media added to the poll description; for polls inside the <a href="#message">Message</a> object only
    */
@@ -2685,11 +2667,10 @@ export interface ChecklistTask {
    * Text of the task
    */
   text: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the task text</td>
-</tr>
+  /**
+   * Special entities that appear in the task text
+   */
+  text_entities?: MessageEntity[];
   /**
    * User that completed the task; omitted if the task wasn&#39;t completed by a user
    */
@@ -2722,11 +2703,10 @@ export interface Checklist {
    * Title of the checklist
    */
   title: string;
-<tr>
-<td>title_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the checklist title</td>
-</tr>
+  /**
+   * Special entities that appear in the checklist title
+   */
+  title_entities?: MessageEntity[];
 <tr>
 <td>tasks</td>
 <td>Array of <a href="#checklisttask">ChecklistTask</a></td>
@@ -2768,11 +2748,10 @@ export interface InputChecklistTask {
    * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.</td>
-</tr>
+  /**
+   * List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.
+   */
+  text_entities?: MessageEntity[];
 </tbody>
 </table>
 }
@@ -2797,11 +2776,10 @@ export interface InputChecklist {
    * Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>title_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.</td>
-</tr>
+  /**
+   * List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.
+   */
+  title_entities?: MessageEntity[];
 <tr>
 <td>tasks</td>
 <td>Array of <a href="#inputchecklisttask">InputChecklistTask</a></td>
@@ -3071,11 +3049,10 @@ export interface PollOptionAdded {
    * Option text
    */
   option_text: string;
-<tr>
-<td>option_text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the <em>option_text</em></td>
-</tr>
+  /**
+   * Special entities that appear in the <em>option_text</em>
+   */
+  option_text_entities?: MessageEntity[];
 </tbody>
 </table>
 }
@@ -3104,11 +3081,10 @@ export interface PollOptionDeleted {
    * Option text
    */
   option_text: string;
-<tr>
-<td>option_text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the <em>option_text</em></td>
-</tr>
+  /**
+   * Special entities that appear in the <em>option_text</em>
+   */
+  option_text_entities?: MessageEntity[];
 </tbody>
 </table>
 }
@@ -3562,11 +3538,10 @@ export interface SharedUser {
    * Username of the user, if the username was requested by the bot
    */
   username?: string;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the chat photo, if the photo was requested by the bot</td>
-</tr>
+  /**
+   * Available sizes of the chat photo, if the photo was requested by the bot
+   */
+  photo?: PhotoSize[];
 </tbody>
 </table>
 }
@@ -3624,11 +3599,10 @@ export interface ChatShared {
    * Username of the chat, if the username was requested by the bot and available
    */
   username?: string;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the chat photo, if the photo was requested by the bot</td>
-</tr>
+  /**
+   * Available sizes of the chat photo, if the photo was requested by the bot
+   */
+  photo?: PhotoSize[];
 </tbody>
 </table>
 }
@@ -6593,11 +6567,10 @@ export interface GiftInfo {
    * Text of the message that was added to the gift
    */
   text?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the text</td>
-</tr>
+  /**
+   * Special entities that appear in the text
+   */
+  entities?: MessageEntity[];
   /**
    * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
    */
@@ -6699,11 +6672,10 @@ export interface OwnedGiftRegular {
    * Text of the message that was added to the gift
    */
   text?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the text</td>
-</tr>
+  /**
+   * Special entities that appear in the text
+   */
+  entities?: MessageEntity[];
   /**
    * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
    */
@@ -6837,11 +6809,10 @@ export interface BotAccessSettings {
    * <em>True</em>, if only selected users can access the bot. The bot&#39;s owner can always access it.
    */
   is_access_restricted: boolean;
-<tr>
-<td>added_users</td>
-<td>Array of <a href="#user">User</a></td>
-<td><em>Optional</em>. The list of other users who have access to the bot if the access is restricted</td>
-</tr>
+  /**
+   * The list of other users who have access to the bot if the access is restricted
+   */
+  added_users?: User[];
 </tbody>
 </table>
 }
@@ -7819,11 +7790,10 @@ export interface InputMediaAnimation {
    * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -7880,11 +7850,10 @@ export interface InputMediaAudio {
    * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Duration of the audio in seconds
    */
@@ -7933,11 +7902,10 @@ export interface InputMediaDocument {
    * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.
    */
@@ -8002,11 +7970,10 @@ export interface InputMediaLivePhoto {
    * Mode for parsing entities in the live photo caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -8079,11 +8046,10 @@ export interface InputMediaPhoto {
    * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -8216,11 +8182,10 @@ export interface InputMediaVideo {
    * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -8277,11 +8242,10 @@ export interface InputMediaVoiceNote {
    * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Duration of the voice message in seconds
    */
@@ -17219,11 +17183,10 @@ export interface InputRichMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td><em>Optional</em>. Content of the rich message to send described as a list of blocks</td>
-</tr>
+  /**
+   * Content of the rich message to send described as a list of blocks
+   */
+  blocks?: InputRichBlock[];
   /**
    * Content of the rich message to send described using HTML formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.
    */
@@ -17232,11 +17195,10 @@ export interface InputRichMessage {
    * Content of the rich message to send described using Markdown formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.
    */
   markdown?: string;
-<tr>
-<td>media</td>
-<td>Array of <a href="#inputrichmessagemedia">InputRichMessageMedia</a></td>
-<td><em>Optional</em>. List of media that are specified in the <em>markdown</em> or <em>html</em> fields using <code>tg://photo?id=</code>, <code>tg://video?id=</code>, and <code>tg://audio?id=</code> links</td>
-</tr>
+  /**
+   * List of media that are specified in the <em>markdown</em> or <em>html</em> fields using <code>tg://photo?id=</code>, <code>tg://video?id=</code>, and <code>tg://audio?id=</code> links
+   */
+  media?: InputRichMessageMedia[];
   /**
    * Pass <em>True</em> if the rich message must be shown right-to-left
    */
@@ -19823,11 +19785,10 @@ export interface InlineQueryResultPhoto {
    * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -19900,11 +19861,10 @@ export interface InlineQueryResultGif {
    * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -19977,11 +19937,10 @@ export interface InlineQueryResultMpeg4Gif {
    * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20044,11 +20003,10 @@ export interface InlineQueryResultVideo {
    * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20117,11 +20075,10 @@ export interface InlineQueryResultAudio {
    * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Performer
    */
@@ -20178,11 +20135,10 @@ export interface InlineQueryResultVoice {
    * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Recording duration in seconds
    */
@@ -20231,11 +20187,10 @@ export interface InlineQueryResultDocument {
    * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * A valid URL for the file
    */
@@ -20552,11 +20507,10 @@ export interface InlineQueryResultCachedPhoto {
    * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20609,11 +20563,10 @@ export interface InlineQueryResultCachedGif {
    * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20666,11 +20619,10 @@ export interface InlineQueryResultCachedMpeg4Gif {
    * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20763,11 +20715,10 @@ export interface InlineQueryResultCachedDocument {
    * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
@@ -20820,11 +20771,10 @@ export interface InlineQueryResultCachedVideo {
    * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * Pass <em>True</em> if the caption must be shown above the message media
    */
@@ -20877,11 +20827,10 @@ export interface InlineQueryResultCachedVoice {
    * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
@@ -20926,11 +20875,10 @@ export interface InlineQueryResultCachedAudio {
    * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+   */
+  caption_entities?: MessageEntity[];
   /**
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
@@ -20980,11 +20928,10 @@ export interface InputTextMessageContent {
    * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+  /**
+   * List of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
+   */
+  entities?: MessageEntity[];
   /**
    * Link preview generation options for the message
    */
@@ -22334,11 +22281,10 @@ export interface TransactionPartnerUser {
    * The duration of the paid subscription. Can be available only for “invoice_payment” transactions.
    */
   subscription_period?: number;
-<tr>
-<td>paid_media</td>
-<td>Array of <a href="#paidmedia">PaidMedia</a></td>
-<td><em>Optional</em>. Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
-</tr>
+  /**
+   * Information about the paid media bought by the user; for “paid_media_payment” transactions only
+   */
+  paid_media?: PaidMedia[];
   /**
    * Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.
    */
@@ -22647,11 +22593,10 @@ export interface EncryptedPassportElement {
    * User&#39;s verified email address; available only for “email” type
    */
   email?: string;
-<tr>
-<td>files</td>
-<td>Array of <a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
+  /**
+   * Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  files?: PassportFile[];
   /**
    * Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
    */
@@ -22664,11 +22609,10 @@ export interface EncryptedPassportElement {
    * Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
    */
   selfie?: PassportFile;
-<tr>
-<td>translation</td>
-<td>Array of <a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
+  /**
+   * Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  translation?: PassportFile[];
   /**
    * Base64-encoded element hash for using in <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
    */
@@ -23174,11 +23118,10 @@ export interface Game {
    * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.
    */
   text?: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in <em>text</em>, such as usernames, URLs, bot commands, etc.</td>
-</tr>
+  /**
+   * Special entities that appear in <em>text</em>, such as usernames, URLs, bot commands, etc.
+   */
+  text_entities?: MessageEntity[];
   /**
    * Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a>.
    */
