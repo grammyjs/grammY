@@ -7025,11 +7025,10 @@ export interface BotCommandScopeChat {
    * Scope type, must be <em>chat</em>
    */
   type: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.</td>
-</tr>
+  /**
+   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   */
+  chat_id: number | string;
 </tbody>
 </table>
 }
@@ -7050,11 +7049,10 @@ export interface BotCommandScopeChatAdministrators {
    * Scope type, must be <em>chat_administrators</em>
    */
   type: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.</td>
-</tr>
+  /**
+   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   */
+  chat_id: number | string;
 </tbody>
 </table>
 }
@@ -7075,11 +7073,10 @@ export interface BotCommandScopeChatMember {
    * Scope type, must be <em>chat_member</em>
    */
   type: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.</td>
-</tr>
+  /**
+   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   */
+  chat_id: number | string;
   /**
    * Unique identifier of the target user
    */
