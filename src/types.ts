@@ -2125,11 +2125,10 @@ export interface PaidMediaInfo {
    * The number of Telegram Stars that must be paid to buy access to the media
    */
   star_count: number;
-<tr>
-<td>paid_media</td>
-<td>Array of <a href="#paidmedia">PaidMedia</a></td>
-<td>Information about the paid media</td>
-</tr>
+  /**
+   * Information about the paid media
+   */
+  paid_media: PaidMedia[];
 </tbody>
 </table>
 }
@@ -2187,11 +2186,10 @@ export interface PaidMediaPhoto {
    * Type of the paid media, always “photo”
    */
   type: string;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>The photo</td>
-</tr>
+  /**
+   * The photo
+   */
+  photo: PhotoSize[];
 </tbody>
 </table>
 }
@@ -2570,11 +2568,10 @@ export interface Poll {
    * Special entities that appear in the <em>question</em>. Currently, only custom emoji entities are allowed in poll questions
    */
   question_entities?: MessageEntity[];
-<tr>
-<td>options</td>
-<td>Array of <a href="#polloption">PollOption</a></td>
-<td>List of poll options</td>
-</tr>
+  /**
+   * List of poll options
+   */
+  options: PollOption[];
   /**
    * Total number of users that voted in the poll
    */
@@ -2707,11 +2704,10 @@ export interface Checklist {
    * Special entities that appear in the checklist title
    */
   title_entities?: MessageEntity[];
-<tr>
-<td>tasks</td>
-<td>Array of <a href="#checklisttask">ChecklistTask</a></td>
-<td>List of tasks in the checklist</td>
-</tr>
+  /**
+   * List of tasks in the checklist
+   */
+  tasks: ChecklistTask[];
   /**
    * <em>True</em>, if users other than the creator of the list can add tasks to the list
    */
@@ -2780,11 +2776,10 @@ export interface InputChecklist {
    * List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.
    */
   title_entities?: MessageEntity[];
-<tr>
-<td>tasks</td>
-<td>Array of <a href="#inputchecklisttask">InputChecklistTask</a></td>
-<td>List of 1-30 tasks in the checklist</td>
-</tr>
+  /**
+   * List of 1-30 tasks in the checklist
+   */
+  tasks: InputChecklistTask[];
   /**
    * Pass <em>True</em> if other users can add tasks to the checklist
    */
@@ -3405,11 +3400,10 @@ export interface ChecklistTasksAdded {
    * Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
   checklist_message?: Message;
-<tr>
-<td>tasks</td>
-<td>Array of <a href="#checklisttask">ChecklistTask</a></td>
-<td>List of tasks added to the checklist</td>
-</tr>
+  /**
+   * List of tasks added to the checklist
+   */
+  tasks: ChecklistTask[];
 </tbody>
 </table>
 }
@@ -3562,11 +3556,10 @@ export interface UsersShared {
    * Identifier of the request
    */
   request_id: number;
-<tr>
-<td>users</td>
-<td>Array of <a href="#shareduser">SharedUser</a></td>
-<td>Information about users shared with the bot</td>
-</tr>
+  /**
+   * Information about users shared with the bot
+   */
+  users: SharedUser[];
 </tbody>
 </table>
 }
@@ -3691,11 +3684,10 @@ export interface VideoChatParticipantsInvited {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>users</td>
-<td>Array of <a href="#user">User</a></td>
-<td>New members that were invited to the video chat</td>
-</tr>
+  /**
+   * New members that were invited to the video chat
+   */
+  users: User[];
 </tbody>
 </table>
 }
@@ -3908,11 +3900,10 @@ export interface Giveaway {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chats</td>
-<td>Array of <a href="#chat">Chat</a></td>
-<td>The list of chats which the user must join to participate in the giveaway</td>
-</tr>
+  /**
+   * The list of chats which the user must join to participate in the giveaway
+   */
+  chats: Chat[];
   /**
    * Point in time (Unix timestamp) when winners of the giveaway will be selected
    */
@@ -3977,11 +3968,10 @@ export interface GiveawayWinners {
    * Total number of winners in the giveaway
    */
   winner_count: number;
-<tr>
-<td>winners</td>
-<td>Array of <a href="#user">User</a></td>
-<td>List of up to 100 winners of the giveaway</td>
-</tr>
+  /**
+   * List of up to 100 winners of the giveaway
+   */
+  winners: User[];
   /**
    * The number of other chats the user had to join in order to be eligible for the giveaway
    */
@@ -4223,11 +4213,10 @@ export interface UserProfileAudios {
    * Total number of profile audios for the target user
    */
   total_count: number;
-<tr>
-<td>audios</td>
-<td>Array of <a href="#audio">Audio</a></td>
-<td>Requested profile audios</td>
-</tr>
+  /**
+   * Requested profile audios
+   */
+  audios: Audio[];
 </tbody>
 </table>
 }
@@ -5648,11 +5637,10 @@ export interface BusinessOpeningHours {
    * Unique name of the time zone for which the opening hours are defined
    */
   time_zone_name: string;
-<tr>
-<td>opening_hours</td>
-<td>Array of <a href="#businessopeninghoursinterval">BusinessOpeningHoursInterval</a></td>
-<td>List of time intervals describing business opening hours</td>
-</tr>
+  /**
+   * List of time intervals describing business opening hours
+   */
+  opening_hours: BusinessOpeningHoursInterval[];
 </tbody>
 </table>
 }
@@ -6103,16 +6091,14 @@ export interface MessageReactionUpdated {
    * Date of the change in Unix time
    */
   date: number;
-<tr>
-<td>old_reaction</td>
-<td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td>Previous list of reaction types that were set by the user</td>
-</tr>
-<tr>
-<td>new_reaction</td>
-<td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td>New list of reaction types that have been set by the user</td>
-</tr>
+  /**
+   * Previous list of reaction types that were set by the user
+   */
+  old_reaction: ReactionType[];
+  /**
+   * New list of reaction types that have been set by the user
+   */
+  new_reaction: ReactionType[];
 </tbody>
 </table>
 }
@@ -6141,11 +6127,10 @@ export interface MessageReactionCountUpdated {
    * Date of the change in Unix time
    */
   date: number;
-<tr>
-<td>reactions</td>
-<td>Array of <a href="#reactioncount">ReactionCount</a></td>
-<td>List of reactions that are present on the message</td>
-</tr>
+  /**
+   * List of reactions that are present on the message
+   */
+  reactions: ReactionCount[];
 </tbody>
 </table>
 }
@@ -6294,11 +6279,10 @@ export interface Gifts {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>gifts</td>
-<td>Array of <a href="#gift">Gift</a></td>
-<td>The list of gifts</td>
-</tr>
+  /**
+   * The list of gifts
+   */
+  gifts: Gift[];
 </tbody>
 </table>
 }
@@ -6780,11 +6764,10 @@ export interface OwnedGifts {
    * The total number of gifts owned by the user or the chat
    */
   total_count: number;
-<tr>
-<td>gifts</td>
-<td>Array of <a href="#ownedgift">OwnedGift</a></td>
-<td>The list of gifts</td>
-</tr>
+  /**
+   * The list of gifts
+   */
+  gifts: OwnedGift[];
   /**
    * Offset for the next request. If empty, then there are no more results.
    */
@@ -7484,11 +7467,10 @@ export interface UserChatBoosts {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>boosts</td>
-<td>Array of <a href="#chatboost">ChatBoost</a></td>
-<td>The list of boosts added to the chat by the user</td>
-</tr>
+  /**
+   * The list of boosts added to the chat by the user
+   */
+  boosts: ChatBoost[];
 </tbody>
 </table>
 }
@@ -16187,11 +16169,10 @@ export interface StickerSet {
    * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
    */
   sticker_type: string;
-<tr>
-<td>stickers</td>
-<td>Array of <a href="#sticker">Sticker</a></td>
-<td>List of all set stickers</td>
-</tr>
+  /**
+   * List of all set stickers
+   */
+  stickers: Sticker[];
   /**
    * Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
    */
@@ -17158,11 +17139,10 @@ export interface RichMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>Content of the message</td>
-</tr>
+  /**
+   * Content of the message
+   */
+  blocks: RichBlock[];
   /**
    * <em>True</em>, if the rich message must be shown right-to-left
    */
@@ -18164,11 +18144,10 @@ export interface RichBlockListItem {
    * Label of the item
    */
   label: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>The content of the item</td>
-</tr>
+  /**
+   * The content of the item
+   */
+  blocks: RichBlock[];
   /**
    * <em>True</em>, if the item has a checkbox
    */
@@ -18424,11 +18403,10 @@ export interface RichBlockList {
    * Type of the block, always “list”
    */
   type: string;
-<tr>
-<td>items</td>
-<td>Array of <a href="#richblocklistitem">RichBlockListItem</a></td>
-<td>Items of the list</td>
-</tr>
+  /**
+   * Items of the list
+   */
+  items: RichBlockListItem[];
 </tbody>
 </table>
 }
@@ -18449,11 +18427,10 @@ export interface RichBlockBlockQuotation {
    * Type of the block, always “blockquote”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>Content of the block</td>
-</tr>
+  /**
+   * Content of the block
+   */
+  blocks: RichBlock[];
   /**
    * Credit of the block
    */
@@ -18506,11 +18483,10 @@ export interface RichBlockCollage {
    * Type of the block, always “collage”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>Elements of the collage</td>
-</tr>
+  /**
+   * Elements of the collage
+   */
+  blocks: RichBlock[];
   /**
    * Caption of the block
    */
@@ -18535,11 +18511,10 @@ export interface RichBlockSlideshow {
    * Type of the block, always “slideshow”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>Elements of the slideshow</td>
-</tr>
+  /**
+   * Elements of the slideshow
+   */
+  blocks: RichBlock[];
   /**
    * Caption of the block
    */
@@ -18605,11 +18580,10 @@ export interface RichBlockDetails {
    * Always shown summary of the block
    */
   summary: RichText;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#richblock">RichBlock</a></td>
-<td>Content of the block</td>
-</tr>
+  /**
+   * Content of the block
+   */
+  blocks: RichBlock[];
   /**
    * <em>True</em>, if the content of the block is visible by default
    */
@@ -18734,11 +18708,10 @@ export interface RichBlockPhoto {
    * Type of the block, always “photo”
    */
   type: string;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>Available sizes of the photo</td>
-</tr>
+  /**
+   * Available sizes of the photo
+   */
+  photo: PhotoSize[];
   /**
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
@@ -18847,11 +18820,10 @@ export interface InputRichBlockListItem {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td>The content of the item</td>
-</tr>
+  /**
+   * The content of the item
+   */
+  blocks: InputRichBlock[];
   /**
    * Pass <em>True</em> if the item has a checkbox
    */
@@ -19107,11 +19079,10 @@ export interface InputRichBlockList {
    * Type of the block, always “list”
    */
   type: string;
-<tr>
-<td>items</td>
-<td>Array of <a href="#inputrichblocklistitem">InputRichBlockListItem</a></td>
-<td>Items of the list</td>
-</tr>
+  /**
+   * Items of the list
+   */
+  items: InputRichBlockListItem[];
 </tbody>
 </table>
 }
@@ -19132,11 +19103,10 @@ export interface InputRichBlockBlockQuotation {
    * Type of the block, always “blockquote”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td>Content of the block</td>
-</tr>
+  /**
+   * Content of the block
+   */
+  blocks: InputRichBlock[];
   /**
    * Credit of the block
    */
@@ -19189,11 +19159,10 @@ export interface InputRichBlockCollage {
    * Type of the block, always “collage”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td>Elements of the collage</td>
-</tr>
+  /**
+   * Elements of the collage
+   */
+  blocks: InputRichBlock[];
   /**
    * Caption of the block
    */
@@ -19218,11 +19187,10 @@ export interface InputRichBlockSlideshow {
    * Type of the block, always “slideshow”
    */
   type: string;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td>Elements of the slideshow</td>
-</tr>
+  /**
+   * Elements of the slideshow
+   */
+  blocks: InputRichBlock[];
   /**
    * Caption of the block
    */
@@ -19288,11 +19256,10 @@ export interface InputRichBlockDetails {
    * Always shown summary of the block
    */
   summary: RichText;
-<tr>
-<td>blocks</td>
-<td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
-<td>Content of the block</td>
-</tr>
+  /**
+   * Content of the block
+   */
+  blocks: InputRichBlock[];
   /**
    * Pass <em>True</em> if the content of the block is visible by default
    */
@@ -21112,11 +21079,10 @@ export interface InputInvoiceMessageContent {
    * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   currency: string;
-<tr>
-<td>prices</td>
-<td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+  /**
+   * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  prices: LabeledPrice[];
   /**
    * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
@@ -21910,11 +21876,10 @@ export interface ShippingOption {
    * Option title
    */
   title: string;
-<tr>
-<td>prices</td>
-<td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>List of price portions</td>
-</tr>
+  /**
+   * List of price portions
+   */
+  prices: LabeledPrice[];
 </tbody>
 </table>
 }
@@ -22497,11 +22462,10 @@ export interface StarTransactions {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>transactions</td>
-<td>Array of <a href="#startransaction">StarTransaction</a></td>
-<td>The list of transactions</td>
-</tr>
+  /**
+   * The list of transactions
+   */
+  transactions: StarTransaction[];
 </tbody>
 </table>
 }
@@ -22520,11 +22484,10 @@ export interface PassportData {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>data</td>
-<td>Array of <a href="#encryptedpassportelement">EncryptedPassportElement</a></td>
-<td>Array with information about documents and other Telegram Passport elements that was shared with the bot</td>
-</tr>
+  /**
+   * Array with information about documents and other Telegram Passport elements that was shared with the bot
+   */
+  data: EncryptedPassportElement[];
   /**
    * Encrypted credentials required to decrypt the data
    */
@@ -23109,11 +23072,10 @@ export interface Game {
    * Description of the game
    */
   description: string;
-<tr>
-<td>photo</td>
-<td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>Photo that will be displayed in the game message in chats</td>
-</tr>
+  /**
+   * Photo that will be displayed in the game message in chats
+   */
+  photo: PhotoSize[];
   /**
    * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.
    */
