@@ -8889,12 +8889,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Message identifier in the chat specified in <em>from_chat_id</em></td>
-</tr>
+    /**
+     * Message identifier in the chat specified in <em>from_chat_id</em>
+     */
+    message_id: number;
 </tbody>
 </table>
   }): never;
@@ -8991,12 +8989,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Message identifier in the chat specified in <em>from_chat_id</em></td>
-</tr>
+    /**
+     * Message identifier in the chat specified in <em>from_chat_id</em>
+     */
+    message_id: number;
     /**
      * New start timestamp for the copied video in the message
      */
@@ -10231,12 +10227,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>The number of Telegram Stars that must be paid to buy access to the media; 1-25000</td>
-</tr>
+    /**
+     * The number of Telegram Stars that must be paid to buy access to the media; 1-25000
+     */
+    star_count: number;
 <tr>
 <td>media</td>
 <td>Array of <a href="#inputpaidmedia">InputPaidMedia</a></td>
@@ -11149,22 +11143,18 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target private chat</td>
-</tr>
+    /**
+     * Unique identifier for the target private chat
+     */
+    chat_id: number;
     /**
      * Unique identifier for the target message thread
      */
     message_thread_id?: number;
-<tr>
-<td>draft_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.</td>
-</tr>
+    /**
+     * Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
+     */
+    draft_id: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -11250,12 +11240,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.</td>
-</tr>
+    /**
+     * Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
+     */
+    message_id: number;
 <tr>
 <td>reaction</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
@@ -11287,12 +11275,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
     /**
      * Sequential number of the first photo to be returned. By default, all photos are returned.
      */
@@ -11320,12 +11306,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
     /**
      * Sequential number of the first audio to be returned. By default, all audios are returned.
      */
@@ -11353,12 +11337,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>emoji_status_custom_emoji_id</td>
 <td>String</td>
@@ -11421,12 +11403,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
     /**
      * Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.
      */
@@ -11462,12 +11442,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>only_if_banned</td>
 <td>Boolean</td>
@@ -11499,12 +11477,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>permissions</td>
 <td><a href="#chatpermissions">ChatPermissions</a></td>
@@ -11546,12 +11522,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>is_anonymous</td>
 <td>Boolean</td>
@@ -11679,12 +11653,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>custom_title</td>
 <td>String</td>
@@ -11716,12 +11688,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>tag</td>
 <td>String</td>
@@ -11753,12 +11723,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>sender_chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target sender chat</td>
-</tr>
+    /**
+     * Unique identifier of the target sender chat
+     */
+    sender_chat_id: number;
 </tbody>
 </table>
   }): never;
@@ -11784,12 +11752,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>sender_chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target sender chat</td>
-</tr>
+    /**
+     * Unique identifier of the target sender chat
+     */
+    sender_chat_id: number;
 </tbody>
 </table>
   }): never;
@@ -11981,18 +11947,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
-<tr>
-<td>subscription_period</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).</td>
-</tr>
-<tr>
-<td>subscription_price</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000</td>
-</tr>
+    /**
+     * The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
+     */
+    subscription_period: number;
+    /**
+     * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000
+     */
+    subscription_price: number;
 </tbody>
 </table>
   }): never;
@@ -12086,12 +12048,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -12117,12 +12077,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -12334,12 +12292,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of a message to pin</td>
-</tr>
+    /**
+     * Identifier of a message to pin
+     */
+    message_id: number;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -12537,12 +12493,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -12562,18 +12516,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target user</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>The maximum number of messages to return; 1-20</td>
-</tr>
+    /**
+     * Unique identifier for the target user
+     */
+    user_id: number;
+    /**
+     * The maximum number of messages to return; 1-20
+     */
+    limit: number;
 </tbody>
 </table>
   }): never;
@@ -12702,12 +12652,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message thread of the forum topic</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread of the forum topic
+     */
+    message_thread_id: number;
 <tr>
 <td>name</td>
 <td>String</td>
@@ -12745,12 +12693,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message thread of the forum topic</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread of the forum topic
+     */
+    message_thread_id: number;
 </tbody>
 </table>
   }): never;
@@ -12776,12 +12722,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message thread of the forum topic</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread of the forum topic
+     */
+    message_thread_id: number;
 </tbody>
 </table>
   }): never;
@@ -12807,12 +12751,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message thread of the forum topic</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread of the forum topic
+     */
+    message_thread_id: number;
 </tbody>
 </table>
   }): never;
@@ -12838,12 +12780,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message thread of the forum topic</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread of the forum topic
+     */
+    message_thread_id: number;
 </tbody>
 </table>
   }): never;
@@ -13105,12 +13045,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the chat or username of the channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -13155,12 +13093,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the managed bot whose token will be returned</td>
-</tr>
+    /**
+     * User identifier of the managed bot whose token will be returned
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -13180,12 +13116,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the managed bot whose token will be replaced</td>
-</tr>
+    /**
+     * User identifier of the managed bot whose token will be replaced
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -13205,12 +13139,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the managed bot whose access settings will be returned</td>
-</tr>
+    /**
+     * User identifier of the managed bot whose access settings will be returned
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -13230,12 +13162,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the managed bot whose access settings will be changed</td>
-</tr>
+    /**
+     * User identifier of the managed bot whose access settings will be changed
+     */
+    user_id: number;
 <tr>
 <td>is_access_restricted</td>
 <td>Boolean</td>
@@ -13738,24 +13668,18 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user who will receive a Telegram Premium subscription</td>
-</tr>
-<tr>
-<td>month_count</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12</td>
-</tr>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months</td>
-</tr>
+    /**
+     * Unique identifier of the target user who will receive a Telegram Premium subscription
+     */
+    user_id: number;
+    /**
+     * Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
+     */
+    month_count: number;
+    /**
+     * Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
+     */
+    star_count: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -13793,12 +13717,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 <tr>
 <td>custom_description</td>
 <td>String</td>
@@ -13855,12 +13777,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user</td>
-</tr>
+    /**
+     * Unique identifier of the target user
+     */
+    user_id: number;
 </tbody>
 </table>
   }): never;
@@ -13911,18 +13831,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection on behalf of which to read the message</td>
 </tr>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the message to mark as read</td>
-</tr>
+    /**
+     * Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.
+     */
+    chat_id: number;
+    /**
+     * Unique identifier of the message to mark as read
+     */
+    message_id: number;
 </tbody>
 </table>
   }): never;
@@ -14208,12 +14124,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Number of Telegram Stars to transfer; 1-10000</td>
-</tr>
+    /**
+     * Number of Telegram Stars to transfer; 1-10000
+     */
+    star_count: number;
 </tbody>
 </table>
   }): never;
@@ -14316,12 +14230,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the user</td>
-</tr>
+    /**
+     * Unique identifier of the user
+     */
+    user_id: number;
 <tr>
 <td>exclude_unlimited</td>
 <td>Boolean</td>
@@ -14554,12 +14466,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the regular gift that should be transferred</td>
 </tr>
-<tr>
-<td>new_owner_chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.</td>
-</tr>
+    /**
+     * Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
+     */
+    new_owner_chat_id: number;
     /**
      * The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the <em>can_transfer_stars</em> business bot right is required.
      */
@@ -14595,12 +14505,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Content of the story</td>
 </tr>
-<tr>
-<td>active_period</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code></td>
-</tr>
+    /**
+     * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
+     */
+    active_period: number;
 <tr>
 <td>caption</td>
 <td>String</td>
@@ -14662,24 +14570,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>from_chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the chat which posted the story that should be reposted</td>
-</tr>
-<tr>
-<td>from_story_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the story that should be reposted</td>
-</tr>
-<tr>
-<td>active_period</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code></td>
-</tr>
+    /**
+     * Unique identifier of the chat which posted the story that should be reposted
+     */
+    from_chat_id: number;
+    /**
+     * Unique identifier of the story that should be reposted
+     */
+    from_story_id: number;
+    /**
+     * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
+     */
+    active_period: number;
 <tr>
 <td>post_to_chat_page</td>
 <td>Boolean</td>
@@ -14717,12 +14619,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>story_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the story to edit</td>
-</tr>
+    /**
+     * Unique identifier of the story to edit
+     */
+    story_id: number;
 <tr>
 <td>content</td>
 <td><a href="#inputstorycontent">InputStoryContent</a></td>
@@ -14778,12 +14678,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>story_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the story to delete</td>
-</tr>
+    /**
+     * Unique identifier of the story to delete
+     */
+    story_id: number;
 </tbody>
 </table>
   }): never;
@@ -14834,12 +14732,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user that can use the prepared message</td>
-</tr>
+    /**
+     * Unique identifier of the target user that can use the prepared message
+     */
+    user_id: number;
 <tr>
 <td>result</td>
 <td><a href="#inlinequeryresult">InlineQueryResult</a></td>
@@ -14889,12 +14785,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the target user that can use the button</td>
-</tr>
+    /**
+     * Unique identifier of the target user that can use the button
+     */
+    user_id: number;
 <tr>
 <td>button</td>
 <td><a href="#keyboardbutton">KeyboardButton</a></td>
@@ -15262,12 +15156,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target message</td>
-</tr>
+    /**
+     * Unique identifier for the target message
+     */
+    message_id: number;
 <tr>
 <td>checklist</td>
 <td><a href="#inputchecklist">InputChecklist</a></td>
@@ -15358,12 +15250,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the original message with the poll</td>
-</tr>
+    /**
+     * Identifier of the original message with the poll
+     */
+    message_id: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15395,18 +15285,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user who received the message</td>
-</tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the ephemeral message to edit</td>
-</tr>
+    /**
+     * Identifier of the user who received the message
+     */
+    receiver_user_id: number;
+    /**
+     * Identifier of the ephemeral message to edit
+     */
+    ephemeral_message_id: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -15462,18 +15348,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user who received the message</td>
-</tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the ephemeral message to edit</td>
-</tr>
+    /**
+     * Identifier of the user who received the message
+     */
+    receiver_user_id: number;
+    /**
+     * Identifier of the ephemeral message to edit
+     */
+    ephemeral_message_id: number;
 <tr>
 <td>media</td>
 <td><a href="#inputmedia">InputMedia</a></td>
@@ -15511,18 +15393,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user who received the message</td>
-</tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the ephemeral message to edit</td>
-</tr>
+    /**
+     * Identifier of the user who received the message
+     */
+    receiver_user_id: number;
+    /**
+     * Identifier of the ephemeral message to edit
+     */
+    ephemeral_message_id: number;
 <tr>
 <td>caption</td>
 <td>String</td>
@@ -15572,18 +15450,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user who received the message</td>
-</tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the ephemeral message to edit</td>
-</tr>
+    /**
+     * Identifier of the user who received the message
+     */
+    receiver_user_id: number;
+    /**
+     * Identifier of the ephemeral message to edit
+     */
+    ephemeral_message_id: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15609,18 +15483,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target direct messages chat</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of a suggested post message to approve</td>
-</tr>
+    /**
+     * Unique identifier for the target direct messages chat
+     */
+    chat_id: number;
+    /**
+     * Identifier of a suggested post message to approve
+     */
+    message_id: number;
     /**
      * Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future.
      */
@@ -15644,18 +15514,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target direct messages chat</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of a suggested post message to decline</td>
-</tr>
+    /**
+     * Unique identifier for the target direct messages chat
+     */
+    chat_id: number;
+    /**
+     * Identifier of a suggested post message to decline
+     */
+    message_id: number;
 <tr>
 <td>comment</td>
 <td>String</td>
@@ -15687,12 +15553,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the message to delete</td>
-</tr>
+    /**
+     * Identifier of the message to delete
+     */
+    message_id: number;
 </tbody>
 </table>
   }): never;
@@ -15749,18 +15613,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user who received the message</td>
-</tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the ephemeral message to delete</td>
-</tr>
+    /**
+     * Identifier of the user who received the message
+     */
+    receiver_user_id: number;
+    /**
+     * Identifier of the ephemeral message to delete
+     */
+    ephemeral_message_id: number;
 </tbody>
 </table>
   }): never;
@@ -15786,12 +15646,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the target message</td>
-</tr>
+    /**
+     * Identifier of the target message
+     */
+    message_id: number;
     /**
      * Identifier of the user whose reaction will be removed, if the reaction was added by a user
      */
@@ -16187,12 +16045,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of sticker file owner</td>
-</tr>
+    /**
+     * User identifier of sticker file owner
+     */
+    user_id: number;
 <tr>
 <td>sticker</td>
 <td><a href="#inputfile">InputFile</a></td>
@@ -16224,12 +16080,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of created sticker set owner</td>
-</tr>
+    /**
+     * User identifier of created sticker set owner
+     */
+    user_id: number;
 <tr>
 <td>name</td>
 <td>String</td>
@@ -16279,12 +16133,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of sticker set owner</td>
-</tr>
+    /**
+     * User identifier of sticker set owner
+     */
+    user_id: number;
 <tr>
 <td>name</td>
 <td>String</td>
@@ -16322,12 +16174,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
-<tr>
-<td>position</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>New sticker position in the set, zero-based</td>
-</tr>
+    /**
+     * New sticker position in the set, zero-based
+     */
+    position: number;
 </tbody>
 </table>
   }): never;
@@ -16372,12 +16222,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the sticker set owner</td>
-</tr>
+    /**
+     * User identifier of the sticker set owner
+     */
+    user_id: number;
 <tr>
 <td>name</td>
 <td>String</td>
@@ -16545,12 +16393,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Sticker set name</td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier of the sticker set owner</td>
-</tr>
+    /**
+     * User identifier of the sticker set owner
+     */
+    user_id: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -17081,22 +16927,18 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier for the target private chat</td>
-</tr>
+    /**
+     * Unique identifier for the target private chat
+     */
+    chat_id: number;
     /**
      * Unique identifier for the target message thread
      */
     message_thread_id?: number;
-<tr>
-<td>draft_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.</td>
-</tr>
+    /**
+     * Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
+     */
+    draft_id: number;
 <tr>
 <td>rich_message</td>
 <td><a href="#inputrichmessage">InputRichMessage</a></td>
@@ -21399,12 +21241,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user whose payment will be refunded</td>
-</tr>
+    /**
+     * Identifier of the user whose payment will be refunded
+     */
+    user_id: number;
 <tr>
 <td>telegram_payment_charge_id</td>
 <td>String</td>
@@ -21430,12 +21270,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Identifier of the user whose subscription will be edited</td>
-</tr>
+    /**
+     * Identifier of the user whose subscription will be edited
+     */
+    user_id: number;
 <tr>
 <td>telegram_payment_charge_id</td>
 <td>String</td>
@@ -22357,12 +22195,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier</td>
-</tr>
+    /**
+     * User identifier
+     */
+    user_id: number;
 <tr>
 <td>errors</td>
 <td>Array of <a href="#passportelementerror">PassportElementError</a></td>
@@ -22837,18 +22673,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>User identifier</td>
-</tr>
-<tr>
-<td>score</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>New score, must be non-negative</td>
-</tr>
+    /**
+     * User identifier
+     */
+    user_id: number;
+    /**
+     * New score, must be non-negative
+     */
+    score: number;
 <tr>
 <td>force</td>
 <td>Boolean</td>
@@ -22896,12 +22728,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Yes</td>
-<td>Target user id</td>
-</tr>
+    /**
+     * Target user id
+     */
+    user_id: number;
     /**
      * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.
      */
