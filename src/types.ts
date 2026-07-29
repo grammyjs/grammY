@@ -248,12 +248,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.</td>
 </tr>
-<tr>
-<td>drop_pending_updates</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to drop all pending updates</td>
-</tr>
+    /**
+     * Pass <em>True</em> to drop all pending updates
+     */
+    drop_pending_updates?: boolean;
     /**
      * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed. The header is useful to ensure that the request comes from a webhook set by you.
      */
@@ -277,12 +275,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>drop_pending_updates</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to drop all pending updates</td>
-</tr>
+    /**
+     * Pass <em>True</em> to drop all pending updates
+     */
+    drop_pending_updates?: boolean;
 </tbody>
 </table>
   }): never;
@@ -8618,24 +8614,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Link preview generation options for the message</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -8849,18 +8839,14 @@ export interface ApiMethods {
      * New start timestamp for the forwarded video in the message
      */
     video_start_timestamp?: number;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the forwarded message from forwarding and saving</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the forwarded message from forwarding and saving
+     */
+    protect_content?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; only available when forwarding to private chats
      */
@@ -8920,18 +8906,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to forward. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the forwarded messages from forwarding and saving</td>
-</tr>
+    /**
+     * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the forwarded messages from forwarding and saving
+     */
+    protect_content?: boolean;
 </tbody>
 </table>
   }): never;
@@ -8993,30 +8975,22 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; only available when copying to private chats
      */
@@ -9084,24 +9058,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to copy. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent messages from forwarding and saving</td>
-</tr>
-<tr>
-<td>remove_caption</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to copy the messages without their captions</td>
-</tr>
+    /**
+     * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent messages from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to copy the messages without their captions
+     */
+    remove_caption?: boolean;
 </tbody>
 </table>
   }): never;
@@ -9167,36 +9135,26 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the photo needs to be covered with a spoiler animation</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Pass <em>True</em> if the photo needs to be covered with a spoiler animation
+     */
+    has_spoiler?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9290,36 +9248,26 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the video needs to be covered with a spoiler animation</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+     */
+    has_spoiler?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9427,24 +9375,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9538,30 +9480,22 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>disable_content_type_detection</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Disables automatic server-side content type detection for files uploaded using multipart/form-data</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Disables automatic server-side content type detection for files uploaded using multipart/form-data
+     */
+    disable_content_type_detection?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9677,42 +9611,30 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the video needs to be covered with a spoiler animation</td>
-</tr>
-<tr>
-<td>supports_streaming</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the uploaded video is suitable for streaming</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+     */
+    has_spoiler?: boolean;
+    /**
+     * Pass <em>True</em> if the uploaded video is suitable for streaming
+     */
+    supports_streaming?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9818,36 +9740,26 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the animation needs to be covered with a spoiler animation</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Pass <em>True</em> if the animation needs to be covered with a spoiler animation
+     */
+    has_spoiler?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -9939,24 +9851,18 @@ export interface ApiMethods {
      * Duration of the voice message in seconds
      */
     duration?: number;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10044,24 +9950,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10149,30 +10049,22 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media
+     */
+    show_caption_above_media?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10234,24 +10126,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized Array describing messages to be sent, must include 2-10 items</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent messages from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent messages from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10337,24 +10223,18 @@ export interface ApiMethods {
      * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
      */
     proximity_alert_radius?: number;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10458,24 +10338,18 @@ export interface ApiMethods {
      * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
      */
     google_place_type?: string;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10559,24 +10433,18 @@ export interface ApiMethods {
      * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
      */
     vcard?: string;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10652,52 +10520,38 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized list of 1-12 answer options</td>
 </tr>
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td><em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em></td>
-</tr>
+    /**
+     * <em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em>
+     */
+    is_anonymous?: boolean;
     /**
      * Poll type, “quiz” or “regular”, defaults to “regular”
      */
     type?: string;
-<tr>
-<td>allows_multiple_answers</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the poll allows multiple answers, defaults to <em>False</em></td>
-</tr>
-<tr>
-<td>allows_revoting</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the poll allows to change chosen answer options, defaults to <em>False</em> for quizzes and to <em>True</em> for regular polls</td>
-</tr>
-<tr>
-<td>shuffle_options</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the poll options must be shown in random order</td>
-</tr>
-<tr>
-<td>allow_adding_options</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes</td>
-</tr>
-<tr>
-<td>hide_results_until_closes</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if poll results must be shown only after the poll closes</td>
-</tr>
-<tr>
-<td>members_only</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the poll allows multiple answers, defaults to <em>False</em>
+     */
+    allows_multiple_answers?: boolean;
+    /**
+     * Pass <em>True</em> if the poll allows to change chosen answer options, defaults to <em>False</em> for quizzes and to <em>True</em> for regular polls
+     */
+    allows_revoting?: boolean;
+    /**
+     * Pass <em>True</em> if the poll options must be shown in random order
+     */
+    shuffle_options?: boolean;
+    /**
+     * Pass <em>True</em> if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes
+     */
+    allow_adding_options?: boolean;
+    /**
+     * Pass <em>True</em> if poll results must be shown only after the poll closes
+     */
+    hide_results_until_closes?: boolean;
+    /**
+     * Pass <em>True</em> if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only
+     */
+    members_only?: boolean;
 <tr>
 <td>country_codes</td>
 <td>Array of String</td>
@@ -10738,12 +10592,10 @@ export interface ApiMethods {
      * Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can&#39;t be used together with <em>open_period</em>.
      */
     close_date?: number;
-<tr>
-<td>is_closed</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the poll needs to be immediately closed. This can be useful for poll preview.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the poll needs to be immediately closed. This can be useful for poll preview.
+     */
+    is_closed?: boolean;
     /**
      * Description of the poll to be sent, 0-1024 characters after entities parsing
      */
@@ -10764,24 +10616,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Media added to the poll description</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -10833,18 +10679,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for the checklist to send</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message silently. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
+    /**
+     * Sends the message silently. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message
      */
@@ -10902,24 +10744,18 @@ export interface ApiMethods {
      * Emoji on which the dice throw animation is based. Currently, must be one of “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, or “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Dice can have values 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, values 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, and values 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Defaults to “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”.
      */
     emoji?: string;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -11060,12 +10896,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.</td>
 </tr>
-<tr>
-<td>is_big</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to set the reaction with a big animation</td>
-</tr>
+    /**
+     * Pass <em>True</em> to set the reaction with a big animation
+     */
+    is_big?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11217,12 +11051,10 @@ export interface ApiMethods {
      * Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.
      */
     until_date?: number;
-<tr>
-<td>revoke_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to delete all messages from the chat for the user that is being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before the user was removed. Always <em>True</em> for supergroups and channels.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to delete all messages from the chat for the user that is being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before the user was removed. Always <em>True</em> for supergroups and channels.
+     */
+    revoke_messages?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11252,12 +11084,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>only_if_banned</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Do nothing if the user is not banned</td>
-</tr>
+    /**
+     * Do nothing if the user is not banned
+     */
+    only_if_banned?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11293,12 +11123,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for new user permissions</td>
 </tr>
-<tr>
-<td>use_independent_chat_permissions</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
+     */
+    use_independent_chat_permissions?: boolean;
     /**
      * Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
      */
@@ -11332,108 +11160,74 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator&#39;s presence in the chat is hidden</td>
-</tr>
-<tr>
-<td>can_manage_chat</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
-</tr>
-<tr>
-<td>can_delete_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can delete messages of other users</td>
-</tr>
-<tr>
-<td>can_manage_video_chats</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can manage video chats</td>
-</tr>
-<tr>
-<td>can_restrict_members</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to <em>True</em> for promotions of channel administrators.</td>
-</tr>
-<tr>
-<td>can_promote_members</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)</td>
-</tr>
-<tr>
-<td>can_change_info</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can change chat title, photo and other settings</td>
-</tr>
-<tr>
-<td>can_invite_users</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can invite new users to the chat</td>
-</tr>
-<tr>
-<td>can_post_stories</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can post stories to the chat</td>
-</tr>
-<tr>
-<td>can_edit_stories</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
-</tr>
-<tr>
-<td>can_delete_stories</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can delete stories posted by other users</td>
-</tr>
-<tr>
-<td>can_post_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
-</tr>
-<tr>
-<td>can_edit_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can edit messages of other users and can pin messages; for channels only</td>
-</tr>
-<tr>
-<td>can_pin_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can pin messages; for supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_topics</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_direct_messages</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can manage direct messages within the channel and decline suggested posts; for channels only</td>
-</tr>
-<tr>
-<td>can_manage_tags</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the administrator can edit the tags of regular members; for groups and supergroups only</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the administrator&#39;s presence in the chat is hidden
+     */
+    is_anonymous?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+     */
+    can_manage_chat?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can delete messages of other users
+     */
+    can_delete_messages?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can manage video chats
+     */
+    can_manage_video_chats?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to <em>True</em> for promotions of channel administrators.
+     */
+    can_restrict_members?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)
+     */
+    can_promote_members?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can change chat title, photo and other settings
+     */
+    can_change_info?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can invite new users to the chat
+     */
+    can_invite_users?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can post stories to the chat
+     */
+    can_post_stories?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+     */
+    can_edit_stories?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can delete stories posted by other users
+     */
+    can_delete_stories?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+     */
+    can_post_messages?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can edit messages of other users and can pin messages; for channels only
+     */
+    can_edit_messages?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can pin messages; for supergroups only
+     */
+    can_pin_messages?: boolean;
+    /**
+     * Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+     */
+    can_manage_topics?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can manage direct messages within the channel and decline suggested posts; for channels only
+     */
+    can_manage_direct_messages?: boolean;
+    /**
+     * Pass <em>True</em> if the administrator can edit the tags of regular members; for groups and supergroups only
+     */
+    can_manage_tags?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11589,12 +11383,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object for new default chat permissions</td>
 </tr>
-<tr>
-<td>use_independent_chat_permissions</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
+     */
+    use_independent_chat_permissions?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11659,12 +11451,10 @@ export interface ApiMethods {
      * The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
      */
     member_limit?: number;
-<tr>
-<td>creates_join_request</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.</td>
-</tr>
+    /**
+     * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
+     */
+    creates_join_request?: boolean;
 </tbody>
 </table>
   }): never;
@@ -11706,12 +11496,10 @@ export interface ApiMethods {
      * The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
      */
     member_limit?: number;
-<tr>
-<td>creates_join_request</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.</td>
-</tr>
+    /**
+     * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
+     */
+    creates_join_request?: boolean;
 </tbody>
 </table>
   }): never;
@@ -12070,12 +11858,10 @@ export interface ApiMethods {
      * Identifier of a message to pin
      */
     message_id: number;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+     */
+    disable_notification?: boolean;
 </tbody>
 </table>
   }): never;
@@ -12209,12 +11995,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>return_bots</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
+     */
+    return_bots?: boolean;
 </tbody>
 </table>
   }): never;
@@ -12729,12 +12513,10 @@ export interface ApiMethods {
      * Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.
      */
     text?: string;
-<tr>
-<td>show_alert</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>If <em>True</em>, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to <em>False</em>.</td>
-</tr>
+    /**
+     * If <em>True</em>, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to <em>False</em>.
+     */
+    show_alert?: boolean;
     /**
      * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
      */
@@ -13279,12 +13061,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.</td>
 </tr>
-<tr>
-<td>for_channels</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
+     */
+    for_channels?: boolean;
 </tbody>
 </table>
   }): never;
@@ -13304,12 +13084,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>for_channels</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+     */
+    for_channels?: boolean;
 </tbody>
 </table>
   }): never;
@@ -13349,12 +13127,10 @@ export interface ApiMethods {
      * Identifier of the gift; limited gifts can&#39;t be sent to channel chats
      */
     gift_id: string;
-<tr>
-<td>pay_for_upgrade</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver</td>
-</tr>
+    /**
+     * Pass <em>True</em> to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver
+     */
+    pay_for_upgrade?: boolean;
     /**
      * Text that will be shown along with the gift; 0-128 characters
      */
@@ -13692,12 +13468,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The new profile photo to set</td>
 </tr>
-<tr>
-<td>is_public</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
+     */
+    is_public?: boolean;
 </tbody>
 </table>
   }): never;
@@ -13721,12 +13495,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-<tr>
-<td>is_public</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
+     */
+    is_public?: boolean;
 </tbody>
 </table>
   }): never;
@@ -13835,54 +13607,38 @@ export interface ApiMethods {
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-<tr>
-<td>exclude_unsaved</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that aren&#39;t saved to the account&#39;s profile page</td>
-</tr>
-<tr>
-<td>exclude_saved</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that are saved to the account&#39;s profile page</td>
-</tr>
-<tr>
-<td>exclude_unlimited</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times</td>
-</tr>
-<tr>
-<td>exclude_limited_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_limited_non_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_unique</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude unique gifts</td>
-</tr>
-<tr>
-<td>exclude_from_blockchain</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram</td>
-</tr>
-<tr>
-<td>sort_by_price</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to exclude gifts that aren&#39;t saved to the account&#39;s profile page
+     */
+    exclude_unsaved?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that are saved to the account&#39;s profile page
+     */
+    exclude_saved?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     */
+    exclude_unlimited?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     */
+    exclude_limited_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     */
+    exclude_limited_non_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude unique gifts
+     */
+    exclude_unique?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     */
+    exclude_from_blockchain?: boolean;
+    /**
+     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     */
+    sort_by_price?: boolean;
     /**
      * Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results
      */
@@ -13914,42 +13670,30 @@ export interface ApiMethods {
      * Unique identifier of the user
      */
     user_id: number;
-<tr>
-<td>exclude_unlimited</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times</td>
-</tr>
-<tr>
-<td>exclude_limited_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_limited_non_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_from_blockchain</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram</td>
-</tr>
-<tr>
-<td>exclude_unique</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude unique gifts</td>
-</tr>
-<tr>
-<td>sort_by_price</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     */
+    exclude_unlimited?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     */
+    exclude_limited_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     */
+    exclude_limited_non_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     */
+    exclude_from_blockchain?: boolean;
+    /**
+     * Pass <em>True</em> to exclude unique gifts
+     */
+    exclude_unique?: boolean;
+    /**
+     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     */
+    sort_by_price?: boolean;
     /**
      * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
      */
@@ -13983,54 +13727,38 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>exclude_unsaved</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always <em>True</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.</td>
-</tr>
-<tr>
-<td>exclude_saved</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that are saved to the chat&#39;s profile page. Always <em>False</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.</td>
-</tr>
-<tr>
-<td>exclude_unlimited</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times</td>
-</tr>
-<tr>
-<td>exclude_limited_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_limited_non_upgradable</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique</td>
-</tr>
-<tr>
-<td>exclude_from_blockchain</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram</td>
-</tr>
-<tr>
-<td>exclude_unique</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to exclude unique gifts</td>
-</tr>
-<tr>
-<td>sort_by_price</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always <em>True</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
+     */
+    exclude_unsaved?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that are saved to the chat&#39;s profile page. Always <em>False</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
+     */
+    exclude_saved?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     */
+    exclude_unlimited?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     */
+    exclude_limited_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     */
+    exclude_limited_non_upgradable?: boolean;
+    /**
+     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     */
+    exclude_from_blockchain?: boolean;
+    /**
+     * Pass <em>True</em> to exclude unique gifts
+     */
+    exclude_unique?: boolean;
+    /**
+     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     */
+    sort_by_price?: boolean;
     /**
      * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
      */
@@ -14093,12 +13821,10 @@ export interface ApiMethods {
      * Unique identifier of the regular gift that should be upgraded to a unique one
      */
     owned_gift_id: string;
-<tr>
-<td>keep_original_details</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to keep the original gift text, sender and receiver in the upgraded gift</td>
-</tr>
+    /**
+     * Pass <em>True</em> to keep the original gift text, sender and receiver in the upgraded gift
+     */
+    keep_original_details?: boolean;
     /**
      * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the <em>can_transfer_stars</em> business bot right is required and <code>gift.upgrade_star_count</code> must be passed.
      */
@@ -14191,18 +13917,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of clickable areas to be shown on the story</td>
 </tr>
-<tr>
-<td>post_to_chat_page</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to keep the story accessible after it expires</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting</td>
-</tr>
+    /**
+     * Pass <em>True</em> to keep the story accessible after it expires
+     */
+    post_to_chat_page?: boolean;
+    /**
+     * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
+     */
+    protect_content?: boolean;
 </tbody>
 </table>
   }): never;
@@ -14238,18 +13960,14 @@ export interface ApiMethods {
      * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
      */
     active_period: number;
-<tr>
-<td>post_to_chat_page</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to keep the story accessible after it expires</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting</td>
-</tr>
+    /**
+     * Pass <em>True</em> to keep the story accessible after it expires
+     */
+    post_to_chat_page?: boolean;
+    /**
+     * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
+     */
+    protect_content?: boolean;
 </tbody>
 </table>
   }): never;
@@ -14388,30 +14106,22 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized object describing the message to be sent</td>
 </tr>
-<tr>
-<td>allow_user_chats</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to private chats with users</td>
-</tr>
-<tr>
-<td>allow_bot_chats</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to private chats with bots</td>
-</tr>
-<tr>
-<td>allow_group_chats</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to group and supergroup chats</td>
-</tr>
-<tr>
-<td>allow_channel_chats</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to channel chats</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the message can be sent to private chats with users
+     */
+    allow_user_chats?: boolean;
+    /**
+     * Pass <em>True</em> if the message can be sent to private chats with bots
+     */
+    allow_bot_chats?: boolean;
+    /**
+     * Pass <em>True</em> if the message can be sent to group and supergroup chats
+     */
+    allow_group_chats?: boolean;
+    /**
+     * Pass <em>True</em> if the message can be sent to channel chats
+     */
+    allow_channel_chats?: boolean;
 </tbody>
 </table>
   }): never;
@@ -14566,12 +14276,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the caption must be shown above the message media. Supported only for animation, photo and video messages.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the caption must be shown above the message media. Supported only for animation, photo and video messages.
+     */
+    show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15528,24 +15236,18 @@ export interface ApiMethods {
      * Emoji associated with the sticker; only for just uploaded stickers
      */
     emoji?: string;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -15690,12 +15392,10 @@ export interface ApiMethods {
      * Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.
      */
     sticker_type?: string;
-<tr>
-<td>needs_repainting</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only</td>
-</tr>
+    /**
+     * Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
+     */
+    needs_repainting?: boolean;
 </tbody>
 </table>
   }): never;
@@ -16416,24 +16116,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The message to be sent</td>
 </tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -18690,12 +18384,10 @@ export interface ApiMethods {
      * The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.
      */
     cache_time?: number;
-<tr>
-<td>is_personal</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.
+     */
+    is_personal?: boolean;
     /**
      * Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.
      */
@@ -20412,66 +20104,46 @@ export interface ApiMethods {
      * Photo height
      */
     photo_height?: number;
-<tr>
-<td>need_name</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_phone_number</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_email</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_shipping_address</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_phone_number_to_provider</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_email_to_provider</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>is_flexible</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_name?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_phone_number?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_email?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_shipping_address?: boolean;
+    /**
+     * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    send_phone_number_to_provider?: boolean;
+    /**
+     * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    send_email_to_provider?: boolean;
+    /**
+     * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    is_flexible?: boolean;
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -20577,48 +20249,34 @@ export interface ApiMethods {
      * Photo height
      */
     photo_height?: number;
-<tr>
-<td>need_name</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_phone_number</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_email</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_shipping_address</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_phone_number_to_provider</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_email_to_provider</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>is_flexible</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_name?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_phone_number?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_email?: boolean;
+    /**
+     * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    need_shipping_address?: boolean;
+    /**
+     * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    send_phone_number_to_provider?: boolean;
+    /**
+     * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    send_email_to_provider?: boolean;
+    /**
+     * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    is_flexible?: boolean;
 </tbody>
 </table>
   }): never;
@@ -22068,24 +21726,18 @@ export interface ApiMethods {
      * Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.
      */
     game_short_name: string;
-<tr>
-<td>disable_notification</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
-</tr>
-<tr>
-<td>protect_content</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Protects the contents of the sent message from forwarding and saving</td>
-</tr>
-<tr>
-<td>allow_paid_broadcast</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+     */
+    disable_notification?: boolean;
+    /**
+     * Protects the contents of the sent message from forwarding and saving
+     */
+    protect_content?: boolean;
+    /**
+     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     */
+    allow_paid_broadcast?: boolean;
     /**
      * Unique identifier of the message effect to be added to the message; for private chats only
      */
@@ -22173,18 +21825,14 @@ export interface ApiMethods {
      * New score, must be non-negative
      */
     score: number;
-<tr>
-<td>force</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters.</td>
-</tr>
-<tr>
-<td>disable_edit_message</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>Pass <em>True</em> if the game message should not be automatically edited to include the current scoreboard</td>
-</tr>
+    /**
+     * Pass <em>True</em> if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters.
+     */
+    force?: boolean;
+    /**
+     * Pass <em>True</em> if the game message should not be automatically edited to include the current scoreboard
+     */
+    disable_edit_message?: boolean;
     /**
      * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.
      */
