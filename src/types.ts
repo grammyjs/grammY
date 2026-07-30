@@ -9425,13 +9425,10 @@ export interface ApiMethods {
         /**
          * A JSON-serialized Array describing messages to be sent, must include 2-10 items
          */
-        media: Array<
-            | InputMediaAudio
-            | InputMediaDocument
-            | InputMediaLivePhoto
-            | InputMediaPhoto
-            | InputMediaVideo
-        >;
+        media:
+            | Array<InputMediaAudio>
+            | Array<InputMediaDocument>
+            | Array<InputMediaLivePhoto | InputMediaPhoto | InputMediaVideo>;
         /**
          * Sends messages {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
