@@ -8351,7 +8351,7 @@ export interface ApiMethods {
  *
  * @see {@link https://core.telegram.org/bots/api#parsemode}
  */
-export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
+export type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 export interface ApiMethods {
     /**
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent {@link Message} is returned.
