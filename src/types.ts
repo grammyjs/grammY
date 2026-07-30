@@ -665,7 +665,7 @@ export interface ApiMethods {
          *
          * Please note that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
          */
-        allowed_updates?: string[];
+        allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
     }): Update[];
 }
 export interface ApiMethods {
@@ -706,7 +706,7 @@ export interface ApiMethods {
          *
          * Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
          */
-        allowed_updates?: string[];
+        allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
         /**
          * Pass `true` to drop all pending updates
          */
@@ -779,7 +779,7 @@ export interface WebhookInfo {
     /**
      * A list of update types the bot is subscribed to. Defaults to all update types except _chat_member_, _message_reaction_, and _message_reaction_count_.
      */
-    allowed_updates?: string[];
+    allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
 }
 // === AVAILABLE TYPES ===
 /**
