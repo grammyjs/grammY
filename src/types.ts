@@ -6794,7 +6794,7 @@ export interface BotCommandScopeDefault {
     type: string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all private chats.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering all private chats.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallprivatechats}
  */
@@ -6805,7 +6805,7 @@ export interface BotCommandScopeAllPrivateChats {
     type: string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all group and supergroup chats.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chats.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallgroupchats}
  */
@@ -6816,7 +6816,7 @@ export interface BotCommandScopeAllGroupChats {
     type: string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all group and supergroup chat administrators.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chat administrators.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallchatadministrators}
  */
@@ -6827,7 +6827,7 @@ export interface BotCommandScopeAllChatAdministrators {
     type: string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering a specific chat.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering a specific chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechat}
  */
@@ -6842,7 +6842,7 @@ export interface BotCommandScopeChat {
     chat_id: number | string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all administrators of a specific group or supergroup chat.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering all administrators of a specific group or supergroup chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechatadministrators}
  */
@@ -6857,7 +6857,7 @@ export interface BotCommandScopeChatAdministrators {
     chat_id: number | string;
 }
 /**
- * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering a specific member of a group or supergroup chat.
+ * Represents the {@link BotCommandScope | scope} of bot commands, covering a specific member of a group or supergroup chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechatmember}
  */
