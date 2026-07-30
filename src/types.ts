@@ -4,6 +4,10 @@
  */
 export type Empty = Record<string, never>;
 /**
+ * Anything except null or undefined
+ */
+export type Present = NonNullable<unknown>;
+/**
  * A two-letter ISO 639-1 language code.
  *
  * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
@@ -508,19 +512,31 @@ export interface Update {
     /**
      * New incoming message of any kind - text, photo, sticker, etc.
      */
-    message?: Message;
+    message?: Message & {
+        chat: { type: "private" | "group" | "supergroup" };
+        from: Present;
+    };
     /**
      * New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      */
-    edited_message?: Message;
+    edited_message?: Message & {
+        chat: { type: "private" | "group" | "supergroup" };
+        from: Present;
+        edit_date: Present;
+    };
     /**
      * New incoming channel post of any kind - text, photo, sticker, etc.
      */
-    channel_post?: Message;
+    channel_post?: Message & {
+        chat: { type: "channel" };
+    };
     /**
      * New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      */
-    edited_channel_post?: Message;
+    edited_channel_post?: Message & {
+        chat: { type: "channel" };
+        edit_date: Present;
+    };
     /**
      * The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
      */
@@ -528,11 +544,16 @@ export interface Update {
     /**
      * New message from a connected business account
      */
-    business_message?: Message;
+    business_message?: Message & {
+        chat: { type: "private" };
+    };
     /**
      * New version of a message from a connected business account
      */
-    edited_business_message?: Message;
+    edited_business_message?: Message & {
+        chat: { type: "private" };
+        edit_date: Present;
+    };
     /**
      * Messages were deleted from a connected business account
      */
@@ -540,7 +561,9 @@ export interface Update {
     /**
      * New guest message. The bot can use the field _Message.guest_query_id_ and the method {@link ApiMethods.answerGuestQuery | answerGuestQuery} to send a message in response.
      */
-    guest_message?: Message;
+    guest_message?: Message & {
+        guest_query_id: Present;
+    };
     /**
      * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `"message_reaction"` in the list of _allowed_updates_ to receive these updates. The update isn't received for reactions set by bots.
      */
