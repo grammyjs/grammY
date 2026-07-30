@@ -1,3 +1,5 @@
+// - keyboard buttons, inline keyboard buttons, any other unions
+// - "must always be" string literals
 // === HELPER TYPES ===
 /**
  * Object with no keys
@@ -2425,7 +2427,16 @@ export interface MessageId {
  *
  * @see {@link https://core.telegram.org/bots/api#inaccessiblemessage}
  */
-export interface InaccessibleMessage {
+export interface InaccessibleMessage extends
+    Omit<
+        // TypeScript cannot discriminate union types based on `0` and `number` so
+        // we work around this by including all other properties here. This mostly
+        // negates the benefit of having this interface in the first place, but not
+        // extending Message is not very ergonomic to use. If you have a better idea
+        // how to model this, please let us know!
+        Message,
+        "chat" | "message_id" | "date"
+    > {
     /**
      * Chat the message belonged to
      */
@@ -2437,7 +2448,7 @@ export interface InaccessibleMessage {
     /**
      * Always 0. The field can be used to differentiate regular and inaccessible messages.
      */
-    date: number;
+    date: 0;
 }
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
