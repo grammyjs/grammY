@@ -11384,7 +11384,7 @@ export interface ApiMethods {
          * Pass `true` to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
          */
         return_bots?: boolean;
-    }): ChatMember[];
+    }): Array<ChatMemberOwner | ChatMemberAdministrator>;
 }
 export interface ApiMethods {
     /**
