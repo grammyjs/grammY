@@ -13,7 +13,9 @@ export type Present = NonNullable<unknown>;
  * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
  * @see {@link https://www.loc.gov/standards/iso639-2/php/code_list.php}
  */
-export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
+export type LanguageCode =
+    | ""
+    | typeof LanguageCodes[keyof typeof LanguageCodes];
 
 // === HELPER RUNTIME CODE ===
 /** More readable aliases for {@link LanguageCode} values */
