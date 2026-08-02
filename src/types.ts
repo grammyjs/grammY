@@ -2468,7 +2468,27 @@ export interface MessageEntity {
     /**
      * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
      */
-    type: string;
+    type:
+        | "mention"
+        | "hashtag"
+        | "cashtag"
+        | "bot_command"
+        | "url"
+        | "email"
+        | "phone_number"
+        | "bold"
+        | "italic"
+        | "underline"
+        | "strikethrough"
+        | "spoiler"
+        | "blockquote"
+        | "expandable_blockquote"
+        | "code"
+        | "pre"
+        | "text_link"
+        | "text_mention"
+        | "custom_emoji"
+        | "date_time";
     /**
      * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
      */
@@ -2707,7 +2727,7 @@ export interface MessageOriginUser {
     /**
      * Type of the message origin, always “user”
      */
-    type: string;
+    type: "user";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -2726,7 +2746,7 @@ export interface MessageOriginHiddenUser {
     /**
      * Type of the message origin, always “hidden_user”
      */
-    type: string;
+    type: "hidden_user";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -2745,7 +2765,7 @@ export interface MessageOriginChat {
     /**
      * Type of the message origin, always “chat”
      */
-    type: string;
+    type: "chat";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -2768,7 +2788,7 @@ export interface MessageOriginChannel {
     /**
      * Type of the message origin, always “channel”
      */
-    type: string;
+    type: "channel";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -3167,7 +3187,7 @@ export interface PaidMediaLivePhoto {
     /**
      * Type of the paid media, always “live_photo”
      */
-    type: string;
+    type: "live_photo";
     /**
      * The photo
      */
@@ -3182,7 +3202,7 @@ export interface PaidMediaPhoto {
     /**
      * Type of the paid media, always “photo”
      */
-    type: string;
+    type: "photo";
     /**
      * The photo
      */
@@ -3197,7 +3217,7 @@ export interface PaidMediaPreview {
     /**
      * Type of the paid media, always “preview”
      */
-    type: string;
+    type: "preview";
     /**
      * Media width as defined by the sender
      */
@@ -3220,7 +3240,7 @@ export interface PaidMediaVideo {
     /**
      * Type of the paid media, always “video”
      */
-    type: string;
+    type: "video";
     /**
      * The video
      */
@@ -3498,7 +3518,7 @@ export interface Poll {
     /**
      * Poll type, currently can be “regular” or “quiz”
      */
-    type: string;
+    type: "regular" | "quiz";
     /**
      * `true`, if the poll allows multiple answers
      */
@@ -3818,7 +3838,7 @@ export interface BotSubscriptionUpdated {
     /**
      * The new state of the subscription. Currently, it can be one of “canceled” if the user canceled the subscription, “active” if the user re-enabled a previously canceled subscription, or “failed” if payment for the subscription failed.
      */
-    state: string;
+    state: "canceled" | "active" | "failed";
 }
 /**
  * Describes a service message about an option added to a poll.
@@ -3899,7 +3919,7 @@ export interface BackgroundFillSolid {
     /**
      * Type of the background fill, always “solid”
      */
-    type: string;
+    type: "solid";
     /**
      * The color of the background fill in the RGB24 format
      */
@@ -3914,7 +3934,7 @@ export interface BackgroundFillGradient {
     /**
      * Type of the background fill, always “gradient”
      */
-    type: string;
+    type: "gradient";
     /**
      * Top color of the gradient in the RGB24 format
      */
@@ -3937,7 +3957,7 @@ export interface BackgroundFillFreeformGradient {
     /**
      * Type of the background fill, always “freeform_gradient”
      */
-    type: string;
+    type: "freeform_gradient";
     /**
      * A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format
      */
@@ -3967,7 +3987,7 @@ export interface BackgroundTypeFill {
     /**
      * Type of the background, always “fill”
      */
-    type: string;
+    type: "fill";
     /**
      * The background fill
      */
@@ -3986,7 +4006,7 @@ export interface BackgroundTypeWallpaper {
     /**
      * Type of the background, always “wallpaper”
      */
-    type: string;
+    type: "wallpaper";
     /**
      * Document with the wallpaper
      */
@@ -4013,7 +4033,7 @@ export interface BackgroundTypePattern {
     /**
      * Type of the background, always “pattern”
      */
-    type: string;
+    type: "pattern";
     /**
      * Document with the pattern
      */
@@ -4044,7 +4064,7 @@ export interface BackgroundTypeChatTheme {
     /**
      * Type of the background, always “chat_theme”
      */
-    type: string;
+    type: "chat_theme";
     /**
      * Name of the chat theme, which is usually an emoji
      */
@@ -4389,7 +4409,7 @@ export interface SuggestedPostPaid {
     /**
      * Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
      */
-    currency: string;
+    currency: "XTR" | "TON";
     /**
      * The amount of the currency that was received by the channel in nanograms; for payments in TON grams only
      */
@@ -4412,7 +4432,7 @@ export interface SuggestedPostRefunded {
     /**
      * Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.
      */
-    reason: string;
+    reason: "post_deleted" | "payment_refunded";
 }
 /**
  * This object represents a service message about the creation of a scheduled giveaway.
@@ -4582,7 +4602,7 @@ export interface SuggestedPostPrice {
     /**
      * Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams.
      */
-    currency: string;
+    currency: "XTR" | "TON";
     /**
      * The amount of the currency that will be paid for the post in the _smallest units_ of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000.
      */
@@ -4597,7 +4617,7 @@ export interface SuggestedPostInfo {
     /**
      * State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.
      */
-    state: string;
+    state: "pending" | "approved" | "declined";
     /**
      * Proposed price of the post. If the field is omitted, then the post is unpaid.
      */
@@ -4753,7 +4773,7 @@ export interface KeyboardButton {
     /**
      * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
      */
-    style?: string;
+    style?: "danger" | "success" | "primary";
     /**
      * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
      */
@@ -4897,7 +4917,7 @@ export interface KeyboardButtonPollType {
     /**
      * If _quiz_ is passed, the user will be allowed to create only polls in the quiz mode. If _regular_ is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
      */
-    type?: string;
+    type?: "regular" | "quiz";
 }
 /**
  * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see {@link ReplyKeyboardMarkup}). Not supported in channels and for messages sent on behalf of a business account.
@@ -4944,7 +4964,7 @@ export interface InlineKeyboardButton {
     /**
      * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
      */
-    style?: string;
+    style?: "danger" | "success" | "primary";
     /**
      * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
      */
@@ -5355,7 +5375,7 @@ export interface ChatMemberOwner {
     /**
      * The member's status in the chat, always “creator”
      */
-    status: string;
+    status: "creator";
     /**
      * Information about the user
      */
@@ -5378,7 +5398,7 @@ export interface ChatMemberAdministrator {
     /**
      * The member's status in the chat, always “administrator”
      */
-    status: string;
+    status: "administrator";
     /**
      * Information about the user
      */
@@ -5469,7 +5489,7 @@ export interface ChatMemberMember {
     /**
      * The member's status in the chat, always “member”
      */
-    status: string;
+    status: "member";
     /**
      * Tag of the member
      */
@@ -5492,7 +5512,7 @@ export interface ChatMemberRestricted {
     /**
      * The member's status in the chat, always “restricted”
      */
-    status: string;
+    status: "restricted";
     /**
      * Tag of the member
      */
@@ -5583,7 +5603,7 @@ export interface ChatMemberLeft {
     /**
      * The member's status in the chat, always “left”
      */
-    status: string;
+    status: "left";
     /**
      * Information about the user
      */
@@ -5598,7 +5618,7 @@ export interface ChatMemberBanned {
     /**
      * The member's status in the chat, always “kicked”
      */
-    status: string;
+    status: "kicked";
     /**
      * Information about the user
      */
@@ -5900,7 +5920,7 @@ export interface StoryAreaTypeLocation {
     /**
      * Type of the area, always “location”
      */
-    type: string;
+    type: "location";
     /**
      * Location latitude in degrees
      */
@@ -5923,7 +5943,7 @@ export interface StoryAreaTypeSuggestedReaction {
     /**
      * Type of the area, always “suggested_reaction”
      */
-    type: string;
+    type: "suggested_reaction";
     /**
      * Type of the reaction
      */
@@ -5946,7 +5966,7 @@ export interface StoryAreaTypeLink {
     /**
      * Type of the area, always “link”
      */
-    type: string;
+    type: "link";
     /**
      * HTTP or tg:// URL to be opened when the area is clicked
      */
@@ -5961,7 +5981,7 @@ export interface StoryAreaTypeWeather {
     /**
      * Type of the area, always “weather”
      */
-    type: string;
+    type: "weather";
     /**
      * Temperature, in degree Celsius
      */
@@ -5984,7 +6004,7 @@ export interface StoryAreaTypeUniqueGift {
     /**
      * Type of the area, always “unique_gift”
      */
-    type: string;
+    type: "unique_gift";
     /**
      * Unique name of the gift
      */
@@ -6042,11 +6062,84 @@ export interface ReactionTypeEmoji {
     /**
      * Type of the reaction, always “emoji”
      */
-    type: string;
+    type: "emoji";
     /**
      * Reaction emoji. Currently, it can be one of "❤", "👍", "👎", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨", "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷", "🤷", "🤷", "😡".
      */
-    emoji: string;
+    emoji:
+        | "❤"
+        | "👍"
+        | "👎"
+        | "🔥"
+        | "🥰"
+        | "👏"
+        | "😁"
+        | "🤔"
+        | "🤯"
+        | "😱"
+        | "🤬"
+        | "😢"
+        | "🎉"
+        | "🤩"
+        | "🤮"
+        | "💩"
+        | "🙏"
+        | "👌"
+        | "🕊"
+        | "🤡"
+        | "🥱"
+        | "🥴"
+        | "😍"
+        | "🐳"
+        | "❤"
+        | "🌚"
+        | "🌭"
+        | "💯"
+        | "🤣"
+        | "⚡"
+        | "🍌"
+        | "🏆"
+        | "💔"
+        | "🤨"
+        | "😐"
+        | "🍓"
+        | "🍾"
+        | "💋"
+        | "🖕"
+        | "😈"
+        | "😴"
+        | "😭"
+        | "🤓"
+        | "👻"
+        | "👨"
+        | "👀"
+        | "🎃"
+        | "🙈"
+        | "😇"
+        | "😨"
+        | "🤝"
+        | "✍"
+        | "🤗"
+        | "🫡"
+        | "🎅"
+        | "🎄"
+        | "☃"
+        | "💅"
+        | "🤪"
+        | "🗿"
+        | "🆒"
+        | "💘"
+        | "🙉"
+        | "🦄"
+        | "😘"
+        | "💊"
+        | "🙊"
+        | "😎"
+        | "👾"
+        | "🤷"
+        | "🤷"
+        | "🤷"
+        | "😡";
 }
 /**
  * The reaction is based on a custom emoji.
@@ -6057,7 +6150,7 @@ export interface ReactionTypeCustomEmoji {
     /**
      * Type of the reaction, always “custom_emoji”
      */
-    type: string;
+    type: "custom_emoji";
     /**
      * Custom emoji identifier
      */
@@ -6072,7 +6165,7 @@ export interface ReactionTypePaid {
     /**
      * Type of the reaction, always “paid”
      */
-    type: string;
+    type: "paid";
 }
 /**
  * Represents a reaction added to a message along with the number of times it was added.
@@ -6284,7 +6377,7 @@ export interface UniqueGiftModel {
     /**
      * Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”.
      */
-    rarity?: string;
+    rarity?: "uncommon" | "rare" | "epic" | "legendary";
 }
 /**
  * This object describes the symbol shown on the pattern of a unique gift.
@@ -6493,11 +6586,11 @@ export interface UniqueGiftInfo {
     /**
      * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers.
      */
-    origin: string;
+    origin: "upgrade" | "transfer" | "resale" | "gifted_upgrade" | "offer";
     /**
      * For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
      */
-    last_resale_currency?: string;
+    last_resale_currency?: "XTR" | "TON";
     /**
      * For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanograms
      */
@@ -6535,7 +6628,7 @@ export interface OwnedGiftRegular {
     /**
      * Type of the gift, always “regular”
      */
-    type: string;
+    type: "regular";
     /**
      * Information about the regular gift
      */
@@ -6602,7 +6695,7 @@ export interface OwnedGiftUnique {
     /**
      * Type of the gift, always “unique”
      */
-    type: string;
+    type: "unique";
     /**
      * Information about the unique gift
      */
@@ -6789,7 +6882,7 @@ export interface BotCommandScopeDefault {
     /**
      * Scope type, must be _default_
      */
-    type: string;
+    type: "default";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all private chats.
@@ -6800,7 +6893,7 @@ export interface BotCommandScopeAllPrivateChats {
     /**
      * Scope type, must be _all_private_chats_
      */
-    type: string;
+    type: "all_private_chats";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chats.
@@ -6811,7 +6904,7 @@ export interface BotCommandScopeAllGroupChats {
     /**
      * Scope type, must be _all_group_chats_
      */
-    type: string;
+    type: "all_group_chats";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chat administrators.
@@ -6822,7 +6915,7 @@ export interface BotCommandScopeAllChatAdministrators {
     /**
      * Scope type, must be _all_chat_administrators_
      */
-    type: string;
+    type: "all_chat_administrators";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering a specific chat.
@@ -6833,7 +6926,7 @@ export interface BotCommandScopeChat {
     /**
      * Scope type, must be _chat_
      */
-    type: string;
+    type: "chat";
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
      */
@@ -6848,7 +6941,7 @@ export interface BotCommandScopeChatAdministrators {
     /**
      * Scope type, must be _chat_administrators_
      */
-    type: string;
+    type: "chat_administrators";
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
      */
@@ -6863,7 +6956,7 @@ export interface BotCommandScopeChatMember {
     /**
      * Scope type, must be _chat_member_
      */
-    type: string;
+    type: "chat_member";
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
      */
@@ -6930,7 +7023,7 @@ export interface MenuButtonCommands {
     /**
      * Type of the button, must be _commands_
      */
-    type: string;
+    type: "commands";
 }
 /**
  * Represents a menu button, which launches a {@link https://core.telegram.org/bots/webapps | Web App}.
@@ -6941,7 +7034,7 @@ export interface MenuButtonWebApp {
     /**
      * Type of the button, must be _web_app_
      */
-    type: string;
+    type: "web_app";
     /**
      * Text on the button
      */
@@ -6960,7 +7053,7 @@ export interface MenuButtonDefault {
     /**
      * Type of the button, must be _default_
      */
-    type: string;
+    type: "default";
 }
 /**
  * This object describes the source of a chat boost. It can be one of
@@ -6984,7 +7077,7 @@ export interface ChatBoostSourcePremium {
     /**
      * Source of the boost, always “premium”
      */
-    source: string;
+    source: "premium";
     /**
      * User that boosted the chat
      */
@@ -6999,7 +7092,7 @@ export interface ChatBoostSourceGiftCode {
     /**
      * Source of the boost, always “gift_code”
      */
-    source: string;
+    source: "gift_code";
     /**
      * User for which the gift code was created
      */
@@ -7014,7 +7107,7 @@ export interface ChatBoostSourceGiveaway {
     /**
      * Source of the boost, always “giveaway”
      */
-    source: string;
+    source: "giveaway";
     /**
      * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn't sent yet.
      */
@@ -7330,7 +7423,7 @@ export interface InputMediaAnimation {
     /**
      * Type of the media, must be _animation_
      */
-    type: string;
+    type: "animation";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7381,7 +7474,7 @@ export interface InputMediaAudio {
     /**
      * Type of the media, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7424,7 +7517,7 @@ export interface InputMediaDocument {
     /**
      * Type of the media, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7459,7 +7552,7 @@ export interface InputMediaLink {
     /**
      * Type of the media, must be _link_
      */
-    type: string;
+    type: "link";
     /**
      * HTTP URL of the link
      */
@@ -7474,7 +7567,7 @@ export interface InputMediaLivePhoto {
     /**
      * Type of the media, must be _live_photo_
      */
-    type: string;
+    type: "live_photo";
     /**
      * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
      */
@@ -7513,7 +7606,7 @@ export interface InputMediaLocation {
     /**
      * Type of the media, must be _location_
      */
-    type: string;
+    type: "location";
     /**
      * Latitude of the location
      */
@@ -7536,7 +7629,7 @@ export interface InputMediaPhoto {
     /**
      * Type of the media, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7571,7 +7664,7 @@ export interface InputMediaSticker {
     /**
      * Type of the media, must be _sticker_
      */
-    type: string;
+    type: "sticker";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://\<file_attach_name>” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7590,7 +7683,7 @@ export interface InputMediaVenue {
     /**
      * Type of the media, must be _venue_
      */
-    type: string;
+    type: "venue";
     /**
      * Latitude of the location
      */
@@ -7633,7 +7726,7 @@ export interface InputMediaVideo {
     /**
      * Type of the media, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7696,7 +7789,7 @@ export interface InputMediaVoiceNote {
     /**
      * Type of the media, must be _voice_note_
      */
-    type: string;
+    type: "voice_note";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7834,7 +7927,7 @@ export interface InputPaidMediaLivePhoto {
     /**
      * Type of the media, must be _live_photo_
      */
-    type: string;
+    type: "live_photo";
     /**
      * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
      */
@@ -7853,7 +7946,7 @@ export interface InputPaidMediaPhoto {
     /**
      * Type of the media, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7868,7 +7961,7 @@ export interface InputPaidMediaVideo {
     /**
      * Type of the media, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7922,7 +8015,7 @@ export interface InputProfilePhotoStatic {
     /**
      * Type of the profile photo, must be _static_
      */
-    type: string;
+    type: "static";
     /**
      * The static profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7937,7 +8030,7 @@ export interface InputProfilePhotoAnimated {
     /**
      * Type of the profile photo, must be _animated_
      */
-    type: string;
+    type: "animated";
     /**
      * The animated profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7967,7 +8060,7 @@ export interface InputStoryContentPhoto {
     /**
      * Type of the content, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -7982,7 +8075,7 @@ export interface InputStoryContentVideo {
     /**
      * Type of the content, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the video was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -9758,7 +9851,7 @@ export interface ApiMethods {
         /**
          * Poll type, “quiz” or “regular”, defaults to “regular”
          */
-        type?: string;
+        type?: "regular" | "quiz";
         /**
          * Pass `true` if the poll allows multiple answers, defaults to `false`
          */
@@ -9932,7 +10025,7 @@ export interface ApiMethods {
         /**
          * Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”.
          */
-        emoji?: string;
+        emoji?: "🎲" | "🎯" | "🏀" | "⚽" | "🎳" | "🎰";
         /**
          * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
@@ -10026,7 +10119,18 @@ export interface ApiMethods {
         /**
          * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
          */
-        action: string;
+        action:
+            | "typing"
+            | "upload_photo"
+            | "record_video"
+            | "upload_video"
+            | "record_voice"
+            | "upload_voice"
+            | "upload_document"
+            | "choose_sticker"
+            | "find_location"
+            | "record_video_note"
+            | "upload_video_note";
     }): true;
 }
 export interface ApiMethods {
@@ -10577,7 +10681,7 @@ export interface ApiMethods {
         /**
          * Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
          */
-        result: string;
+        result: "approve" | "decline" | "queue";
     }): true;
 }
 export interface ApiMethods {
@@ -12749,7 +12853,7 @@ export interface Sticker {
     /**
      * Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields _is_animated_ and _is_video_.
      */
-    type: string;
+    type: "regular" | "mask" | "custom_emoji";
     /**
      * Sticker width
      */
@@ -12816,7 +12920,7 @@ export interface StickerSet {
     /**
      * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
      */
-    sticker_type: string;
+    sticker_type: "regular" | "mask" | "custom_emoji";
     /**
      * List of all set stickers
      */
@@ -12835,7 +12939,7 @@ export interface MaskPosition {
     /**
      * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
      */
-    point: string;
+    point: "forehead" | "eyes" | "mouth" | "chin";
     /**
      * Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
      */
@@ -12862,7 +12966,7 @@ export interface InputSticker {
     /**
      * Format of the added sticker, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, “video” for a **.WEBM** video
      */
-    format: string;
+    format: "static" | "animated" | "video";
     /**
      * List of 1-20 emoji associated with the sticker
      */
@@ -12993,7 +13097,7 @@ export interface ApiMethods {
         /**
          * Format of the sticker, must be one of “static”, “animated”, “video”
          */
-        sticker_format: string;
+        sticker_format: "static" | "animated" | "video";
     }): File;
 }
 export interface ApiMethods {
@@ -13022,7 +13126,7 @@ export interface ApiMethods {
         /**
          * Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.
          */
-        sticker_type?: string;
+        sticker_type?: "regular" | "mask" | "custom_emoji";
         /**
          * Pass `true` if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
          */
@@ -13195,7 +13299,7 @@ export interface ApiMethods {
         /**
          * Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video
          */
-        format: string;
+        format: "static" | "animated" | "video";
     }): true;
 }
 export interface ApiMethods {
@@ -13740,7 +13844,7 @@ export interface RichTextBold {
     /**
      * Type of the rich text, always “bold”
      */
-    type: string;
+    type: "bold";
     /**
      * The text
      */
@@ -13755,7 +13859,7 @@ export interface RichTextItalic {
     /**
      * Type of the rich text, always “italic”
      */
-    type: string;
+    type: "italic";
     /**
      * The text
      */
@@ -13770,7 +13874,7 @@ export interface RichTextUnderline {
     /**
      * Type of the rich text, always “underline”
      */
-    type: string;
+    type: "underline";
     /**
      * The text
      */
@@ -13785,7 +13889,7 @@ export interface RichTextStrikethrough {
     /**
      * Type of the rich text, always “strikethrough”
      */
-    type: string;
+    type: "strikethrough";
     /**
      * The text
      */
@@ -13800,7 +13904,7 @@ export interface RichTextSpoiler {
     /**
      * Type of the rich text, always “spoiler”
      */
-    type: string;
+    type: "spoiler";
     /**
      * The text
      */
@@ -13815,7 +13919,7 @@ export interface RichTextDateTime {
     /**
      * Type of the rich text, always “date_time”
      */
-    type: string;
+    type: "date_time";
     /**
      * The text
      */
@@ -13838,7 +13942,7 @@ export interface RichTextTextMention {
     /**
      * Type of the rich text, always “text_mention”
      */
-    type: string;
+    type: "text_mention";
     /**
      * The text
      */
@@ -13857,7 +13961,7 @@ export interface RichTextSubscript {
     /**
      * Type of the rich text, always “subscript”
      */
-    type: string;
+    type: "subscript";
     /**
      * The text
      */
@@ -13872,7 +13976,7 @@ export interface RichTextSuperscript {
     /**
      * Type of the rich text, always “superscript”
      */
-    type: string;
+    type: "superscript";
     /**
      * The text
      */
@@ -13887,7 +13991,7 @@ export interface RichTextMarked {
     /**
      * Type of the rich text, always “marked”
      */
-    type: string;
+    type: "marked";
     /**
      * The text
      */
@@ -13902,7 +14006,7 @@ export interface RichTextCode {
     /**
      * Type of the rich text, always “code”
      */
-    type: string;
+    type: "code";
     /**
      * The text
      */
@@ -13917,7 +14021,7 @@ export interface RichTextCustomEmoji {
     /**
      * Type of the rich text, always “custom_emoji”
      */
-    type: string;
+    type: "custom_emoji";
     /**
      * Unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker.
      */
@@ -13936,7 +14040,7 @@ export interface RichTextMathematicalExpression {
     /**
      * Type of the rich text, always “mathematical_expression”
      */
-    type: string;
+    type: "mathematical_expression";
     /**
      * The expression in LaTeX format
      */
@@ -13951,7 +14055,7 @@ export interface RichTextUrl {
     /**
      * Type of the rich text, always “url”
      */
-    type: string;
+    type: "url";
     /**
      * The text
      */
@@ -13970,7 +14074,7 @@ export interface RichTextEmailAddress {
     /**
      * Type of the rich text, always “email_address”
      */
-    type: string;
+    type: "email_address";
     /**
      * The text
      */
@@ -13989,7 +14093,7 @@ export interface RichTextPhoneNumber {
     /**
      * Type of the rich text, always “phone_number”
      */
-    type: string;
+    type: "phone_number";
     /**
      * The text
      */
@@ -14008,7 +14112,7 @@ export interface RichTextBankCardNumber {
     /**
      * Type of the rich text, always “bank_card_number”
      */
-    type: string;
+    type: "bank_card_number";
     /**
      * The text
      */
@@ -14027,7 +14131,7 @@ export interface RichTextMention {
     /**
      * Type of the rich text, always “mention”
      */
-    type: string;
+    type: "mention";
     /**
      * The text
      */
@@ -14046,7 +14150,7 @@ export interface RichTextHashtag {
     /**
      * Type of the rich text, always “hashtag”
      */
-    type: string;
+    type: "hashtag";
     /**
      * The text
      */
@@ -14065,7 +14169,7 @@ export interface RichTextCashtag {
     /**
      * Type of the rich text, always “cashtag”
      */
-    type: string;
+    type: "cashtag";
     /**
      * The text
      */
@@ -14084,7 +14188,7 @@ export interface RichTextBotCommand {
     /**
      * Type of the rich text, always “bot_command”
      */
-    type: string;
+    type: "bot_command";
     /**
      * The text
      */
@@ -14103,7 +14207,7 @@ export interface RichTextAnchor {
     /**
      * Type of the rich text, always “anchor”
      */
-    type: string;
+    type: "anchor";
     /**
      * The name of the anchor
      */
@@ -14118,7 +14222,7 @@ export interface RichTextAnchorLink {
     /**
      * Type of the rich text, always “anchor_link”
      */
-    type: string;
+    type: "anchor_link";
     /**
      * The link text
      */
@@ -14137,7 +14241,7 @@ export interface RichTextReference {
     /**
      * Type of the rich text, always “reference”
      */
-    type: string;
+    type: "reference";
     /**
      * Text of the reference
      */
@@ -14156,7 +14260,7 @@ export interface RichTextReferenceLink {
     /**
      * Type of the rich text, always “reference_link”
      */
-    type: string;
+    type: "reference_link";
     /**
      * The link text
      */
@@ -14206,11 +14310,11 @@ export interface RichBlockTableCell {
     /**
      * Horizontal cell content alignment. Currently, must be one of “left”, “center”, or “right”.
      */
-    align: string;
+    align: "left" | "center" | "right";
     /**
      * Vertical cell content alignment. Currently, must be one of “top”, “middle”, or “bottom”.
      */
-    valign: string;
+    valign: "top" | "middle" | "bottom";
 }
 /**
  * An item of a list.
@@ -14241,7 +14345,7 @@ export interface RichBlockListItem {
     /**
      * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
      */
-    type?: string;
+    type?: "a" | "A" | "i" | "I" | "1";
 }
 /**
  * This object represents a block in a rich formatted message. Currently, it can be any of the following types:
@@ -14301,7 +14405,7 @@ export interface RichBlockParagraph {
     /**
      * Type of the block, always “paragraph”
      */
-    type: string;
+    type: "paragraph";
     /**
      * Text of the block
      */
@@ -14316,7 +14420,7 @@ export interface RichBlockSectionHeading {
     /**
      * Type of the block, always “heading”
      */
-    type: string;
+    type: "heading";
     /**
      * Text of the block
      */
@@ -14335,7 +14439,7 @@ export interface RichBlockPreformatted {
     /**
      * Type of the block, always “pre”
      */
-    type: string;
+    type: "pre";
     /**
      * Text of the block
      */
@@ -14354,7 +14458,7 @@ export interface RichBlockFooter {
     /**
      * Type of the block, always “footer”
      */
-    type: string;
+    type: "footer";
     /**
      * Text of the block
      */
@@ -14369,7 +14473,7 @@ export interface RichBlockDivider {
     /**
      * Type of the block, always “divider”
      */
-    type: string;
+    type: "divider";
 }
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `<tg-math-block>`.
@@ -14380,7 +14484,7 @@ export interface RichBlockMathematicalExpression {
     /**
      * Type of the block, always “mathematical_expression”
      */
-    type: string;
+    type: "mathematical_expression";
     /**
      * The mathematical expression in LaTeX format
      */
@@ -14395,7 +14499,7 @@ export interface RichBlockAnchor {
     /**
      * Type of the block, always “anchor”
      */
-    type: string;
+    type: "anchor";
     /**
      * The name of the anchor
      */
@@ -14410,7 +14514,7 @@ export interface RichBlockList {
     /**
      * Type of the block, always “list”
      */
-    type: string;
+    type: "list";
     /**
      * Items of the list
      */
@@ -14425,7 +14529,7 @@ export interface RichBlockBlockQuotation {
     /**
      * Type of the block, always “blockquote”
      */
-    type: string;
+    type: "blockquote";
     /**
      * Content of the block
      */
@@ -14444,7 +14548,7 @@ export interface RichBlockPullQuotation {
     /**
      * Type of the block, always “pullquote”
      */
-    type: string;
+    type: "pullquote";
     /**
      * Text of the block
      */
@@ -14463,7 +14567,7 @@ export interface RichBlockCollage {
     /**
      * Type of the block, always “collage”
      */
-    type: string;
+    type: "collage";
     /**
      * Elements of the collage
      */
@@ -14482,7 +14586,7 @@ export interface RichBlockSlideshow {
     /**
      * Type of the block, always “slideshow”
      */
-    type: string;
+    type: "slideshow";
     /**
      * Elements of the slideshow
      */
@@ -14501,7 +14605,7 @@ export interface RichBlockTable {
     /**
      * Type of the block, always “table”
      */
-    type: string;
+    type: "table";
     /**
      * Cells of the table
      */
@@ -14528,7 +14632,7 @@ export interface RichBlockDetails {
     /**
      * Type of the block, always “details”
      */
-    type: string;
+    type: "details";
     /**
      * Always shown summary of the block
      */
@@ -14551,7 +14655,7 @@ export interface RichBlockMap {
     /**
      * Type of the block, always “map”
      */
-    type: string;
+    type: "map";
     /**
      * Location of the center of the map
      */
@@ -14582,7 +14686,7 @@ export interface RichBlockAnimation {
     /**
      * Type of the block, always “animation”
      */
-    type: string;
+    type: "animation";
     /**
      * The animation
      */
@@ -14605,7 +14709,7 @@ export interface RichBlockAudio {
     /**
      * Type of the block, always “audio”
      */
-    type: string;
+    type: "audio";
     /**
      * The audio
      */
@@ -14624,7 +14728,7 @@ export interface RichBlockPhoto {
     /**
      * Type of the block, always “photo”
      */
-    type: string;
+    type: "photo";
     /**
      * Available sizes of the photo
      */
@@ -14647,7 +14751,7 @@ export interface RichBlockVideo {
     /**
      * Type of the block, always “video”
      */
-    type: string;
+    type: "video";
     /**
      * The video
      */
@@ -14670,7 +14774,7 @@ export interface RichBlockVoiceNote {
     /**
      * Type of the block, always “voice_note”
      */
-    type: string;
+    type: "voice_note";
     /**
      * The voice note
      */
@@ -14689,7 +14793,7 @@ export interface RichBlockThinking {
     /**
      * Type of the block, always “thinking”
      */
-    type: string;
+    type: "thinking";
     /**
      * Text of the block. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
      */
@@ -14720,7 +14824,7 @@ export interface InputRichBlockListItem {
     /**
      * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
      */
-    type?: string;
+    type?: "a" | "A" | "i" | "I" | "1";
 }
 /**
  * This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:
@@ -14780,7 +14884,7 @@ export interface InputRichBlockParagraph {
     /**
      * Type of the block, always “paragraph”
      */
-    type: string;
+    type: "paragraph";
     /**
      * Text of the block
      */
@@ -14795,7 +14899,7 @@ export interface InputRichBlockSectionHeading {
     /**
      * Type of the block, always “heading”
      */
-    type: string;
+    type: "heading";
     /**
      * Text of the block
      */
@@ -14814,7 +14918,7 @@ export interface InputRichBlockPreformatted {
     /**
      * Type of the block, always “pre”
      */
-    type: string;
+    type: "pre";
     /**
      * Text of the block
      */
@@ -14833,7 +14937,7 @@ export interface InputRichBlockFooter {
     /**
      * Type of the block, always “footer”
      */
-    type: string;
+    type: "footer";
     /**
      * Text of the block
      */
@@ -14848,7 +14952,7 @@ export interface InputRichBlockDivider {
     /**
      * Type of the block, always “divider”
      */
-    type: string;
+    type: "divider";
 }
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `<tg-math-block>`.
@@ -14859,7 +14963,7 @@ export interface InputRichBlockMathematicalExpression {
     /**
      * Type of the block, always “mathematical_expression”
      */
-    type: string;
+    type: "mathematical_expression";
     /**
      * The mathematical expression in LaTeX format
      */
@@ -14874,7 +14978,7 @@ export interface InputRichBlockAnchor {
     /**
      * Type of the block, always “anchor”
      */
-    type: string;
+    type: "anchor";
     /**
      * The name of the anchor
      */
@@ -14889,7 +14993,7 @@ export interface InputRichBlockList {
     /**
      * Type of the block, always “list”
      */
-    type: string;
+    type: "list";
     /**
      * Items of the list
      */
@@ -14904,7 +15008,7 @@ export interface InputRichBlockBlockQuotation {
     /**
      * Type of the block, always “blockquote”
      */
-    type: string;
+    type: "blockquote";
     /**
      * Content of the block
      */
@@ -14923,7 +15027,7 @@ export interface InputRichBlockPullQuotation {
     /**
      * Type of the block, always “pullquote”
      */
-    type: string;
+    type: "pullquote";
     /**
      * Text of the block
      */
@@ -14942,7 +15046,7 @@ export interface InputRichBlockCollage {
     /**
      * Type of the block, always “collage”
      */
-    type: string;
+    type: "collage";
     /**
      * Elements of the collage
      */
@@ -14961,7 +15065,7 @@ export interface InputRichBlockSlideshow {
     /**
      * Type of the block, always “slideshow”
      */
-    type: string;
+    type: "slideshow";
     /**
      * Elements of the slideshow
      */
@@ -14980,7 +15084,7 @@ export interface InputRichBlockTable {
     /**
      * Type of the block, always “table”
      */
-    type: string;
+    type: "table";
     /**
      * Cells of the table
      */
@@ -15007,7 +15111,7 @@ export interface InputRichBlockDetails {
     /**
      * Type of the block, always “details”
      */
-    type: string;
+    type: "details";
     /**
      * Always shown summary of the block
      */
@@ -15030,7 +15134,7 @@ export interface InputRichBlockMap {
     /**
      * Type of the block, always “map”
      */
-    type: string;
+    type: "map";
     /**
      * Location of the center of the map
      */
@@ -15061,7 +15165,7 @@ export interface InputRichBlockAnimation {
     /**
      * Type of the block, always “animation”
      */
-    type: string;
+    type: "animation";
     /**
      * The animation. Caption is ignored.
      */
@@ -15080,7 +15184,7 @@ export interface InputRichBlockAudio {
     /**
      * Type of the block, always “audio”
      */
-    type: string;
+    type: "audio";
     /**
      * The audio. Caption is ignored.
      */
@@ -15099,7 +15203,7 @@ export interface InputRichBlockPhoto {
     /**
      * Type of the block, always “photo”
      */
-    type: string;
+    type: "photo";
     /**
      * The photo. Caption is ignored.
      */
@@ -15118,7 +15222,7 @@ export interface InputRichBlockVideo {
     /**
      * Type of the block, always “video”
      */
-    type: string;
+    type: "video";
     /**
      * The video. Caption is ignored.
      */
@@ -15137,7 +15241,7 @@ export interface InputRichBlockVoiceNote {
     /**
      * Type of the block, always “voice_note”
      */
-    type: string;
+    type: "voice_note";
     /**
      * The voice note. Caption is ignored.
      */
@@ -15156,7 +15260,7 @@ export interface InputRichBlockThinking {
     /**
      * Type of the block, always “thinking”
      */
-    type: string;
+    type: "thinking";
     /**
      * Text of the block. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
      */
@@ -15188,7 +15292,7 @@ export interface InlineQuery {
     /**
      * Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat.
      */
-    chat_type?: string;
+    chat_type?: "sender" | "private" | "group" | "supergroup" | "channel";
     /**
      * Sender location, only for bots that request user location
      */
@@ -15308,7 +15412,7 @@ export interface InlineQueryResultArticle {
     /**
      * Type of the result, must be _article_
      */
-    type: string;
+    type: "article";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -15355,7 +15459,7 @@ export interface InlineQueryResultPhoto {
     /**
      * Type of the result, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15418,7 +15522,7 @@ export interface InlineQueryResultGif {
     /**
      * Type of the result, must be _gif_
      */
-    type: string;
+    type: "gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15446,7 +15550,7 @@ export interface InlineQueryResultGif {
     /**
      * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
      */
-    thumbnail_mime_type?: string;
+    thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
     /**
      * Title for the result
      */
@@ -15485,7 +15589,7 @@ export interface InlineQueryResultMpeg4Gif {
     /**
      * Type of the result, must be _mpeg4_gif_
      */
-    type: string;
+    type: "mpeg4_gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15513,7 +15617,7 @@ export interface InlineQueryResultMpeg4Gif {
     /**
      * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
      */
-    thumbnail_mime_type?: string;
+    thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
     /**
      * Title for the result
      */
@@ -15554,7 +15658,7 @@ export interface InlineQueryResultVideo {
     /**
      * Type of the result, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15566,7 +15670,7 @@ export interface InlineQueryResultVideo {
     /**
      * MIME type of the content of the video URL, “text/html” or “video/mp4”
      */
-    mime_type: string;
+    mime_type: "text/html" | "video/mp4";
     /**
      * URL of the thumbnail (JPEG only) for the video
      */
@@ -15625,7 +15729,7 @@ export interface InlineQueryResultAudio {
     /**
      * Type of the result, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15676,7 +15780,7 @@ export interface InlineQueryResultVoice {
     /**
      * Type of the result, must be _voice_
      */
-    type: string;
+    type: "voice";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15723,7 +15827,7 @@ export interface InlineQueryResultDocument {
     /**
      * Type of the result, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15751,7 +15855,7 @@ export interface InlineQueryResultDocument {
     /**
      * MIME type of the content of the file, either “application/pdf” or “application/zip”
      */
-    mime_type: string;
+    mime_type: "application/pdf" | "application/zip";
     /**
      * Short description of the result
      */
@@ -15786,7 +15890,7 @@ export interface InlineQueryResultLocation {
     /**
      * Type of the result, must be _location_
      */
-    type: string;
+    type: "location";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -15849,7 +15953,7 @@ export interface InlineQueryResultVenue {
     /**
      * Type of the result, must be _venue_
      */
-    type: string;
+    type: "venue";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -15916,7 +16020,7 @@ export interface InlineQueryResultContact {
     /**
      * Type of the result, must be _contact_
      */
-    type: string;
+    type: "contact";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -15967,7 +16071,7 @@ export interface InlineQueryResultGame {
     /**
      * Type of the result, must be _game_
      */
-    type: string;
+    type: "game";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -15990,7 +16094,7 @@ export interface InlineQueryResultCachedPhoto {
     /**
      * Type of the result, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16041,7 +16145,7 @@ export interface InlineQueryResultCachedGif {
     /**
      * Type of the result, must be _gif_
      */
-    type: string;
+    type: "gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16088,7 +16192,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
     /**
      * Type of the result, must be _mpeg4_gif_
      */
-    type: string;
+    type: "mpeg4_gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16135,7 +16239,7 @@ export interface InlineQueryResultCachedSticker {
     /**
      * Type of the result, must be _sticker_
      */
-    type: string;
+    type: "sticker";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16162,7 +16266,7 @@ export interface InlineQueryResultCachedDocument {
     /**
      * Type of the result, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16209,7 +16313,7 @@ export interface InlineQueryResultCachedVideo {
     /**
      * Type of the result, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16260,7 +16364,7 @@ export interface InlineQueryResultCachedVoice {
     /**
      * Type of the result, must be _voice_
      */
-    type: string;
+    type: "voice";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -16303,7 +16407,7 @@ export interface InlineQueryResultCachedAudio {
     /**
      * Type of the result, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -17106,7 +17210,7 @@ export interface RefundedPayment {
     /**
      * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}. Currently, always “XTR”.
      */
-    currency: string;
+    currency: "XTR";
     /**
      * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
@@ -17219,7 +17323,7 @@ export interface RevenueWithdrawalStatePending {
     /**
      * Type of the state, always “pending”
      */
-    type: string;
+    type: "pending";
 }
 /**
  * The withdrawal succeeded.
@@ -17230,7 +17334,7 @@ export interface RevenueWithdrawalStateSucceeded {
     /**
      * Type of the state, always “succeeded”
      */
-    type: string;
+    type: "succeeded";
     /**
      * Date the withdrawal was completed in Unix time
      */
@@ -17249,7 +17353,7 @@ export interface RevenueWithdrawalStateFailed {
     /**
      * Type of the state, always “failed”
      */
-    type: string;
+    type: "failed";
 }
 /**
  * Contains information about the affiliate that received a commission via this transaction.
@@ -17308,11 +17412,16 @@ export interface TransactionPartnerUser {
     /**
      * Type of the transaction partner, always “user”
      */
-    type: string;
+    type: "user";
     /**
      * Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts
      */
-    transaction_type: string;
+    transaction_type:
+        | "invoice_payment"
+        | "paid_media_payment"
+        | "gift_purchase"
+        | "premium_purchase"
+        | "business_account_transfer";
     /**
      * Information about the user
      */
@@ -17355,7 +17464,7 @@ export interface TransactionPartnerChat {
     /**
      * Type of the transaction partner, always “chat”
      */
-    type: string;
+    type: "chat";
     /**
      * Information about the chat
      */
@@ -17374,7 +17483,7 @@ export interface TransactionPartnerAffiliateProgram {
     /**
      * Type of the transaction partner, always “affiliate_program”
      */
-    type: string;
+    type: "affiliate_program";
     /**
      * Information about the bot that sponsored the affiliate program
      */
@@ -17393,7 +17502,7 @@ export interface TransactionPartnerFragment {
     /**
      * Type of the transaction partner, always “fragment”
      */
-    type: string;
+    type: "fragment";
     /**
      * State of the transaction if the transaction is outgoing
      */
@@ -17408,7 +17517,7 @@ export interface TransactionPartnerTelegramAds {
     /**
      * Type of the transaction partner, always “telegram_ads”
      */
-    type: string;
+    type: "telegram_ads";
 }
 /**
  * Describes a transaction with payment for {@link https://core.telegram.org/bots/api#paid-broadcasts | paid broadcasting}.
@@ -17419,7 +17528,7 @@ export interface TransactionPartnerTelegramApi {
     /**
      * Type of the transaction partner, always “telegram_api”
      */
-    type: string;
+    type: "telegram_api";
     /**
      * The number of successful requests that exceeded regular limits and were therefore billed
      */
@@ -17434,7 +17543,7 @@ export interface TransactionPartnerOther {
     /**
      * Type of the transaction partner, always “other”
      */
-    type: string;
+    type: "other";
 }
 /**
  * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot's balance. This is outside of Telegram's control.
@@ -17526,7 +17635,20 @@ export interface EncryptedPassportElement {
     /**
      * Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
      */
-    type: string;
+    type:
+        | "personal_details"
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "address"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration"
+        | "phone_number"
+        | "email";
     /**
      * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
      */
@@ -17636,11 +17758,17 @@ export interface PassportElementErrorDataField {
     /**
      * Error source, must be _data_
      */
-    source: string;
+    source: "data";
     /**
      * The section of the user's Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”
      */
-    type: string;
+    type:
+        | "personal_details"
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "address";
     /**
      * Name of the data field which has the error
      */
@@ -17663,11 +17791,15 @@ export interface PassportElementErrorFrontSide {
     /**
      * Error source, must be _front_side_
      */
-    source: string;
+    source: "front_side";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport";
     /**
      * Base64-encoded hash of the file with the front side of the document
      */
@@ -17686,11 +17818,11 @@ export interface PassportElementErrorReverseSide {
     /**
      * Error source, must be _reverse_side_
      */
-    source: string;
+    source: "reverse_side";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “driver_license”, “identity_card”
      */
-    type: string;
+    type: "driver_license" | "identity_card";
     /**
      * Base64-encoded hash of the file with the reverse side of the document
      */
@@ -17709,11 +17841,15 @@ export interface PassportElementErrorSelfie {
     /**
      * Error source, must be _selfie_
      */
-    source: string;
+    source: "selfie";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport";
     /**
      * Base64-encoded hash of the file with the selfie
      */
@@ -17732,11 +17868,16 @@ export interface PassportElementErrorFile {
     /**
      * Error source, must be _file_
      */
-    source: string;
+    source: "file";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * Base64-encoded file hash
      */
@@ -17755,11 +17896,16 @@ export interface PassportElementErrorFiles {
     /**
      * Error source, must be _files_
      */
-    source: string;
+    source: "files";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * List of base64-encoded file hashes
      */
@@ -17778,11 +17924,20 @@ export interface PassportElementErrorTranslationFile {
     /**
      * Error source, must be _translation_file_
      */
-    source: string;
+    source: "translation_file";
     /**
      * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * Base64-encoded file hash
      */
@@ -17801,11 +17956,20 @@ export interface PassportElementErrorTranslationFiles {
     /**
      * Error source, must be _translation_files_
      */
-    source: string;
+    source: "translation_files";
     /**
      * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * List of base64-encoded file hashes
      */
@@ -17824,7 +17988,7 @@ export interface PassportElementErrorUnspecified {
     /**
      * Error source, must be _unspecified_
      */
-    source: string;
+    source: "unspecified";
     /**
      * Type of element of the user's Telegram Passport which has the issue
      */
