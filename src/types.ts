@@ -13562,7 +13562,7 @@ export interface RichMessage {
  *
  * <tg-reference name="note-1">Referenced text</tg-reference>
  * <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
- * <img src="tg://emoji?id=5368324170671202286" alt="img class=""/>
+ * <img src="tg://emoji?id=5368324170671202286" alt="👍"/>
  * <tg-time unix="1647531900" format="wDT">22:45 tomorrow</tg-time>
  * <tg-math>x^2 + y^2</tg-math>
  *
