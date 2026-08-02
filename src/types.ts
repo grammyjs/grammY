@@ -878,17 +878,17 @@ export interface UserFromGetMe extends User {
  * @see {@link https://core.telegram.org/bots/api#chat}
  */
 export type Chat =
-    | Chat.PrivateChat
-    | Chat.GroupChat
-    | Chat.SupergroupChat
-    | Chat.ChannelChat;
+    | Chat.Private
+    | Chat.Group
+    | Chat.Supergroup
+    | Chat.Channel;
 export declare namespace Chat {
     /**
      * This object represents a private chat.
      *
      * @see {@link https://core.telegram.org/bots/api#chat}
      */
-    export interface PrivateChat {
+    export interface Private {
         /**
          * Unique identifier for this chat.
          */
@@ -927,7 +927,7 @@ export declare namespace Chat {
      *
      * @see {@link https://core.telegram.org/bots/api#chat}
      */
-    export interface GroupChat {
+    export interface Group {
         /**
          * Unique identifier for this chat.
          */
@@ -966,7 +966,7 @@ export declare namespace Chat {
      *
      * @see {@link https://core.telegram.org/bots/api#chat}
      */
-    export interface SupergroupChat {
+    export interface Supergroup {
         /**
          * Unique identifier for this chat.
          */
@@ -1005,7 +1005,7 @@ export declare namespace Chat {
      *
      * @see {@link https://core.telegram.org/bots/api#chat}
      */
-    export interface ChannelChat {
+    export interface Channel {
         /**
          * Unique identifier for this chat.
          */
@@ -1566,7 +1566,7 @@ export declare namespace ChatFullInfo {
         /**
          * Information about the corresponding channel chat; for direct messages chats only
          */
-        parent_chat?: Chat.ChannelChat;
+        parent_chat?: Chat.Channel;
         /**
          * List of available reactions allowed in the chat. If omitted, then all {@link ReactionTypeEmoji | emoji reactions} are allowed.
          */
