@@ -2464,63 +2464,333 @@ export type MaybeInaccessibleMessage =
  *
  * @see {@link https://core.telegram.org/bots/api#messageentity}
  */
-export interface MessageEntity {
-    /**
-     * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
-     */
-    type:
-        | "mention"
-        | "hashtag"
-        | "cashtag"
-        | "bot_command"
-        | "url"
-        | "email"
-        | "phone_number"
-        | "bold"
-        | "italic"
-        | "underline"
-        | "strikethrough"
-        | "spoiler"
-        | "blockquote"
-        | "expandable_blockquote"
-        | "code"
-        | "pre"
-        | "text_link"
-        | "text_mention"
-        | "custom_emoji"
-        | "date_time";
-    /**
-     * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
-     */
-    offset: number;
-    /**
-     * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
-     */
-    length: number;
-    /**
-     * For “text_link” only, URL that will be opened after user taps on the text
-     */
-    url?: string;
-    /**
-     * For “text_mention” only, the mentioned user
-     */
-    user?: User;
-    /**
-     * For “pre” only, the programming language of the entity text
-     */
-    language?: string;
-    /**
-     * For “custom_emoji” only, unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker.
-     */
-    custom_emoji_id?: string;
-    /**
-     * For “date_time” only, the Unix time associated with the entity
-     */
-    unix_time?: number;
-    /**
-     * For “date_time” only, the string that defines the formatting of the date and time. See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details.
-     */
-    date_time_format?: string;
+export type MessageEntity =
+    | MessageEntity.Mention
+    | MessageEntity.Hashtag
+    | MessageEntity.Cashtag
+    | MessageEntity.BotCommand
+    | MessageEntity.Url
+    | MessageEntity.Email
+    | MessageEntity.PhoneNumber
+    | MessageEntity.Bold
+    | MessageEntity.Italic
+    | MessageEntity.Underline
+    | MessageEntity.Strikethrough
+    | MessageEntity.Spoiler
+    | MessageEntity.Blockquote
+    | MessageEntity.ExpandableBlockquote
+    | MessageEntity.Code
+    | MessageEntity.Pre
+    | MessageEntity.TextLink
+    | MessageEntity.TextMention
+    | MessageEntity.CustomEmoji
+    | MessageEntity.DateTime;
+
+export declare namespace MessageEntity {
+    export interface Mention {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "mention";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Hashtag {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "hashtag";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Cashtag {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "cashtag";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface BotCommand {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "bot_command";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Url {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "url";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Email {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "email";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface PhoneNumber {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "phone_number";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Bold {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "bold";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Italic {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "italic";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Underline {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "underline";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Strikethrough {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "strikethrough";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Spoiler {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "spoiler";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Blockquote {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "blockquote";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface ExpandableBlockquote {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "expandable_blockquote";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Code {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "code";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+    }
+    export interface Pre {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "pre";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+        /**
+         * For “pre” only, the programming language of the entity text
+         */
+        language?: string;
+    }
+    export interface TextLink {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "text_link";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+        /**
+         * For “text_link” only, URL that will be opened after user taps on the text
+         */
+        url: string;
+    }
+    export interface TextMention {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "text_mention";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+        /**
+         * For “text_mention” only, the mentioned user
+         */
+        user: User;
+    }
+    export interface CustomEmoji {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "custom_emoji";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+        /**
+         * For “custom_emoji” only, unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker.
+         */
+        custom_emoji_id: string;
+    }
+    export interface DateTime {
+        /**
+         * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+         */
+        type: "date_time";
+        /**
+         * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
+         */
+        offset: number;
+        /**
+         * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
+         */
+        length: number;
+        /**
+         * For “date_time” only, the Unix time associated with the entity
+         */
+        unix_time: number;
+        /**
+         * For “date_time” only, the string that defines the formatting of the date and time. See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details.
+         */
+        date_time_format: string;
+    }
 }
 /**
  * This object contains information about the quoted part of a message that is replied to by the given message.
