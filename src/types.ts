@@ -5030,47 +5030,156 @@ export interface ReplyKeyboardMarkup {
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
  */
-export interface KeyboardButton {
-    /**
-     * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
-     */
-    text: string;
-    /**
-     * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
-     */
-    icon_custom_emoji_id?: string;
-    /**
-     * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
-     */
-    style?: "danger" | "success" | "primary";
-    /**
-     * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
-     */
-    request_users?: KeyboardButtonRequestUsers;
-    /**
-     * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
-     */
-    request_chat?: KeyboardButtonRequestChat;
-    /**
-     * If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the {@link https://t.me/BotFather | @BotFather} Mini App. Available in private chats only.
-     */
-    request_managed_bot?: KeyboardButtonRequestManagedBot;
-    /**
-     * If `true`, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
-     */
-    request_contact?: boolean;
-    /**
-     * If `true`, the user's current location will be sent when the button is pressed. Available in private chats only.
-     */
-    request_location?: boolean;
-    /**
-     * If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
-     */
-    request_poll?: KeyboardButtonPollType;
-    /**
-     * If specified, the described {@link https://core.telegram.org/bots/webapps | Web App} will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
-     */
-    web_app?: WebAppInfo;
+export type KeyboardButton =
+    | KeyboardButton.WithText
+    | KeyboardButton.WithRequestUsers
+    | KeyboardButton.WithRequestChat
+    | KeyboardButton.WithRequestManagedBot
+    | KeyboardButton.WithRequestContact
+    | KeyboardButton.WithRequestLocation
+    | KeyboardButton.WithRequestPoll
+    | KeyboardButton.WithWebApp;
+export declare namespace KeyboardButton {
+    export interface WithText {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+    }
+    export interface WithRequestUsers {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+         */
+        request_users: KeyboardButtonRequestUsers;
+    }
+    export interface WithRequestChat {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
+         */
+        request_chat: KeyboardButtonRequestChat;
+    }
+    export interface WithRequestManagedBot {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the {@link https://t.me/BotFather | @BotFather} Mini App. Available in private chats only.
+         */
+        request_managed_bot: KeyboardButtonRequestManagedBot;
+    }
+    export interface WithRequestContact {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If `true`, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
+         */
+        request_contact: boolean;
+    }
+    export interface WithRequestLocation {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If `true`, the user's current location will be sent when the button is pressed. Available in private chats only.
+         */
+        request_location: boolean;
+    }
+    export interface WithRequestPoll {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
+         */
+        request_poll: KeyboardButtonPollType;
+    }
+    export interface WithWebApp {
+        /**
+         * Text of the button. If none of the fields other than _text_, _icon_custom_emoji_id_, and _style_ are used, it will be sent as a message when the button is pressed.
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If specified, the described {@link https://core.telegram.org/bots/webapps | Web App} will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+         */
+        web_app: WebAppInfo;
+    }
 }
 /**
  * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. {@link https://core.telegram.org/bots/features#chat-and-user-selection | More about requesting users »}
@@ -5221,65 +5330,204 @@ export interface InlineKeyboardMarkup {
  *
  * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
  */
-export interface InlineKeyboardButton {
-    /**
-     * Label text on the button
-     */
-    text: string;
-    /**
-     * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
-     */
-    icon_custom_emoji_id?: string;
-    /**
-     * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
-     */
-    style?: "danger" | "success" | "primary";
-    /**
-     * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
-     */
-    url?: string;
-    /**
-     * Data to be sent in a {@link CallbackQuery | callback query} to the bot when the button is pressed, 1-64 bytes
-     */
-    callback_data?: string;
-    /**
-     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
-     */
-    web_app?: WebAppInfo;
-    /**
-     * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget}.
-     */
-    login_url?: LoginUrl;
-    /**
-     * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
-     */
-    switch_inline_query?: string;
-    /**
-     * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
-     *
-     * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
-     */
-    switch_inline_query_current_chat?: string;
-    /**
-     * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
-     */
-    switch_inline_query_chosen_chat?: SwitchInlineQueryChosenChat;
-    /**
-     * Description of the button that copies the specified text to the clipboard
-     */
-    copy_text?: CopyTextButton;
-    /**
-     * Description of the game that will be launched when the user presses the button.
-     *
-     * **NOTE:** This type of button **must** always be the first button in the first row.
-     */
-    callback_game?: CallbackGame;
-    /**
-     * Specify `true`, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
-     *
-     * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
-     */
-    pay?: boolean;
+export type InlineKeyboardButton =
+    | InlineKeyboardButton.WithUrl
+    | InlineKeyboardButton.WithCallbackData
+    | InlineKeyboardButton.WithWebApp
+    | InlineKeyboardButton.WithLoginUrl
+    | InlineKeyboardButton.WithSwitchInlineQuery
+    | InlineKeyboardButton.WithSwitchInlineQueryCurrentChat
+    | InlineKeyboardButton.WithSwitchInlineQueryChosenChat
+    | InlineKeyboardButton.WithCopyText
+    | InlineKeyboardButton.WithCallbackGame
+    | InlineKeyboardButton.WithPay;
+export declare namespace InlineKeyboardButton {
+    export interface WithUrl {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+         */
+        url: string;
+    }
+    export interface WithCallbackData {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * Data to be sent in a {@link CallbackQuery | callback query} to the bot when the button is pressed, 1-64 bytes
+         */
+        callback_data: string;
+    }
+    export interface WithWebApp {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
+         */
+        web_app: WebAppInfo;
+    }
+    export interface WithLoginUrl {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget}.
+         */
+        login_url: LoginUrl;
+    }
+    export interface WithSwitchInlineQuery {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+         */
+        switch_inline_query: string;
+    }
+    export interface WithSwitchInlineQueryCurrentChat {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
+         *
+         * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
+         */
+        switch_inline_query_current_chat: string;
+    }
+    export interface WithSwitchInlineQueryChosenChat {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+         */
+        switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
+    }
+    export interface WithCopyText {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * Description of the button that copies the specified text to the clipboard
+         */
+        copy_text: CopyTextButton;
+    }
+    export interface WithCallbackGame {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * Description of the game that will be launched when the user presses the button.
+         *
+         * **NOTE:** This type of button **must** always be the first button in the first row.
+         */
+        callback_game: CallbackGame;
+    }
+    export interface WithPay {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+         */
+        icon_custom_emoji_id?: string;
+        /**
+         * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+         */
+        style?: "danger" | "success" | "primary";
+        /**
+         * Specify `true`, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
+         *
+         * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
+         */
+        pay: boolean;
+    }
 }
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget} when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
