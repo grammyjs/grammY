@@ -811,7 +811,7 @@ export interface User {
     /**
      * {@link https://en.wikipedia.org/wiki/IETF_language_tag | IETF language tag} of the user's language
      */
-    language_code?: LanguageCode;
+    language_code?: string;
     /**
      * `true`, if this user is a Telegram Premium user
      */
