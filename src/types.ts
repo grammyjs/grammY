@@ -1,5 +1,3 @@
-// - keyboard buttons, inline keyboard buttons, any other unions
-// - "must always be" string literals
 // === HELPER TYPES ===
 /**
  * Object with no keys
@@ -791,7 +789,7 @@ export interface WebhookInfo {
  */
 export interface User {
     /**
-     * Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+     * Unique identifier for this user or bot.
      */
     id: number;
     /**
@@ -890,7 +888,7 @@ export declare namespace Chat {
      */
     export interface PrivateChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -929,7 +927,7 @@ export declare namespace Chat {
      */
     export interface GroupChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -968,7 +966,7 @@ export declare namespace Chat {
      */
     export interface SupergroupChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1007,7 +1005,7 @@ export declare namespace Chat {
      */
     export interface ChannelChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1058,7 +1056,7 @@ export declare namespace ChatFullInfo {
      */
     export interface PrivateChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1238,7 +1236,7 @@ export declare namespace ChatFullInfo {
          */
         custom_emoji_sticker_set_name?: undefined;
         /**
-         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats.
          */
         linked_chat_id?: undefined;
         /**
@@ -1277,7 +1275,7 @@ export declare namespace ChatFullInfo {
      */
     export interface GroupChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1457,7 +1455,7 @@ export declare namespace ChatFullInfo {
          */
         custom_emoji_sticker_set_name?: undefined;
         /**
-         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats.
          */
         linked_chat_id?: undefined;
         /**
@@ -1496,7 +1494,7 @@ export declare namespace ChatFullInfo {
      */
     export interface SupergroupChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1676,7 +1674,7 @@ export declare namespace ChatFullInfo {
          */
         custom_emoji_sticker_set_name?: string;
         /**
-         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats.
          */
         linked_chat_id?: number;
         /**
@@ -1715,7 +1713,7 @@ export declare namespace ChatFullInfo {
      */
     export interface ChannelChat {
         /**
-         * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for this chat.
          */
         id: number;
         /**
@@ -1895,7 +1893,7 @@ export declare namespace ChatFullInfo {
          */
         custom_emoji_sticker_set_name?: undefined;
         /**
-         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+         * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats.
          */
         linked_chat_id?: number;
         /**
@@ -2223,11 +2221,11 @@ export interface Message {
      */
     message_auto_delete_timer_changed?: MessageAutoDeleteTimerChanged;
     /**
-     * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+     * The group has been migrated to a supergroup with the specified identifier.
      */
     migrate_to_chat_id?: number;
     /**
-     * The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+     * The supergroup has been migrated from a group with the specified identifier.
      */
     migrate_from_chat_id?: number;
     /**
@@ -2854,7 +2852,7 @@ export interface Animation {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -2893,7 +2891,7 @@ export interface Audio {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
     /**
@@ -2928,7 +2926,7 @@ export interface Document {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -2967,7 +2965,7 @@ export interface LivePhoto {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -3013,7 +3011,7 @@ export interface VideoQuality {
      */
     codec: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -3068,7 +3066,7 @@ export interface Video {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -3126,7 +3124,7 @@ export interface Voice {
      */
     mime_type?: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
 }
@@ -3247,7 +3245,7 @@ export interface Contact {
      */
     last_name?: string;
     /**
-     * Contact's user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+     * Contact's user identifier in Telegram.
      */
     user_id?: number;
     /**
@@ -4183,7 +4181,7 @@ export type GeneralForumTopicUnhidden = Empty;
  */
 export interface SharedUser {
     /**
-     * Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
+     * Identifier of the shared user. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
      */
     user_id: number;
     /**
@@ -4229,7 +4227,7 @@ export interface ChatShared {
      */
     request_id: number;
     /**
-     * Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.
+     * Identifier of the shared chat. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.
      */
     chat_id: number;
     /**
@@ -4631,7 +4629,7 @@ export interface SuggestedPostParameters {
  */
 export interface DirectMessagesTopic {
     /**
-     * Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+     * Unique identifier of the topic.
      */
     topic_id: number;
     /**
@@ -4686,7 +4684,7 @@ export interface File {
      */
     file_unique_id: string;
     /**
-     * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+     * File size in bytes.
      */
     file_size?: number;
     /**
@@ -5133,7 +5131,7 @@ export interface ForceReply {
  */
 export interface Community {
     /**
-     * Unique identifier for this community. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+     * Unique identifier for this community.
      */
     id: number;
     /**
@@ -5625,7 +5623,7 @@ export interface ChatJoinRequest {
      */
     from: User;
     /**
-     * Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user.
+     * Identifier of a private chat with the user who sent the join request. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user.
      */
     user_chat_id: number;
     /**
@@ -7206,7 +7204,7 @@ export interface BusinessConnection {
      */
     user: User;
     /**
-     * Identifier of a private chat with the user who created the business connection. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+     * Identifier of a private chat with the user who created the business connection.
      */
     user_chat_id: number;
     /**
@@ -7296,7 +7294,7 @@ export interface PreparedKeyboardButton {
  */
 export interface ResponseParameters {
     /**
-     * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+     * The group has been migrated to a supergroup with the specified identifier.
      */
     migrate_to_chat_id?: number;
     /**
