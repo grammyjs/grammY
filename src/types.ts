@@ -2788,7 +2788,7 @@ export declare namespace MessageEntity {
         /**
          * For “date_time” only, the string that defines the formatting of the date and time. See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details.
          */
-        date_time_format: string;
+        date_time_format: "r" | `${"w" | ""}${"d" | "D" | ""}${"t" | "T" | ""}`;
     }
 }
 /**
@@ -14454,7 +14454,7 @@ export interface RichTextDateTime {
     /**
      * The string that defines the formatting of the date and time. See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details.
      */
-    date_time_format: string;
+    date_time_format: "r" | `${"w" | ""}${"d" | "D" | ""}${"t" | "T" | ""}`;
 }
 /**
  * A mention of a Telegram user by their identifier.
