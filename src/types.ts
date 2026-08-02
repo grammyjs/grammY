@@ -1594,7 +1594,7 @@ export declare namespace ChatFullInfo {
         /**
          * Bio of the other party in a private chat
          */
-        bio?: string;
+        bio?: undefined;
         /**
          * `true`, if privacy settings of the other party in the private chat allows to use `tg://user?id=<user_id>` links only in chats with the user
          */
