@@ -10588,7 +10588,7 @@ export interface ApiMethods {
         /**
          * The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
          */
-        subscription_period: number;
+        subscription_period: 2592000;
         /**
          * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000
          */
@@ -10970,7 +10970,13 @@ export interface ApiMethods {
         /**
          * Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F).
          */
-        icon_color?: number;
+        icon_color?:
+            | 0x6FB9F0
+            | 0xFFD67E
+            | 0xCB86DB
+            | 0x8EEE98
+            | 0xFF93B2
+            | 0xFB6F5F;
         /**
          * Unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers.
          */
@@ -11577,11 +11583,11 @@ export interface ApiMethods {
         /**
          * Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
          */
-        month_count: number;
+        month_count: 3 | 6 | 12;
         /**
          * Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
          */
-        star_count: number;
+        star_count: 1000 | 1500 | 2500;
         /**
          * Text that will be shown along with the service message about the subscription; 0-128 characters
          */
@@ -12074,7 +12080,7 @@ export interface ApiMethods {
         /**
          * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
          */
-        active_period: number;
+        active_period: 21600 | 43200 | 86400 | 172800;
         /**
          * Caption of the story, 0-2048 characters after entities parsing
          */
@@ -12123,7 +12129,7 @@ export interface ApiMethods {
         /**
          * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
          */
-        active_period: number;
+        active_period: 21600 | 43200 | 86400 | 172800;
         /**
          * Pass `true` to keep the story accessible after it expires
          */
@@ -16871,7 +16877,7 @@ export interface ApiMethods {
         /**
          * The number of seconds the subscription will be active for before the next payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at the same time, including multiple concurrent subscriptions from the same user. Subscription price must no exceed 10000 Telegram Stars.
          */
-        subscription_period?: number;
+        subscription_period?: 2592000;
         /**
          * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
