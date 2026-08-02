@@ -5033,6 +5033,7 @@ export interface ReplyKeyboardMarkup {
  * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
  */
 export type KeyboardButton =
+    | string
     | KeyboardButton.WithText
     | KeyboardButton.WithRequestUsers
     | KeyboardButton.WithRequestChat
