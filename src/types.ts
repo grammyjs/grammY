@@ -2485,7 +2485,6 @@ export type MessageEntity =
     | MessageEntity.TextMention
     | MessageEntity.CustomEmoji
     | MessageEntity.DateTime;
-
 export declare namespace MessageEntity {
     export interface Mention {
         /**
@@ -8562,7 +8561,7 @@ export interface ApiMethods {
  * #### Formatting options
  *
  * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
-
+ *
  * Note that Telegram clients will display an **alert** to the user before opening an inline link ('Open this link?' together with the full URL).
  *
  * Message entities can be nested, providing following restrictions are met:
@@ -18071,11 +18070,7 @@ export interface PassportElementErrorFrontSide {
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type:
-        | "passport"
-        | "driver_license"
-        | "identity_card"
-        | "internal_passport";
+    type: "passport" | "driver_license" | "identity_card" | "internal_passport";
     /**
      * Base64-encoded hash of the file with the front side of the document
      */
@@ -18121,11 +18116,7 @@ export interface PassportElementErrorSelfie {
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type:
-        | "passport"
-        | "driver_license"
-        | "identity_card"
-        | "internal_passport";
+    type: "passport" | "driver_license" | "identity_card" | "internal_passport";
     /**
      * Base64-encoded hash of the file with the selfie
      */
