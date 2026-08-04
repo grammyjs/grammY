@@ -51,6 +51,7 @@ import type { // unused types are in fact used in TSDoc strings, see https://git
     InputMedia,
     InputMediaAudio,
     InputMediaDocument,
+    InputMediaLivePhoto,
     InputMediaPhoto,
     InputMediaVideo,
     InputPaidMedia,
@@ -1685,12 +1686,10 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async sendMediaGroup(
-        media: Array<
-            | InputMediaAudio
-            | InputMediaDocument
-            | InputMediaPhoto
-            | InputMediaVideo
-        >,
+        media:
+            | Array<InputMediaAudio>
+            | Array<InputMediaDocument>
+            | Array<InputMediaLivePhoto | InputMediaPhoto | InputMediaVideo>,
         other?: Partial<ApiParameters<"sendMediaGroup">>,
         signal?: AbortSignal,
     ): Promise<Message[]> {
@@ -5601,7 +5600,7 @@ interface ChatFrom<T extends Chat["type"]> {
 
 // === Util functions
 function ensureChatId<T extends number | string>(
-    method: "send" | keyof ApiMethods,
+    method: "send" | "edit" | keyof ApiMethods,
     ctx: { chatId?: number },
     other?: { chat_id?: T },
 ): T | number {
@@ -5627,7 +5626,7 @@ function ensureFromChatId<T extends number | string>(
     return fromChatId;
 }
 function ensureMessageId(
-    method: keyof ApiMethods,
+    method: "edit" | keyof ApiMethods,
     ctx: { msgId?: number },
     other?: { message_id?: number },
 ) {
