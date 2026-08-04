@@ -812,9 +812,10 @@ export class Context implements CamelCaseUpdate {
             this.deletedBusinessMessages?.business_connection_id;
     }
     /**
-     * Get entities and their text. Extracts the text from `ctx.msg.text` or
-     * `ctx.msg.caption`. Returns an empty array if one of `ctx.msg`,
-     * `ctx.msg.text` or `ctx.msg.entities` is undefined.
+     * Get entities and their text. Extracts the text from
+     * {@link msg | ctx.msg}{@link Message.text | .text} or
+     * {@link msg | ctx.msg}{@link Message.caption | .caption}. Returns an empty
+     * array if one there are no text or entities in the message.
      *
      * You can filter specific entity types by passing the `types` parameter.
      * Example:
@@ -846,14 +847,15 @@ export class Context implements CamelCaseUpdate {
     entities(types?: MaybeArray<MessageEntity["type"]>) {
         const message = this.msg;
         if (message === undefined) return [];
-
         const text = message.text ?? message.caption;
         if (text === undefined) return [];
         let entities = message.entities ?? message.caption_entities;
         if (entities === undefined) return [];
-        if (types !== undefined) {
-            const filters = new Set(toArray(types));
-            entities = entities.filter((entity) => filters.has(entity.type));
+
+        if (typeof types === "string") {
+            entities = entities.filter((entity) => entity.type === types);
+        } else if (types !== undefined) {
+            entities = entities.filter((entity) => types.includes(entity.type));
         }
 
         return entities.map((entity) => ({
