@@ -10,6 +10,8 @@ import {
 import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
     AcceptedGiftTypes,
     ApiMethods,
+    // deno-lint-ignore no-unused-vars
+    BotSubscriptionUpdated,
     BusinessConnection,
     // deno-lint-ignore no-unused-vars
     BusinessMessagesDeleted,
@@ -57,6 +59,8 @@ import type { // unused types are in fact used in TSDoc strings, see https://git
     InputSticker,
     InputStoryContent,
     LabeledPrice,
+    // deno-lint-ignore no-unused-vars
+    ManagedBotUpdated,
     Message,
     MessageEntity,
     MessageId,
@@ -811,8 +815,10 @@ export class Context implements CamelCaseUpdate {
      *
      * - {@link businessConnection | ctx.businessConnection}{@link BusinessConnection.user | ?.user}
      * - {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.user | ?.user}
-     * - {@link chatBoost | ctx.chatBoost}{@link ChatBoostUpdated.boost | ?.boost}{@link ChatBoost.user | ?.user}
+     * - {@link managedBot | ctx.managedBot}{@link ManagedBotUpdated.user | ?.user}
+     * - {@link chatBoost | ctx.chatBoost}{@link ChatBoostUpdated.boost | ?.boost}{@link ChatBoost.source | ?.source}{@link ChatBoostSource.user | ?.user}
      * - {@link removedChatBoost | ctx.removedChatBoost}{@link ChatBoostRemoved.source | ?.source}{@link ChatBoostSource.user | ?.user}
+     * - {@link subscription | ctx.subscription}{@link BotSubscriptionUpdated.user | ?.user}
      * - {@link callbackQuery | ctx.callbackQuery}{@link CallbackQuery.from | ?.from}
      * - {@link msg | ctx.msg}{@link Message.from | ?.from}
      * - {@link inlineQuery | ctx.inlineQuery}{@link InlineQuery.from | ?.from}
@@ -829,7 +835,9 @@ export class Context implements CamelCaseUpdate {
         return (
             this.businessConnection ??
                 this.messageReaction ??
-                (this.chatBoost?.boost ?? this.removedChatBoost)?.source
+                this.managedBot ??
+                (this.chatBoost?.boost ?? this.removedChatBoost)?.source ??
+                this.subscription
         )?.user ??
             (
                 this.callbackQuery ??
