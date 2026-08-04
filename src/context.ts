@@ -7,7 +7,8 @@ import {
     type FilterQueryContext,
     matchFilter,
 } from "./filter.ts";
-import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
+// Unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
+import type {
     AcceptedGiftTypes,
     ApiMethods,
     // deno-lint-ignore no-unused-vars
