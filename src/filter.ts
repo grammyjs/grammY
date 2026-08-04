@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase no-explicit-any
 import type { Context } from "./context.ts";
-import type { Update } from "./types.ts";
+import type { Message, MessageEntity, Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
@@ -215,6 +215,7 @@ function testMaybeArray<T>(t: T | T[], pred: (t: T) => boolean): boolean {
 }
 
 // === Define a structure to validate the queries
+type NestedObj = Record<string, Record<string, Record<string, never>>>; // for validation only
 // L3
 const ENTITY_KEYS = {
     mention: {},
@@ -236,7 +237,8 @@ const ENTITY_KEYS = {
     text_link: {},
     text_mention: {},
     custom_emoji: {},
-} as const;
+    date_time: {},
+} as const satisfies Record<MessageEntity["type"], NestedObj>;
 const USER_KEYS = {
     me: {},
     is_bot: {},
@@ -270,12 +272,15 @@ const COMMON_MESSAGE_KEYS = {
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
+    guest_query_id: {},
     business_connection_id: {},
 
     text: {},
+    rich_message: {},
     animation: {},
     audio: {},
     document: {},
+    live_photo: {},
     paid_media: {},
     photo: {},
     sticker: STICKER_KEYS,
@@ -331,6 +336,8 @@ const MESSAGE_KEYS = {
 
     direct_messages_topic: {},
 
+    chat_owner_left: { new_owner: {} },
+    chat_owner_changed: {},
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     group_chat_created: {},
@@ -342,6 +349,7 @@ const MESSAGE_KEYS = {
     users_shared: {},
     chat_shared: {},
     connected_website: {},
+    managed_bot_created: {},
     write_access_allowed: {},
     passport_data: {},
     boost_added: {},
@@ -355,6 +363,10 @@ const MESSAGE_KEYS = {
     checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
     checklist_tasks_done: {},
     checklist_tasks_added: {},
+    community_chat_added: {},
+    community_chat_removed: {},
+    poll_option_added: {},
+    poll_option_deleted: {},
 
     suggested_post_info: {},
     suggested_post_approved: {},
@@ -364,13 +376,13 @@ const MESSAGE_KEYS = {
     suggested_post_refunded: {},
 
     sender_boost_count: {},
-} as const;
+} as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
     direct_message_price_changed: {},
     is_paid_post: {},
-} as const;
+} as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const BUSINESS_CONNECTION_KEYS = {
     can_reply: {},
     is_enabled: {},
@@ -395,6 +407,7 @@ const UPDATE_KEYS = {
     business_message: MESSAGE_KEYS,
     edited_business_message: MESSAGE_KEYS,
     deleted_business_messages: {},
+    guest_message: MESSAGE_KEYS,
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
@@ -404,13 +417,15 @@ const UPDATE_KEYS = {
     poll_answer: {},
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
+    managed_bot: {},
     chat_join_request: {},
     message_reaction: MESSAGE_REACTION_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
     purchased_paid_media: {},
-} as const;
+    subscription: { state: { canceled: {}, active: {}, failed: {} } },
+} as const satisfies Record<Exclude<keyof Update, "update_id">, NestedObj>;
 
 // === Build up all possible filter queries from the above validation structure
 type KeyOf<T> = string & keyof T; // Emulate `keyofStringsOnly`
@@ -589,6 +604,8 @@ interface Shortcuts<U extends Update> {
     deletedBusinessMessages: [U["deleted_business_messages"]] extends [object]
         ? U["deleted_business_messages"]
         : undefined;
+    guestMessage: [U["guest_message"]] extends [object] ? U["guest_message"]
+        : undefined;
     messageReaction: [U["message_reaction"]] extends [object]
         ? U["message_reaction"]
         : undefined;
@@ -614,6 +631,8 @@ interface Shortcuts<U extends Update> {
         : undefined;
     chatMember: [U["chat_member"]] extends [object] ? U["chat_member"]
         : undefined;
+    managedBot: [U["managed_bot"]] extends [object] ? U["managed_bot"]
+        : undefined;
     chatJoinRequest: [U["chat_join_request"]] extends [object]
         ? U["chat_join_request"]
         : undefined;
@@ -624,6 +643,8 @@ interface Shortcuts<U extends Update> {
     purchasedPaidMedia: [U["purchased_paid_media"]] extends [object]
         ? U["purchased_paid_media"]
         : undefined;
+    subscription: [U["subscription"]] extends [object] ? U["subscription"]
+        : undefined;
 
     msg: [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
@@ -632,6 +653,7 @@ interface Shortcuts<U extends Update> {
         : [U["business_message"]] extends [object] ? U["business_message"]
         : [U["edited_business_message"]] extends [object]
             ? U["edited_business_message"]
+        : [U["guest_message"]] extends [object] ? U["guest_message"]
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
@@ -670,10 +692,12 @@ interface Shortcuts<U extends Update> {
         ? U["business_connection"]["user"]
         : [U["message_reaction"]] extends [object]
             ? U["message_reaction"]["user"]
+        : [U["managed_bot"]] extends [object] ? U["managed_bot"]["user"]
         : [U["chat_boost"]] extends [object]
             ? U["chat_boost"]["boost"]["source"]["user"]
         : [U["removed_chat_boost"]] extends [object]
             ? U["removed_chat_boost"]["source"]["user"]
+        : [U["subscription"]] extends [object] ? U["subscription"]["user"]
         : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
@@ -686,8 +710,14 @@ interface Shortcuts<U extends Update> {
         : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
+        : [U["purchased_paid_media"]] extends [object]
+            ? U["purchased_paid_media"]["from"]
         : undefined;
     fromId: [Shortcuts<U>["from"]] extends [object] ? number : undefined;
+    managedBotId: [U["managed_bot"]] extends [object] ? number
+        : [Shortcuts<U>["msg"]] extends [{ managed_bot_created: object }]
+            ? number
+        : undefined;
     businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
@@ -704,9 +734,10 @@ const L1_SHORTCUTS = {
 } as const;
 const L2_SHORTCUTS = {
     "": ["entities", "caption_entities"],
-    media: ["photo", "video"],
+    media: ["photo", "live_photo", "video"],
     file: [
         "photo",
+        "live_photo",
         "animation",
         "audio",
         "document",
@@ -763,8 +794,10 @@ type L2Equivalents = {
     edited_channel_post: MessageEquivalents;
     business_message: MessageEquivalents;
     edited_business_message: MessageEquivalents;
+    guest_message: MessageEquivalents;
 };
 type MessageEquivalents = {
+    live_photo: "photo";
     animation: "document";
     entities: "text";
     caption_entities: "caption";
