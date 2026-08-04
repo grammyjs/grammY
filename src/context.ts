@@ -4554,7 +4554,7 @@ export class Context implements CamelCaseUpdate {
      * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
-     * @param text_or_rich_message New text of the message, 1-4096 characters after entity parsing; or new rich content of the message
+     * @param text_or_rich_message New text of the message, 1-4096 characters after entity parsing; or new rich content of the message. Direct upload of new files isn't supported when an inline message is edited.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -4648,7 +4648,7 @@ export class Context implements CamelCaseUpdate {
      * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
-     * @param media An object for a new media content of the message
+     * @param media An object for the new media content of the message
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
