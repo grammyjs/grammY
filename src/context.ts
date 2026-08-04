@@ -723,6 +723,7 @@ export class Context implements CamelCaseUpdate {
                 this.editedChannelPost ??
                 this.businessMessage ??
                 this.editedBusinessMessage ??
+                this.guestMessage ??
                 this.callbackQuery?.message
         );
     }
