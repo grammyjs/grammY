@@ -1243,8 +1243,8 @@ export class Context implements CamelCaseUpdate {
             (chat_id !== undefined && message_id !== undefined)
         ) {
             return await this.api.edit(
-                ensureChatId("editMessageText", this, { chat_id }),
-                ensureMessageId("editMessageText", this, { message_id }),
+                ensureChatId("edit", this, { chat_id }),
+                ensureMessageId("edit", this, { message_id }),
                 { ...fillConnection(this), ...rest },
                 signal,
             );
