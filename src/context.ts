@@ -1290,13 +1290,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendmessage}
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
@@ -1322,8 +1322,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `from_chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#forwardmessage}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -1350,7 +1350,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `from_chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#forwardmessages}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -1379,8 +1379,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `from_chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#copymessage}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -1407,7 +1407,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `from_chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#copymessages}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -1436,13 +1436,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendphoto}
      * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1468,13 +1468,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendlivephoto}
      * @param live_photo Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
@@ -1505,13 +1505,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendaudio}
      * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1537,13 +1537,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#senddocument}
      * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1569,13 +1569,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendvideo}
      * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1601,13 +1601,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendanimation}
      * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1633,13 +1633,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendvoice}
      * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -1665,13 +1665,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendvideonote}
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending video notes by a URL is currently unsupported.
@@ -1697,13 +1697,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendpaidmedia}
      * @param star_count The number of Telegram Stars that must be paid to buy access to the media; 1-25000
@@ -1732,13 +1732,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendmediagroup}
      * @param media An Array describing messages to be sent, must include 2-10 items
@@ -1767,13 +1767,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendlocation}
      * @param latitude Latitude of the location
@@ -1802,13 +1802,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendvenue}
      * @param latitude Latitude of the venue
@@ -1843,13 +1843,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendcontact}
      * @param phone_number Contact's phone number
@@ -1878,12 +1878,12 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * @see {@link https://core.telegram.org/bots/api#sendpoll}
      * @param question Poll question, 1-300 characters
@@ -1912,8 +1912,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#sendchecklist}
      * @param checklist An object for the checklist to send
@@ -1940,13 +1940,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#senddice}
      * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”.
@@ -1972,11 +1972,11 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
      * @param draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
@@ -2009,12 +2009,12 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * @see {@link https://core.telegram.org/bots/api#sendchataction}
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link sendMessage | text messages}, _upload_photo_ for {@link sendPhoto | photos}, _record_video_ or _upload_video_ for {@link sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link sendVoice | voice notes}, _upload_document_ for {@link sendDocument | general files}, _choose_sticker_ for {@link sendSticker | stickers}, _find_location_ for {@link sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link sendVideoNote | video notes}.
@@ -2045,14 +2045,14 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
-     * Alias for {@link Context.setMessageReaction} which is a context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}.
+     * Alias for {@link setMessageReaction} which is a context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}.
      *
      * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns `true` on success.
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
      * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
@@ -2073,8 +2073,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
      * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
@@ -2101,7 +2101,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserprofilephotos}
      * @param other Options object with all optional parameters
@@ -2124,7 +2124,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserprofileaudios}
      * @param other Options object with all optional parameters
@@ -2147,7 +2147,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
      * @param emoji_status_custom_emoji_id Custom emoji identifier of the emoji status to set. Pass an empty string to remove the status.
@@ -2198,8 +2198,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
      * @param other Options object with all optional parameters
@@ -2223,7 +2223,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
      * @param user_id Unique identifier of the target user
@@ -2249,8 +2249,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
      * @param other Options object with all optional parameters
@@ -2274,7 +2274,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
      * @param user_id Unique identifier of the target user
@@ -2300,8 +2300,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.restrictChatMember | ctx.api.restrictChatMember}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
      *
@@ -2330,7 +2330,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.restrictChatMember | ctx.api.restrictChatMember}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
      *
@@ -2361,8 +2361,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#promotechatmember}
      * @param other Options object with all optional parameters
@@ -2386,7 +2386,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#promotechatmember}
      * @param user_id Unique identifier of the target user
@@ -2412,8 +2412,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
      * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
@@ -2440,7 +2440,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
      * @param user_id Unique identifier of the target user
@@ -2469,8 +2469,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatmembertag}
      * @param tag New tag for the member; 0-16 characters, emoji are not allowed
@@ -2497,7 +2497,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatmembertag}
      * @param user_id Unique identifier of the target user
@@ -2526,8 +2526,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `sender_chat_id` from {@link Context.msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `sender_chat_id` from {@link msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
      * @param other Options object with all optional parameters
@@ -2551,7 +2551,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
      * @param sender_chat_id Unique identifier of the target sender chat
@@ -2577,8 +2577,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `sender_chat_id` from {@link Context.msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `sender_chat_id` from {@link msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
      * @param other Options object with all optional parameters
@@ -2602,7 +2602,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
      * @param sender_chat_id Unique identifier of the target sender chat
@@ -2628,7 +2628,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.setChatPermissions | ctx.api.setChatPermissions}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
      *
@@ -2658,7 +2658,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
      * @param other Options object with all optional parameters
@@ -2681,7 +2681,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
      * @param other Options object with all optional parameters
@@ -2704,7 +2704,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#editchatinvitelink}
      * @param invite_link The invite link to edit
@@ -2730,7 +2730,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
      * @param subscription_period The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
@@ -2759,7 +2759,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#editchatsubscriptioninvitelink}
      * @param invite_link The invite link to edit
@@ -2785,7 +2785,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#revokechatinvitelink}
      * @param invite_link The invite link to revoke
@@ -2811,8 +2811,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
      * @param other Options object with all optional parameters
@@ -2836,8 +2836,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
      * @param other Options object with all optional parameters
@@ -2861,7 +2861,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatphoto}
      * @param photo New chat photo, uploaded using multipart/form-data
@@ -2887,7 +2887,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletechatphoto}
      * @param other Options object with all optional parameters
@@ -2910,7 +2910,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchattitle}
      * @param title New chat title, 1-128 characters
@@ -2936,7 +2936,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatdescription}
      * @param description New chat description, 0-255 characters
@@ -2962,11 +2962,11 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
      * @param message_id Identifier of a message to pin
@@ -2992,11 +2992,11 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
      * @param message_id Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
@@ -3022,7 +3022,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#unpinallchatmessages}
      * @param other Options object with all optional parameters
@@ -3045,7 +3045,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#leavechat}
      * @param other Options object with all optional parameters
@@ -3068,7 +3068,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchat}
      * @param other Options object with all optional parameters
@@ -3091,7 +3091,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatadministrators}
      * @param other Options object with all optional parameters
@@ -3114,7 +3114,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatmembercount}
      * @param other Options object with all optional parameters
@@ -3137,8 +3137,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatmember}
      * @param other Options object with all optional parameters
@@ -3162,7 +3162,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatmember}
      * @param user_id Unique identifier of the target user
@@ -3188,7 +3188,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserpersonalchatmessages}
      * @param limit The maximum number of messages to return; 1-20
@@ -3214,7 +3214,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
      * @param sticker_set_name Name of the sticker set to be set as the group sticker set
@@ -3240,7 +3240,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
      * @param other Options object with all optional parameters
@@ -3263,7 +3263,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#createforumtopic}
      * @param name Topic name, 1-128 characters
@@ -3289,8 +3289,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * @see {@link https://core.telegram.org/bots/api#editforumtopic}
      * @param other Options object with all optional parameters
@@ -3314,8 +3314,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * @see {@link https://core.telegram.org/bots/api#closeforumtopic}
      * @param other Options object with all optional parameters
@@ -3339,8 +3339,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * @see {@link https://core.telegram.org/bots/api#reopenforumtopic}
      * @param other Options object with all optional parameters
@@ -3364,8 +3364,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
      * @param other Options object with all optional parameters
@@ -3389,8 +3389,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
      * @param other Options object with all optional parameters
@@ -3414,7 +3414,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#editgeneralforumtopic}
      * @param name New topic name, 1-128 characters
@@ -3440,7 +3440,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#closegeneralforumtopic}
      * @param other Options object with all optional parameters
@@ -3463,7 +3463,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#reopengeneralforumtopic}
      * @param other Options object with all optional parameters
@@ -3486,7 +3486,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#hidegeneralforumtopic}
      * @param other Options object with all optional parameters
@@ -3509,7 +3509,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#unhidegeneralforumtopic}
      * @param other Options object with all optional parameters
@@ -3532,7 +3532,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages}
      * @param other Options object with all optional parameters
@@ -3557,7 +3557,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `callback_query_id` from {@link Context.callbackQuery | ctx.callbackQuery}{@link CallbackQuery.id | .id}
+     * - `callback_query_id` from {@link callbackQuery | ctx.callbackQuery}{@link CallbackQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
      * @param signal Optional {@link AbortSignal} to cancel the request
@@ -3582,7 +3582,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `guest_query_id` from {@link Context.msg | ctx.msg}{@link Message.guest_query_id | .guest_query_id}
+     * - `guest_query_id` from {@link msg | ctx.msg}{@link Message.guest_query_id | .guest_query_id}
      *
      * @see {@link https://core.telegram.org/bots/api#answerguestquery}
      * @param result An object describing the message to be sent
@@ -3608,8 +3608,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
      * @param other Options object with all optional parameters
@@ -3633,7 +3633,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
      * @param user_id Unique identifier of the target user
@@ -3659,7 +3659,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#getbusinessconnection}
      * @param other Options object with all optional parameters
@@ -3682,7 +3682,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.managedBotId | ctx.managedBotId}
+     * - `user_id` from {@link managedBotId | ctx.managedBotId}
      *
      * @see {@link https://core.telegram.org/bots/api#getmanagedbottoken}
      * @param other Options object with all optional parameters
@@ -3705,7 +3705,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.managedBotId | ctx.managedBotId}
+     * - `user_id` from {@link managedBotId | ctx.managedBotId}
      *
      * @see {@link https://core.telegram.org/bots/api#replacemanagedbottoken}
      * @param other Options object with all optional parameters
@@ -3728,7 +3728,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.managedBotId | ctx.managedBotId}
+     * - `user_id` from {@link managedBotId | ctx.managedBotId}
      *
      * @see {@link https://core.telegram.org/bots/api#getmanagedbotaccesssettings}
      * @param other Options object with all optional parameters
@@ -3751,7 +3751,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.managedBotId | ctx.managedBotId}
+     * - `user_id` from {@link managedBotId | ctx.managedBotId}
      *
      * @see {@link https://core.telegram.org/bots/api#setmanagedbotaccesssettings}
      * @param other Options object with all optional parameters
@@ -3774,7 +3774,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.managedBotId | ctx.managedBotId}
+     * - `user_id` from {@link managedBotId | ctx.managedBotId}
      *
      * @see {@link https://core.telegram.org/bots/api#setmanagedbotaccesssettings}
      * @param other Options object with all optional parameters
@@ -3797,7 +3797,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#sendgift}
      * @param gift_id Identifier of the gift; limited gifts can't be sent to channel chats
@@ -3823,7 +3823,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#sendgift}
      * @param gift_id Identifier of the gift; limited gifts can't be sent to channel chats
@@ -3849,7 +3849,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#giftpremiumsubscription}
      * @param month_count Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
@@ -3878,7 +3878,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#verifyuser}
      * @param other Options object with all optional parameters
@@ -3901,7 +3901,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#verifychat}
      * @param other Options object with all optional parameters
@@ -3924,7 +3924,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#removeuserverification}
      * @param other Options object with all optional parameters
@@ -3947,7 +3947,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#removechatverification}
      * @param other Options object with all optional parameters
@@ -3970,9 +3970,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#readbusinessmessage}
      * @param other Options object with all optional parameters
@@ -3997,7 +3997,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletebusinessmessages}
      * @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link deleteMessage} for limitations on which messages can be deleted.
@@ -4023,7 +4023,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountname}
      * @param first_name The new value of the first name for the business account; 1-64 characters
@@ -4049,7 +4049,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountusername}
      * @param username The new value of the username for the business account; 0-32 characters
@@ -4079,7 +4079,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountbio}
      * @param bio The new value of the bio for the business account; 0-140 characters
@@ -4105,7 +4105,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountprofilephoto}
      * @param photo The new profile photo to set
@@ -4135,7 +4135,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#removebusinessaccountprofilephoto}
      * @param other Options object with all optional parameters
@@ -4162,8 +4162,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `show_gift_button: false` (use {@link Context.setBusinessAccountGiftSettingsShowGiftButton} for `true`)
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `show_gift_button: false` (use {@link setBusinessAccountGiftSettingsShowGiftButton} for `true`)
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
      * @param accepted_gift_types Types of gifts accepted by the business account
@@ -4194,8 +4194,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `show_gift_button: true` (use {@link Context.setBusinessAccountGiftSettingsHideGiftButton} for `false`)
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `show_gift_button: true` (use {@link setBusinessAccountGiftSettingsHideGiftButton} for `false`)
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
      * @param accepted_gift_types Types of gifts accepted by the business account
@@ -4226,7 +4226,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#getbusinessaccountstarbalance}
      * @param other Options object with all optional parameters
@@ -4253,7 +4253,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#transferbusinessaccountstars}
      * @param star_count Number of Telegram Stars to transfer; 1-10000
@@ -4283,7 +4283,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#getbusinessaccountgifts}
      * @param other Options object with all optional parameters
@@ -4306,7 +4306,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getusergifts}
      * @param other Options object with all optional parameters
@@ -4329,7 +4329,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatgifts}
      * @param other Options object with all optional parameters
@@ -4352,7 +4352,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#convertgifttostars}
      * @param owned_gift_id Unique identifier of the regular gift that should be converted to Telegram Stars
@@ -4378,7 +4378,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#upgradegift}
      * @param owned_gift_id Unique identifier of the regular gift that should be upgraded to a unique one
@@ -4404,7 +4404,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#transfergift}
      * @param owned_gift_id Unique identifier of the regular gift that should be transferred
@@ -4433,7 +4433,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#poststory}
      * @param content Content of the story
@@ -4462,9 +4462,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `from_story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `from_chat_id` from {@link chatId | ctx.chatId}
+     * - `from_story_id` from {@link msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#repoststory}
      * @param active_period Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
@@ -4492,8 +4492,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `story_id` from {@link msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#editstory}
      * @param content Content of the story
@@ -4520,8 +4520,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `story_id` from {@link msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#deletestory}
      * @param other Options object with all optional parameters
@@ -4545,13 +4545,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
      * @param text_or_rich_message New text of the message, 1-4096 characters after entity parsing; or new rich content of the message. Direct upload of new files isn't supported when an inline message is edited.
@@ -4591,13 +4591,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
      * @param caption New caption of the message, 0-1024 characters after entities parsing
@@ -4637,13 +4637,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
      * @param media An object for the new media content of the message
@@ -4684,13 +4684,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
      * @param latitude Latitude of new location
@@ -4734,13 +4734,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
      * @param other Options object with all optional parameters
@@ -4776,9 +4776,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagechecklist}
      * @param checklist An object for the new checklist
@@ -4806,13 +4806,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
      * @param reply_markup An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
@@ -4852,12 +4852,12 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
      *
      * @see {@link https://core.telegram.org/bots/api#stoppoll}
      * @param other Options object with all optional parameters
@@ -4881,9 +4881,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `receiver_user_id` from {@link Context.msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
-     * - `ephemeral_message_id` from {@link Context.msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `receiver_user_id` from {@link msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
+     * - `ephemeral_message_id` from {@link msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
      *
      * @see {@link https://core.telegram.org/bots/api#editephemeralmessagetext}
      * @param text New text of the message, 1-4096 characters after entity parsing
@@ -4911,9 +4911,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `receiver_user_id` from {@link Context.msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
-     * - `ephemeral_message_id` from {@link Context.msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `receiver_user_id` from {@link msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
+     * - `ephemeral_message_id` from {@link msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
      *
      * @see {@link https://core.telegram.org/bots/api#editephemeralmessagemedia}
      * @param media An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
@@ -4941,9 +4941,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `receiver_user_id` from {@link Context.msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
-     * - `ephemeral_message_id` from {@link Context.msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `receiver_user_id` from {@link msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
+     * - `ephemeral_message_id` from {@link msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
      *
      * @see {@link https://core.telegram.org/bots/api#editephemeralmessagecaption}
      * @param caption New caption of the message, 0-1024 characters after entities parsing
@@ -4975,9 +4975,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `receiver_user_id` from {@link Context.msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
-     * - `ephemeral_message_id` from {@link Context.msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `receiver_user_id` from {@link msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
+     * - `ephemeral_message_id` from {@link msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
      *
      * @see {@link https://core.telegram.org/bots/api#editephemeralmessagereplymarkup}
      * @param other Options object with all optional parameters
@@ -5010,8 +5010,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#approvesuggestedpost}
      * @param other Options object with all optional parameters
@@ -5035,8 +5035,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#declinesuggestedpost}
      * @param other Options object with all optional parameters
@@ -5072,8 +5072,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessage}
      * @param other Options object with all optional parameters
@@ -5097,7 +5097,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessages}
      * @param message_ids A list of 1-100 identifiers of messages to delete. See {@link deleteMessage} for limitations on which messages can be deleted.
@@ -5123,9 +5123,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `receiver_user_id` from {@link Context.msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
-     * - `ephemeral_message_id` from {@link Context.msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `receiver_user_id` from {@link msg | ctx.msg}{@link Message.receiver_user | .receiver_user}{@link User.id | .id}
+     * - `ephemeral_message_id` from {@link msg | ctx.msg}{@link Message.ephemeral_message_id | .ephemeral_message_id}
      *
      * @see {@link https://core.telegram.org/bots/api#deleteephemeralmessage}
      * @param other Options object with all optional parameters
@@ -5150,9 +5150,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
      * @param other Options object with all optional parameters
@@ -5177,9 +5177,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `message_id` from {@link Context.msgId | ctx.msgId}
-     * - `actor_chat_id` from {@link Context.messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.actor_chat | .actor_chat}{@link Chat.id | .id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
+     * - `actor_chat_id` from {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.actor_chat | .actor_chat}{@link Chat.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
      * @param other Options object with all optional parameters
@@ -5204,8 +5204,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
      * @param other Options object with all optional parameters
@@ -5229,8 +5229,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
-     * - `actor_chat_id` from {@link Context.messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.actor_chat | .actor_chat}{@link Chat.id | .id}
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `actor_chat_id` from {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.actor_chat | .actor_chat}{@link Chat.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
      * @param other Options object with all optional parameters
@@ -5254,13 +5254,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendsticker}
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Video and animated stickers can't be sent via an HTTP URL.
@@ -5286,7 +5286,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * @see {@link https://core.telegram.org/bots/api#getstickerset}
      * @param other Options object with all optional parameters
@@ -5309,7 +5309,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
      * @param sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See {@link https://core.telegram.org/stickers | https://core.telegram.org/stickers} for technical requirements. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
@@ -5338,7 +5338,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#createnewstickerset}
      * @param name Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in `"_by_<bot_username>"`. `<bot_username>` is case insensitive. 1-64 characters.
@@ -5370,8 +5370,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `user_id` from {@link fromId | ctx.fromId}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * @see {@link https://core.telegram.org/bots/api#addstickertoset}
      * @param sticker An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
@@ -5398,7 +5398,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickerpositioninset}
      * @param position New sticker position in the set, zero-based
@@ -5424,7 +5424,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#deletestickerfromset}
      * @param other Options object with all optional parameters
@@ -5447,9 +5447,9 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
-     * - `old_sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `user_id` from {@link fromId | ctx.fromId}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `old_sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
      * @param sticker An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
@@ -5477,7 +5477,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickeremojilist}
      * @param emoji_list A list of 1-20 emoji associated with the sticker
@@ -5503,7 +5503,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
      * @param keywords A list of 0-20 search keywords for the sticker with total length of up to 64 characters
@@ -5529,7 +5529,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
+     * - `sticker` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickermaskposition}
      * @param mask_position An object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
@@ -5555,7 +5555,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickersettitle}
      * @param title Sticker set title, 1-64 characters
@@ -5581,8 +5581,8 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setstickersetthumbnail}
      * @param thumbnail A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
@@ -5612,7 +5612,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * @see {@link https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail}
      * @param custom_emoji_id Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail
@@ -5642,7 +5642,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `name` from {@link msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * @see {@link https://core.telegram.org/bots/api#deletestickerset}
      * @param other Options object with all optional parameters
@@ -5665,13 +5665,13 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendrichmessage}
      * @param rich_message The message to be sent
@@ -5697,11 +5697,11 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
      * @param draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
@@ -5732,7 +5732,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_query_id` from {@link Context.inlineQuery | ctx.inlineQuery}{@link InlineQuery.id | .id}
+     * - `inline_query_id` from {@link inlineQuery | ctx.inlineQuery}{@link InlineQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
      * @param results An Array of results for the inline query
@@ -5758,7 +5758,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
      * @param result An object describing the message to be sent
@@ -5784,7 +5784,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#savepreparedkeyboardbutton}
      * @param button An object describing the button to be saved. The button must be of the type _request_users_, _request_chat_, or _request_managed_bot_.
@@ -5810,12 +5810,12 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
-     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * @see {@link https://core.telegram.org/bots/api#sendinvoice}
      * @param title Product name, 1-32 characters
@@ -5853,7 +5853,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `shipping_query_id` from {@link Context.shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
+     * - `shipping_query_id` from {@link shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
      * @param shipping_options An Array of available shipping options
@@ -5879,7 +5879,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `shipping_query_id` from {@link Context.shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
+     * - `shipping_query_id` from {@link shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
      * @param error_message Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
@@ -5905,7 +5905,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `pre_checkout_query_id` from {@link Context.preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
+     * - `pre_checkout_query_id` from {@link preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
      * @param other Options object with all optional parameters
@@ -5928,7 +5928,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `pre_checkout_query_id` from {@link Context.preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
+     * - `pre_checkout_query_id` from {@link preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
      * @param error_message Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
@@ -5954,7 +5954,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#refundstarpayment}
      * @param telegram_payment_charge_id Telegram payment identifier
@@ -5980,7 +5980,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#edituserstarsubscription}
      * @param telegram_payment_charge_id Telegram payment identifier for the subscription
@@ -6011,7 +6011,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setpassportdataerrors}
      * @param errors An Array describing the errors
@@ -6037,12 +6037,12 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
-     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * @see {@link https://core.telegram.org/bots/api#sendgame}
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via {@link https://t.me/botfather | \@BotFather}.
@@ -6068,10 +6068,10 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `user_id` from {@link fromId | ctx.fromId}
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * @see {@link https://core.telegram.org/bots/api#setgamescore}
      * @param score New score, must be non-negative
@@ -6116,10 +6116,10 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from {@link Context.fromId | ctx.fromId}
-     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
-     * - `message_id` from {@link Context.msgId | ctx.msgId} (if no value for `inline_message_id` exists)
+     * - `user_id` from {@link fromId | ctx.fromId}
+     * - `inline_message_id` from {@link inlineMessageId | ctx.inlineMessageId}
+     * - `chat_id` from {@link chatId | ctx.chatId} (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link msgId | ctx.msgId} (if no value for `inline_message_id` exists)
      *
      * @see {@link https://core.telegram.org/bots/api#getgamehighscores}
      * @param other Options object with all optional parameters
