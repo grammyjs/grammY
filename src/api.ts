@@ -988,7 +988,14 @@ export class Api<R extends RawApi = RawApi> {
         return await this.raw.setMessageReaction({
             chat_id,
             message_id,
-            reaction,
+            reaction: reaction === undefined
+                ? undefined
+                : (Array.isArray(reaction) ? reaction : [reaction])
+                    .map((emoji): ReactionType =>
+                        typeof emoji === "string"
+                            ? ({ type: "emoji", emoji })
+                            : emoji
+                    ),
             ...other,
         }, signal);
     }
