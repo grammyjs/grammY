@@ -14,7 +14,7 @@ jobs:
               with:
                   deno-version: v2.x
                   cache: true
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - run: deno fmt --check
             - run: deno lint
             - run: deno task check
@@ -29,5 +29,5 @@ jobs:
               with:
                   deno-version: v2.x
                   cache: true
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - run: deno task test
