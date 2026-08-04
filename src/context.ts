@@ -352,7 +352,7 @@ const checker: StaticHas = {
         const hasMessageReaction = checker.filterQuery("message_reaction");
         const normalized: ReactionType[] = typeof reaction === "string"
             ? [{ type: "emoji", emoji: reaction }]
-            : (Array.isArray(reaction) ? reaction : [reaction]).map((emoji) =>
+            : toArray(reaction).map((emoji) =>
                 typeof emoji === "string" ? { type: "emoji", emoji } : emoji
             );
         const emoji = new Set(
