@@ -4539,6 +4539,58 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
+     * Context-aware alias for {@link Api.savePreparedInlineMessage | ctx.api.savePreparedInlineMessage}.
+     *
+     * Stores a message that can be sent by a user of a Mini App. Returns a {@link PreparedInlineMessage} object.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `user_id` from {@link fromId | ctx.fromId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
+     * @param result An object describing the message to be sent
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async savePreparedInlineMessage(
+        result: InlineQueryResult,
+        other?: Partial<ApiParameters<"savePreparedInlineMessage">>,
+        signal?: AbortSignal,
+    ): Promise<PreparedInlineMessage> {
+        return await this.api.savePreparedInlineMessage(
+            ensureUserId("savePreparedInlineMessage", this, other),
+            result,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.savePreparedKeyboardButton | ctx.api.savePreparedKeyboardButton}.
+     *
+     * Stores a keyboard button that can be used by a user within a Mini App. Returns a {@link PreparedKeyboardButton} object.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `user_id` from {@link fromId | ctx.fromId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#savepreparedkeyboardbutton}
+     * @param button An object describing the button to be saved. The button must be of the type _request_users_, _request_chat_, or _request_managed_bot_.
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async savePreparedKeyboardButton(
+        button: KeyboardButton,
+        other?: Partial<ApiParameters<"savePreparedKeyboardButton">>,
+        signal?: AbortSignal,
+    ): Promise<PreparedKeyboardButton> {
+        return await this.api.savePreparedKeyboardButton(
+            ensureUserId("savePreparedKeyboardButton", this, other),
+            button,
+            other,
+            signal,
+        );
+    }
+    /**
      * Context-aware alias for {@link Api.editMessageText | ctx.api.editMessageText}.
      *
      * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -5747,58 +5799,6 @@ export class Context implements CamelCaseUpdate {
         return await this.api.answerInlineQuery(
             ensureInlineQueryId("answerInlineQuery", this, other),
             results,
-            other,
-            signal,
-        );
-    }
-    /**
-     * Context-aware alias for {@link Api.savePreparedInlineMessage | ctx.api.savePreparedInlineMessage}.
-     *
-     * Stores a message that can be sent by a user of a Mini App. Returns a {@link PreparedInlineMessage} object.
-     *
-     * The following parameters are pre-supplied based on the current update:
-     *
-     * - `user_id` from {@link fromId | ctx.fromId}
-     *
-     * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
-     * @param result An object describing the message to be sent
-     * @param other Options object with all optional parameters
-     * @param signal Optional {@link AbortSignal} to cancel the request
-     */
-    async savePreparedInlineMessage(
-        result: InlineQueryResult,
-        other?: Partial<ApiParameters<"savePreparedInlineMessage">>,
-        signal?: AbortSignal,
-    ): Promise<PreparedInlineMessage> {
-        return await this.api.savePreparedInlineMessage(
-            ensureUserId("savePreparedInlineMessage", this, other),
-            result,
-            other,
-            signal,
-        );
-    }
-    /**
-     * Context-aware alias for {@link Api.savePreparedKeyboardButton | ctx.api.savePreparedKeyboardButton}.
-     *
-     * Stores a keyboard button that can be used by a user within a Mini App. Returns a {@link PreparedKeyboardButton} object.
-     *
-     * The following parameters are pre-supplied based on the current update:
-     *
-     * - `user_id` from {@link fromId | ctx.fromId}
-     *
-     * @see {@link https://core.telegram.org/bots/api#savepreparedkeyboardbutton}
-     * @param button An object describing the button to be saved. The button must be of the type _request_users_, _request_chat_, or _request_managed_bot_.
-     * @param other Options object with all optional parameters
-     * @param signal Optional {@link AbortSignal} to cancel the request
-     */
-    async savePreparedKeyboardButton(
-        button: KeyboardButton,
-        other?: Partial<ApiParameters<"savePreparedKeyboardButton">>,
-        signal?: AbortSignal,
-    ): Promise<PreparedKeyboardButton> {
-        return await this.api.savePreparedKeyboardButton(
-            ensureUserId("savePreparedKeyboardButton", this, other),
-            button,
             other,
             signal,
         );
