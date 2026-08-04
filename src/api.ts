@@ -153,6 +153,12 @@ export class Api<R extends RawApi = RawApi> {
         if ("text" in payload) {
             return await this.raw.sendMessage({ chat_id, ...payload }, signal);
         }
+        if ("live_photo" in payload) {
+            return await this.raw.sendLivePhoto(
+                { chat_id, ...payload } as ApiParameters<"sendLivePhoto">,
+                signal,
+            );
+        }
         if ("photo" in payload) {
             return await this.raw.sendPhoto({ chat_id, ...payload }, signal);
         }
@@ -256,7 +262,7 @@ export class Api<R extends RawApi = RawApi> {
             )) as Message;
         }
         payload satisfies never;
-        throw new Error("Cannot send unknown data!");
+        throw new Error("Cannot edit unknown data!");
     }
 
     async editInline(

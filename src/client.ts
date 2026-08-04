@@ -31,6 +31,10 @@ export type CallData<R extends RawApi = RawApi> = {
 export type SendData<R extends RawApi = RawApi> =
     | string
     | (Partial<ApiParameters<"sendMessage", R>> & { text: string })
+    | (Partial<ApiParameters<"sendLivePhoto", R>> & {
+        live_photo: Present;
+        photo: Present;
+    })
     | (Partial<ApiParameters<"sendPhoto", R>> & { photo: Present })
     | (Partial<ApiParameters<"sendAudio", R>> & { audio: Present })
     | (Partial<ApiParameters<"sendDocument", R>> & { document: Present })
@@ -62,6 +66,7 @@ export type SendData<R extends RawApi = RawApi> =
     })
     | (Partial<ApiParameters<"sendDice", R>> & { emoji: Present })
     | (Partial<ApiParameters<"sendSticker", R>> & { sticker: Present })
+    | (Partial<ApiParameters<"sendRichMessage", R>> & { rich_message: Present })
     | (Partial<ApiParameters<"sendInvoice", R>> & {
         title: Present;
         description: Present;
@@ -73,6 +78,7 @@ export type SendData<R extends RawApi = RawApi> =
 export type EditData<R extends RawApi = RawApi> =
     | string
     | (Partial<ApiParameters<"editMessageText", R>> & { text: Present })
+    | (Partial<ApiParameters<"editMessageText", R>> & { rich_message: Present })
     | (Partial<ApiParameters<"editMessageCaption", R>> & { caption: Present })
     | (Partial<ApiParameters<"editMessageMedia", R>> & { media: Present })
     | (Partial<ApiParameters<"editMessageLiveLocation", R>> & {
