@@ -4563,10 +4563,9 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageText">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
-            this.inlineMessageId;
+        const ilMsgId = other?.inline_message_id ?? this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.editMessageText(
@@ -4578,7 +4577,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.editMessageTextInline(
-                inlineMessageId,
+                ilMsgId,
                 text_or_rich_message,
                 fillConnection(this, other),
                 signal,
@@ -4610,10 +4609,9 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageCaption">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
-            this.inlineMessageId;
+        const ilMsgId = other?.inline_message_id ?? this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.editMessageCaption(
@@ -4625,7 +4623,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.editMessageCaptionInline(
-                inlineMessageId,
+                ilMsgId,
                 caption,
                 fillConnection(this, other),
                 signal,
@@ -4657,10 +4655,10 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageMedia">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
+        const ilMsgId = other?.inline_message_id ??
             this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.editMessageMedia(
@@ -4672,7 +4670,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.editMessageMediaInline(
-                inlineMessageId,
+                ilMsgId,
                 media,
                 fillConnection(this, other),
                 signal,
@@ -4706,10 +4704,9 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
-            this.inlineMessageId;
+        const ilMsgId = other?.inline_message_id ?? this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.editMessageLiveLocation(
@@ -4722,7 +4719,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.editMessageLiveLocationInline(
-                inlineMessageId,
+                ilMsgId,
                 latitude,
                 longitude,
                 fillConnection(this, other),
@@ -4753,10 +4750,9 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"stopMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
-            this.inlineMessageId;
+        const ilMsgId = other?.inline_message_id ?? this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.stopMessageLiveLocation(
@@ -4767,7 +4763,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.stopMessageLiveLocationInline(
-                inlineMessageId,
+                ilMsgId,
                 fillConnection(this, other),
                 signal,
             );
@@ -4828,10 +4824,9 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageReplyMarkup">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
-            this.inlineMessageId;
+        const ilMsgId = other?.inline_message_id ?? this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.editMessageReplyMarkup(
@@ -4843,7 +4838,7 @@ export class Context implements CamelCaseUpdate {
             );
         } else {
             return await this.api.editMessageReplyMarkupInline(
-                inlineMessageId,
+                ilMsgId,
                 reply_markup,
                 fillConnection(this, other),
                 signal,
@@ -6088,10 +6083,10 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"setGameScore">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        const inlineMessageId = other?.inline_message_id ??
+        const ilMsgId = other?.inline_message_id ??
             this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.setGameScore(
@@ -6106,7 +6101,7 @@ export class Context implements CamelCaseUpdate {
             return await this.api.setGameScoreInline(
                 ensureUserId("setGameScore", this, other),
                 score,
-                inlineMessageId,
+                ilMsgId,
                 other,
                 signal,
             );
@@ -6134,10 +6129,10 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"getGameHighScores">>,
         signal?: AbortSignal,
     ): Promise<GameHighScore[]> {
-        const inlineMessageId = other?.inline_message_id ??
+        const ilMsgId = other?.inline_message_id ??
             this.inlineMessageId;
         if (
-            inlineMessageId === undefined ||
+            ilMsgId === undefined ||
             (other?.chat_id !== undefined && other.message_id !== undefined)
         ) {
             return await this.api.getGameHighScores(
@@ -6150,7 +6145,7 @@ export class Context implements CamelCaseUpdate {
         } else {
             return await this.api.getGameHighScoresInline(
                 ensureUserId("getGameHighScores", this, other),
-                inlineMessageId,
+                ilMsgId,
                 other,
                 signal,
             );
