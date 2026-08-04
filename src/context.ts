@@ -969,6 +969,8 @@ export class Context implements CamelCaseUpdate {
                     customEmoji.push(reaction.custom_emoji_id);
                 } else if (reaction.type === "paid") {
                     paid = paidAdded = true;
+                } else {
+                    reaction satisfies never;
                 }
             }
             // temporarily move all old emoji to the *Removed arrays
@@ -979,6 +981,8 @@ export class Context implements CamelCaseUpdate {
                     customEmojiRemoved.push(reaction.custom_emoji_id);
                 } else if (reaction.type === "paid") {
                     paidAdded = false;
+                } else {
+                    reaction satisfies never;
                 }
             }
             // temporarily move all new emoji to the *Added arrays
