@@ -2811,7 +2811,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id}, falling back to {@link chatId | ctx.chatId}
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
@@ -2823,7 +2823,11 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.approveChatJoinRequest(
-            ensureChatId("approveChatJoinRequest", this, other),
+            ensureChatJoinRequestChatId(
+                "approveChatJoinRequest",
+                this,
+                other,
+            ),
             ensureUserId("approveChatJoinRequest", this, other),
             other,
             signal,
@@ -2836,7 +2840,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id}, falling back to {@link chatId | ctx.chatId}
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
@@ -2848,7 +2852,11 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.declineChatJoinRequest(
-            ensureChatId("declineChatJoinRequest", this, other),
+            ensureChatJoinRequestChatId(
+                "declineChatJoinRequest",
+                this,
+                other,
+            ),
             ensureUserId("declineChatJoinRequest", this, other),
             other,
             signal,
@@ -4463,7 +4471,7 @@ export class Context implements CamelCaseUpdate {
      * The following parameters are pre-supplied based on the current update:
      *
      * - `business_connection_id` from {@link businessConnectionId | ctx.businessConnectionId}
-     * - `from_chat_id` from {@link chatId | ctx.chatId}
+     * - `from_chat_id` from {@link msg | ctx.msg}{@link Message.story | .story}{@link Story.chat | .chat}{@link Chat.id | .id}, falling back to {@link chatId | ctx.chatId}
      * - `from_story_id` from {@link msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * @see {@link https://core.telegram.org/bots/api#repoststory}
@@ -4478,7 +4486,7 @@ export class Context implements CamelCaseUpdate {
     ): Promise<Story> {
         return await this.api.repostStory(
             ensureBusinessConnectionId("repostStory", this, other),
-            ensureFromChatId("repostStory", this, other),
+            ensureFromStoryChatId("repostStory", this, other),
             ensureFromStoryId("repostStory", this, other),
             active_period,
             other,
@@ -6378,6 +6386,22 @@ function ensureChatId<T extends number | string>(
     }
     return chatId;
 }
+function ensureChatJoinRequestChatId<T extends number | string>(
+    method: "approveChatJoinRequest" | "declineChatJoinRequest",
+    ctx: {
+        chatId?: number;
+        chatJoinRequest?: { chat: { id: number } };
+    },
+    other?: { chat_id?: T },
+): T | number {
+    const chatId = other?.chat_id ?? ctx.chatJoinRequest?.chat.id ?? ctx.chatId;
+    if (chatId === undefined) {
+        throw new Error(
+            `Cannot call '${method}' because this update does not belong to a chat, so there is no known value for the parameter 'chat_id' to identify the target chat`,
+        );
+    }
+    return chatId;
+}
 function ensureFromChatId<T extends number | string>(
     method: keyof ApiMethods,
     ctx: { chatId?: number },
@@ -6387,6 +6411,23 @@ function ensureFromChatId<T extends number | string>(
     if (fromChatId === undefined) {
         throw new Error(
             `Cannot call '${method}' because this update does not belong to a chat, so there is no known value for the parameter 'from_chat_id' to identify the origin chat`,
+        );
+    }
+    return fromChatId;
+}
+function ensureFromStoryChatId(
+    method: "repostStory",
+    ctx: {
+        chatId?: number;
+        msg?: { story?: { chat: { id: number } } };
+    },
+    other?: { from_chat_id?: number },
+) {
+    const fromChatId = other?.from_chat_id ?? ctx.msg?.story?.chat.id ??
+        ctx.chatId;
+    if (fromChatId === undefined) {
+        throw new Error(
+            `Cannot call '${method}' because this update does not contain a story message, so there is no known value for the parameter 'from_chat_id' to identify the chat which posted the story`,
         );
     }
     return fromChatId;
