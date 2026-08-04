@@ -527,97 +527,161 @@ export class Context implements CamelCaseUpdate {
     // UPDATE SHORTCUTS
 
     // Keep in sync with types in `filter.ts`.
-    /** Alias for `ctx.update.message` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.message | .message}. New incoming message of any kind - text, photo, sticker, etc.
+     */
     get message(): Update["message"] {
         return this.update.message;
     }
-    /** Alias for `ctx.update.edited_message` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.edited_message | .edited_message}. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
+     */
     get editedMessage(): Update["edited_message"] {
         return this.update.edited_message;
     }
-    /** Alias for `ctx.update.channel_post` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.channel_post | .channel_post}. New incoming channel post of any kind - text, photo, sticker, etc.
+     */
     get channelPost(): Update["channel_post"] {
         return this.update.channel_post;
     }
-    /** Alias for `ctx.update.edited_channel_post` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.edited_channel_post | .edited_channel_post}. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
+     */
     get editedChannelPost(): Update["edited_channel_post"] {
         return this.update.edited_channel_post;
     }
-    /** Alias for `ctx.update.business_connection` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.business_connection | .business_connection}. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot.
+     */
     get businessConnection(): Update["business_connection"] {
         return this.update.business_connection;
     }
-    /** Alias for `ctx.update.business_message` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.business_message | .business_message}. New message from a connected business account.
+     */
     get businessMessage(): Update["business_message"] {
         return this.update.business_message;
     }
-    /** Alias for `ctx.update.edited_business_message` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.edited_business_message | .edited_business_message}. New version of a message from a connected business account.
+     */
     get editedBusinessMessage(): Update["edited_business_message"] {
         return this.update.edited_business_message;
     }
-    /** Alias for `ctx.update.deleted_business_messages` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.deleted_business_messages | .deleted_business_messages}. Messages were deleted from a connected business account.
+     */
     get deletedBusinessMessages(): Update["deleted_business_messages"] {
         return this.update.deleted_business_messages;
     }
-    /** Alias for `ctx.update.message_reaction` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.guest_message | .guest_message}. New guest message. The bot can use the field _Message.guest_query_id_ and the method {@link answerGuestQuery} to send a message in response.
+     */
+    get guestMessage(): Update["guest_message"] {
+        return this.update.guest_message;
+    }
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.message_reaction | .message_reaction}. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `"message_reaction"` in the list of _allowed_updates_ to receive these updates. The update isn't received for reactions set by bots.
+     */
     get messageReaction(): Update["message_reaction"] {
         return this.update.message_reaction;
     }
-    /** Alias for `ctx.update.message_reaction_count` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.message_reaction_count | .message_reaction_count}. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `"message_reaction_count"` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
+     */
     get messageReactionCount(): Update["message_reaction_count"] {
         return this.update.message_reaction_count;
     }
-    /** Alias for `ctx.update.inline_query` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.inline_query | .inline_query}. New incoming {@link https://core.telegram.org/bots/api#inline-mode | inline} query.
+     */
     get inlineQuery(): Update["inline_query"] {
         return this.update.inline_query;
     }
-    /** Alias for `ctx.update.chosen_inline_result` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.chosen_inline_result | .chosen_inline_result}. The result of an {@link https://core.telegram.org/bots/api#inline-mode | inline} query that was chosen by a user and sent to their chat partner. Please see our documentation on the {@link https://core.telegram.org/bots/inline#collecting-feedback | feedback collecting} for details on how to enable these updates for your bot.
+     */
     get chosenInlineResult(): Update["chosen_inline_result"] {
         return this.update.chosen_inline_result;
     }
-    /** Alias for `ctx.update.callback_query` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.callback_query | .callback_query}. New incoming callback query.
+     */
     get callbackQuery(): Update["callback_query"] {
         return this.update.callback_query;
     }
-    /** Alias for `ctx.update.shipping_query` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.shipping_query | .shipping_query}. New incoming shipping query. Only for invoices with flexible price.
+     */
     get shippingQuery(): Update["shipping_query"] {
         return this.update.shipping_query;
     }
-    /** Alias for `ctx.update.pre_checkout_query` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.pre_checkout_query | .pre_checkout_query}. New incoming pre-checkout query. Contains full information about checkout.
+     */
     get preCheckoutQuery(): Update["pre_checkout_query"] {
         return this.update.pre_checkout_query;
     }
-    /** Alias for `ctx.update.poll` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.purchased_paid_media | .purchased_paid_media}. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat.
+     */
+    get purchasedPaidMedia(): Update["purchased_paid_media"] {
+        return this.update.purchased_paid_media;
+    }
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.poll | .poll}. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot.
+     */
     get poll(): Update["poll"] {
         return this.update.poll;
     }
-    /** Alias for `ctx.update.poll_answer` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.poll_answer | .poll_answer}. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
+     */
     get pollAnswer(): Update["poll_answer"] {
         return this.update.poll_answer;
     }
-    /** Alias for `ctx.update.my_chat_member` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.my_chat_member | .my_chat_member}. The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+     */
     get myChatMember(): Update["my_chat_member"] {
         return this.update.my_chat_member;
     }
-    /** Alias for `ctx.update.chat_member` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.chat_member | .chat_member}. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `"chat_member"` in the list of _allowed_updates_ to receive these updates.
+     */
     get chatMember(): Update["chat_member"] {
         return this.update.chat_member;
     }
-    /** Alias for `ctx.update.chat_join_request` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.chat_join_request | .chat_join_request}. A request to join the chat has been sent. The bot must have the _can_invite_users_ administrator right in the chat to receive these updates.
+     */
     get chatJoinRequest(): Update["chat_join_request"] {
         return this.update.chat_join_request;
     }
-    /** Alias for `ctx.update.chat_boost` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.chat_boost | .chat_boost}. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
+     */
     get chatBoost(): Update["chat_boost"] {
         return this.update.chat_boost;
     }
-    /** Alias for `ctx.update.removed_chat_boost` */
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.removed_chat_boost | .removed_chat_boost}. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+     */
     get removedChatBoost(): Update["removed_chat_boost"] {
         return this.update.removed_chat_boost;
     }
-    /** Alias for `ctx.update.purchased_paid_media` */
-    get purchasedPaidMedia(): Update["purchased_paid_media"] {
-        return this.update.purchased_paid_media;
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.managed_bot | .managed_bot}. A new bot was created to be managed by the bot, or token or owner of a managed bot was changed.
+     */
+    get managedBot(): Update["managed_bot"] {
+        return this.update.managed_bot;
+    }
+    /**
+     * Alias for {@link update | ctx.update}{@link Update.subscription | .subscription}. User payment subscription has changed.
+     */
+    get subscription(): Update["subscription"] {
+        return this.update.subscription;
     }
 
     // AGGREGATION SHORTCUTS
