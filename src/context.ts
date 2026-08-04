@@ -2863,6 +2863,66 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
+     * Context-aware alias for {@link Api.answerChatJoinRequestQuery | ctx.api.answerChatJoinRequestQuery}.
+     *
+     * Use this method to process a received chat join request query. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_join_request_query_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.query_id | .query_id}
+     *
+     * @see {@link https://core.telegram.org/bots/api#answerchatjoinrequestquery}
+     * @param result Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async answerChatJoinRequestQuery(
+        result: "approve" | "decline" | "queue",
+        other?: Partial<ApiParameters<"answerChatJoinRequestQuery">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.answerChatJoinRequestQuery(
+            ensureChatJoinRequestQueryId(
+                "answerChatJoinRequestQuery",
+                this,
+                other,
+            ),
+            result,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.sendChatJoinRequestWebApp | ctx.api.sendChatJoinRequestWebApp}.
+     *
+     * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call {@link answerChatJoinRequestQuery} to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_join_request_query_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.query_id | .query_id}
+     *
+     * @see {@link https://core.telegram.org/bots/api#sendchatjoinrequestwebapp}
+     * @param web_app_url An HTTPS URL of a Web App to be opened with additional data as specified in {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | Initializing Web Apps}
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async sendChatJoinRequestWebApp(
+        web_app_url: string,
+        other?: Partial<ApiParameters<"sendChatJoinRequestWebApp">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.sendChatJoinRequestWebApp(
+            ensureChatJoinRequestQueryId(
+                "sendChatJoinRequestWebApp",
+                this,
+                other,
+            ),
+            web_app_url,
+            other,
+            signal,
+        );
+    }
+    /**
      * Context-aware alias for {@link Api.setChatPhoto | ctx.api.setChatPhoto}.
      *
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
@@ -6563,6 +6623,20 @@ function ensureCallbackQueryId(
         );
     }
     return callbackQueryId;
+}
+function ensureChatJoinRequestQueryId(
+    method: "answerChatJoinRequestQuery" | "sendChatJoinRequestWebApp",
+    ctx: { chatJoinRequest?: { query_id?: string } },
+    other?: { chat_join_request_query_id?: string },
+) {
+    const queryId = other?.chat_join_request_query_id ??
+        ctx.chatJoinRequest?.query_id;
+    if (queryId === undefined) {
+        throw new Error(
+            `Cannot call '${method}' because this update does not contain a chat join request query, so there is no known value for the parameter 'chat_join_request_query_id'`,
+        );
+    }
+    return queryId;
 }
 function ensureGuestQueryId(
     method: keyof ApiMethods,
