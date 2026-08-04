@@ -159,7 +159,7 @@ describe("Composer types", () => {
                 const from = ctx.from;
                 const channelPost = ctx.channelPost;
 
-                assertType<IsMutuallyAssignable<typeof chat, Chat.PrivateChat>>(
+                assertType<IsMutuallyAssignable<typeof chat, Chat.Private>>(
                     true,
                 );
                 assertType<IsExact<typeof chatId, number>>(true);
@@ -169,7 +169,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.message.chat,
-                            Chat.PrivateChat
+                            Chat.Private
                         >
                     >(
                         true,
@@ -179,7 +179,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.callbackQuery.message.chat,
-                            Chat.PrivateChat
+                            Chat.Private
                         >
                     >(true);
                 }
@@ -191,7 +191,7 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
                 const channelPost = ctx.channelPost;
 
-                assertType<IsMutuallyAssignable<typeof chat, Chat.GroupChat>>(
+                assertType<IsMutuallyAssignable<typeof chat, Chat.Group>>(
                     true,
                 );
                 assertType<IsExact<typeof chatId, number>>(true);
@@ -200,7 +200,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.message.chat,
-                            Chat.GroupChat
+                            Chat.Group
                         >
                     >(
                         true,
@@ -210,7 +210,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.callbackQuery.message.chat,
-                            Chat.GroupChat
+                            Chat.Group
                         >
                     >(true);
                 }
@@ -223,7 +223,7 @@ describe("Composer types", () => {
                 const channelPost = ctx.channelPost;
 
                 assertType<
-                    IsMutuallyAssignable<typeof chat, Chat.SupergroupChat>
+                    IsMutuallyAssignable<typeof chat, Chat.Supergroup>
                 >(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 assertType<IsExact<typeof channelPost, undefined>>(true);
@@ -231,7 +231,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.message.chat,
-                            Chat.SupergroupChat
+                            Chat.Supergroup
                         >
                     >(true);
                 }
@@ -239,7 +239,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.callbackQuery.message.chat,
-                            Chat.SupergroupChat
+                            Chat.Supergroup
                         >
                     >(true);
                 }
@@ -251,7 +251,7 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
                 const message = ctx.message;
 
-                assertType<IsMutuallyAssignable<typeof chat, Chat.ChannelChat>>(
+                assertType<IsMutuallyAssignable<typeof chat, Chat.Channel>>(
                     true,
                 );
                 assertType<IsExact<typeof chatId, number>>(true);
@@ -260,7 +260,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.channelPost.chat,
-                            Chat.ChannelChat
+                            Chat.Channel
                         >
                     >(true);
                 }
@@ -268,7 +268,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.callbackQuery.message.chat,
-                            Chat.ChannelChat
+                            Chat.Channel
                         >
                     >(true);
                 }
@@ -282,7 +282,7 @@ describe("Composer types", () => {
                 assertType<
                     IsMutuallyAssignable<
                         typeof chat,
-                        Chat.PrivateChat | Chat.ChannelChat
+                        Chat.Private | Chat.Channel
                     >
                 >(true);
                 assertType<IsExact<typeof chatId, number>>(true);
@@ -290,7 +290,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.message.chat,
-                            Chat.PrivateChat
+                            Chat.Private
                         >
                     >(
                         true,
@@ -300,7 +300,7 @@ describe("Composer types", () => {
                     assertType<
                         IsMutuallyAssignable<
                             typeof ctx.channelPost.chat,
-                            Chat.ChannelChat
+                            Chat.Channel
                         >
                     >(true);
                 }
