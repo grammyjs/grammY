@@ -7,26 +7,42 @@ import {
     type FilterQueryContext,
     matchFilter,
 } from "./filter.ts";
-import type {
+import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
     AcceptedGiftTypes,
     ApiMethods,
     BusinessConnection,
     // deno-lint-ignore no-unused-vars
-    CallbackQuery, // used in TSDoc strings
+    BusinessMessagesDeleted,
+    // deno-lint-ignore no-unused-vars
+    CallbackQuery,
     Chat,
+    // deno-lint-ignore no-unused-vars
+    ChatBoost,
+    // deno-lint-ignore no-unused-vars
+    ChatBoostRemoved,
+    // deno-lint-ignore no-unused-vars
+    ChatBoostSource,
+    // deno-lint-ignore no-unused-vars
+    ChatBoostUpdated,
     ChatFullInfo,
     ChatInviteLink,
+    // deno-lint-ignore no-unused-vars
+    ChatJoinRequest,
     ChatMember,
     ChatMemberAdministrator,
     ChatMemberOwner,
+    // deno-lint-ignore no-unused-vars
+    ChatMemberUpdated,
     ChatPermissions,
     // deno-lint-ignore no-unused-vars
-    DirectMessagesTopic, // used in TSDoc strings
+    ChosenInlineResult,
+    // deno-lint-ignore no-unused-vars
+    DirectMessagesTopic,
     File,
     ForumTopic,
     GameHighScore,
     // deno-lint-ignore no-unused-vars
-    InlineQuery, // used in TSDoc strings
+    InlineQuery,
     InlineQueryResult,
     InputChecklist,
     InputFile,
@@ -44,20 +60,26 @@ import type {
     Message,
     MessageEntity,
     MessageId,
+    // deno-lint-ignore no-unused-vars
+    MessageReactionCountUpdated,
+    // deno-lint-ignore no-unused-vars
+    MessageReactionUpdated,
     OwnedGifts,
+    // deno-lint-ignore no-unused-vars
+    PaidMediaPurchased,
     PassportElementError,
     Poll,
     // deno-lint-ignore no-unused-vars
-    PreCheckoutQuery, // used in TSDoc strings
+    PreCheckoutQuery,
     PreparedInlineMessage,
     ReactionType,
     ReactionTypeEmoji,
     ShippingOption,
     // deno-lint-ignore no-unused-vars
-    ShippingQuery, // used in TSDoc strings
+    ShippingQuery,
     StarAmount,
     // deno-lint-ignore no-unused-vars
-    Sticker, // used in TSDOC strings
+    Sticker,
     StickerSet,
     Story,
     Update,

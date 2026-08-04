@@ -1,8 +1,8 @@
 // deno-lint-ignore-file camelcase
-import type {
+import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
     AcceptedGiftTypes,
     // deno-lint-ignore no-unused-vars
-    Audio, // used in TSDoc strings
+    Audio,
     BotAccessSettings,
     BotCommand,
     BotDescription,
@@ -17,7 +17,7 @@ import type {
     ChatMemberOwner,
     ChatPermissions,
     // deno-lint-ignore no-unused-vars
-    Document, // used in TSDoc strings
+    Document,
     File,
     ForumTopic,
     GameHighScore,
@@ -43,7 +43,7 @@ import type {
     MaskPosition,
     MenuButton,
     // deno-lint-ignore no-unused-vars
-    MenuButtonDefault, // used in TSDoc strings
+    MenuButtonDefault,
     Message,
     MessageId,
     OwnedGifts,
@@ -63,7 +63,7 @@ import type {
     Story,
     Update,
     // deno-lint-ignore no-unused-vars
-    User, // used in TSDoc strings
+    User,
     UserChatBoosts,
     UserFromGetMe,
     UserProfileAudios,
