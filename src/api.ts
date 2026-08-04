@@ -1,6 +1,8 @@
 // deno-lint-ignore-file camelcase
 import type {
     AcceptedGiftTypes,
+    // deno-lint-ignore no-unused-vars
+    Audio, // used in doc string
     BotAccessSettings,
     BotCommand,
     BotDescription,
@@ -14,6 +16,8 @@ import type {
     ChatMemberAdministrator,
     ChatMemberOwner,
     ChatPermissions,
+    // deno-lint-ignore no-unused-vars
+    Document, // used in doc string
     File,
     ForumTopic,
     GameHighScore,
@@ -38,6 +42,8 @@ import type {
     LabeledPrice,
     MaskPosition,
     MenuButton,
+    // deno-lint-ignore no-unused-vars
+    MenuButtonDefault, // used in doc string
     Message,
     MessageId,
     OwnedGifts,
@@ -56,6 +62,8 @@ import type {
     StickerSet,
     Story,
     Update,
+    // deno-lint-ignore no-unused-vars
+    User, // used in doc string
     UserChatBoosts,
     UserFromGetMe,
     UserProfileAudios,
