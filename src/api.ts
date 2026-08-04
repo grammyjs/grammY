@@ -2,7 +2,7 @@
 import type {
     AcceptedGiftTypes,
     // deno-lint-ignore no-unused-vars
-    Audio, // used in doc string
+    Audio, // used in TSDoc strings
     BotAccessSettings,
     BotCommand,
     BotDescription,
@@ -17,7 +17,7 @@ import type {
     ChatMemberOwner,
     ChatPermissions,
     // deno-lint-ignore no-unused-vars
-    Document, // used in doc string
+    Document, // used in TSDoc strings
     File,
     ForumTopic,
     GameHighScore,
@@ -43,7 +43,7 @@ import type {
     MaskPosition,
     MenuButton,
     // deno-lint-ignore no-unused-vars
-    MenuButtonDefault, // used in doc string
+    MenuButtonDefault, // used in TSDoc strings
     Message,
     MessageId,
     OwnedGifts,
@@ -63,7 +63,7 @@ import type {
     Story,
     Update,
     // deno-lint-ignore no-unused-vars
-    User, // used in doc string
+    User, // used in TSDoc strings
     UserChatBoosts,
     UserFromGetMe,
     UserProfileAudios,
