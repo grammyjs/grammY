@@ -327,7 +327,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * > **Notes**
      * >
-     * > 1. You will not be able to receive updates using {@link ApiMethods.getUpdates | getUpdates} for as long as an outgoing webhook is set up.
+     * > 1. You will not be able to receive updates using {@link getUpdates} for as long as an outgoing webhook is set up.
      * > 2. To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
      * > 3. Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
      *
@@ -349,7 +349,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to remove webhook integration if you decide to switch back to {@link ApiMethods.getUpdates | getUpdates}. Returns `true` on success.
+     * Use this method to remove webhook integration if you decide to switch back to {@link getUpdates}. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deletewebhook}
      * @param other Options object with all optional parameters
@@ -364,7 +364,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to get current webhook status. Requires no parameters. On success, returns a {@link WebhookInfo} object. If the bot is using {@link ApiMethods.getUpdates | getUpdates}, will return an object with the _url_ field empty.
+     * Use this method to get current webhook status. Requires no parameters. On success, returns a {@link WebhookInfo} object. If the bot is using {@link getUpdates}, will return an object with the _url_ field empty.
      *
      * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
      * @param other Options object with all optional parameters
@@ -493,7 +493,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn't have a link to the original message. Returns the {@link MessageId} of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link forwardMessage}, but the copied message doesn't have a link to the original message. Returns the {@link MessageId} of the sent message on success.
      *
      * @see {@link https://core.telegram.org/bots/api#copymessage}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -517,7 +517,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of {@link MessageId} of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link forwardMessages}, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of {@link MessageId} of the sent messages is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#copymessages}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -588,7 +588,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent {@link Message} is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * For sending voice messages, use the {@link ApiMethods.sendVoice | sendVoice} method instead.
+     * For sending voice messages, use the {@link sendVoice} method instead.
      *
      * @see {@link https://core.telegram.org/bots/api#sendaudio}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -909,7 +909,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendMessage | sendMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
+     * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link sendMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
      * @param chat_id Unique identifier for the target private chat
@@ -935,13 +935,13 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns `true` on success.
      *
-     * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link ApiMethods.sendChatAction | sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
+     * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
      *
      * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
      *
      * @see {@link https://core.telegram.org/bots/api#sendchataction}
      * @param chat_id Unique identifier for the target chat or username of the target bot or supergroup in the format `@username`. Channel chats and channel direct messages chats aren't supported.
-     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
+     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link sendMessage | text messages}, _upload_photo_ for {@link sendPhoto | photos}, _record_video_ or _upload_video_ for {@link sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link sendVoice | voice notes}, _upload_document_ for {@link sendDocument | general files}, _choose_sticker_ for {@link sendSticker | stickers}, _find_location_ for {@link sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link sendVideoNote | video notes}.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -981,7 +981,10 @@ export class Api<R extends RawApi = RawApi> {
     async setMessageReaction(
         chat_id: number | string,
         message_id: number,
-        reaction: ReactionType[] | undefined,
+        reaction:
+            | (ReactionTypeEmoji["emoji"] | ReactionType)
+            | Array<ReactionTypeEmoji["emoji"] | ReactionType>
+            | undefined,
         other?: Partial<ApiParameters<"setMessageReaction", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
@@ -1057,7 +1060,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.
+     * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link getFile} again.
      *
      * **Note:** This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
      *
@@ -1077,7 +1080,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
+     * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
      * @param chat_id Unique identifier for the target group or username of the target supergroup or channel in the format `@username`
@@ -1215,7 +1218,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
+     * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
      * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
@@ -1283,7 +1286,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as `string` on success.
      *
-     * > Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} or by calling the {@link ApiMethods.getChat | getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} again.
+     * > Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link exportChatInviteLink} or by calling the {@link getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link exportChatInviteLink} again.
      *
      * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
      * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
@@ -1301,7 +1304,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as {@link ChatInviteLink} object.
+     * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link revokeChatInviteLink}. Returns the new invite link as {@link ChatInviteLink} object.
      *
      * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
      * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
@@ -1340,7 +1343,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link ApiMethods.editChatSubscriptionInviteLink | editChatSubscriptionInviteLink} or revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as a {@link ChatInviteLink} object.
+     * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link editChatSubscriptionInviteLink} or revoked using the method {@link revokeChatInviteLink}. Returns the new invite link as a {@link ChatInviteLink} object.
      *
      * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
      * @param chat_id Unique identifier for the target channel chat or username of the target channel in the format `@username`
@@ -1469,7 +1472,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call {@link ApiMethods.answerChatJoinRequestQuery | answerChatJoinRequestQuery} to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
+     * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call {@link answerChatJoinRequestQuery} to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#sendchatjoinrequestwebapp}
      * @param chat_join_request_query_id Unique identifier of the join request query
@@ -1745,7 +1748,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns `true` on success.
+     * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link getChat} requests to check if the bot can use this method. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
@@ -1766,7 +1769,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns `true` on success.
+     * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link getChat} requests to check if the bot can use this method. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
@@ -2635,7 +2638,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#deletebusinessmessages}
      * @param business_connection_id Unique identifier of the business connection on behalf of which to delete the messages
-     * @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
+     * @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link deleteMessage} for limitations on which messages can be deleted.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -3235,7 +3238,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal) as true;
     }
     /**
-     * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, the edited {@link Message} is returned.
+     * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link stopMessageLiveLocation}. On success, the edited {@link Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -3263,7 +3266,7 @@ export class Api<R extends RawApi = RawApi> {
             }, signal) as Message;
     }
     /**
-     * Use this method to edit live location inline messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, `true` is returned.
+     * Use this method to edit live location inline messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link stopMessageLiveLocationInline}. On success, `true` is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
      * @param inline_message_id Identifier of the inline message
@@ -3604,7 +3607,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessages}
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
-     * @param message_ids A list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
+     * @param message_ids A list of 1-100 identifiers of messages to delete. See {@link deleteMessage} for limitations on which messages can be deleted.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -3792,7 +3795,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to upload a file with a sticker for later use in the {@link ApiMethods.createNewStickerSet | createNewStickerSet}, {@link ApiMethods.addStickerToSet | addStickerToSet}, or {@link ApiMethods.replaceStickerInSet | replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded {@link File} on success.
+     * Use this method to upload a file with a sticker for later use in the {@link createNewStickerSet}, {@link addStickerToSet}, or {@link replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded {@link File} on success.
      *
      * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
      * @param user_id User identifier of sticker file owner
@@ -3906,7 +3909,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link ApiMethods.deleteStickerFromSet | deleteStickerFromSet}, then {@link ApiMethods.addStickerToSet | addStickerToSet}, then {@link ApiMethods.setStickerPositionInSet | setStickerPositionInSet}. Returns `true` on success.
+     * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link deleteStickerFromSet}, then {@link addStickerToSet}, then {@link setStickerPositionInSet}. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
      * @param user_id User identifier of the sticker set owner
@@ -4104,7 +4107,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendRichMessage | sendRichMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
+     * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link sendRichMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
      * @param chat_id Unique identifier for the target private chat
