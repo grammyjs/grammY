@@ -1,6 +1,7 @@
 // deno-lint-ignore-file camelcase
 import type {
     AcceptedGiftTypes,
+    BotAccessSettings,
     BotCommand,
     BotDescription,
     BotName,
@@ -30,9 +31,12 @@ import type {
     InputPaidMedia,
     InputPollOption,
     InputProfilePhoto,
+    InputRichMessage,
     InputSticker,
     InputStoryContent,
+    KeyboardButton,
     LabeledPrice,
+    MaskPosition,
     MenuButton,
     Message,
     MessageId,
@@ -40,8 +44,10 @@ import type {
     PassportElementError,
     Poll,
     PreparedInlineMessage,
+    PreparedKeyboardButton,
     ReactionType,
     ReactionTypeEmoji,
+    SentGuestMessage,
     SentWebAppMessage,
     ShippingOption,
     StarAmount,
@@ -52,6 +58,7 @@ import type {
     Update,
     UserChatBoosts,
     UserFromGetMe,
+    UserProfileAudios,
     UserProfilePhotos,
     WebhookInfo,
 } from "./types.ts";
@@ -2151,19 +2158,36 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#setmanagedbotaccesssettings}
      * @param user_id User identifier of the managed bot whose access settings will be changed
-     * @param is_access_restricted Pass `true` if only selected users can access the bot. The bot's owner can always access it.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async setManagedBotAccessSettings(
+    async setManagedBotAccessSettingsRestricted(
         user_id: number,
-        is_access_restricted: boolean,
         other?: Partial<ApiParameters<"setManagedBotAccessSettings", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.setManagedBotAccessSettings({
             user_id,
-            is_access_restricted,
+            is_access_restricted: true,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to change the access settings of a managed bot. Returns `true` on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#setmanagedbotaccesssettings}
+     * @param user_id User identifier of the managed bot whose access settings will be changed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async setManagedBotAccessSettingsUnrestricted(
+        user_id: number,
+        other?: Partial<ApiParameters<"setManagedBotAccessSettings", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.setManagedBotAccessSettings({
+            user_id,
+            is_access_restricted: false,
             ...other,
         }, signal);
     }
@@ -2428,26 +2452,43 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split user/chat
     /**
-     * Sends a gift to the given user or channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns `true` on success.
+     * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the receiver. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#sendgift}
-     * @param user_id Required if _chat_id_ is not specified. Unique identifier of the target user who will receive the gift.
-     * @param chat_id Required if _user_id_ is not specified. Unique identifier for the chat or username of the channel (in the format `@username`) that will receive the gift.
+     * @param user_id Unique identifier of the target user who will receive the gift
      * @param gift_id Identifier of the gift; limited gifts can't be sent to channel chats
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async sendGift(
+    async sendGiftToUser(
         user_id: number,
-        chat_id: number | string,
         gift_id: string,
         other?: Partial<ApiParameters<"sendGift", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.sendGift({
             user_id,
+            gift_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Sends a gift to the given channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns `true` on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#sendgift}
+     * @param chat_id Unique identifier for the chat or username of the channel (in the format `@username`) that will receive the gift
+     * @param gift_id Identifier of the gift; limited gifts can't be sent to channel chats
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async sendGiftToChat(
+        chat_id: number | string,
+        gift_id: string,
+        other?: Partial<ApiParameters<"sendGift", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.sendGift({
             chat_id,
             gift_id,
             ...other,
@@ -3038,39 +3079,61 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split inline
     /**
-     * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, the edited {@link Message} is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message to edit.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message to edit
+     * @param text_or_rich_message New text of the message, 1-4096 characters after entity parsing; or new rich content of the message
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
     async editMessageText(
         chat_id: number | string,
         message_id: number,
-        inline_message_id: string,
+        text_or_rich_message: string | InputRichMessage,
         other?: Partial<ApiParameters<"editMessageText", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<Message> {
         return await this.raw.editMessageText({
             chat_id,
             message_id,
-            inline_message_id,
+            ...(typeof text_or_rich_message === "string"
+                ? { text: text_or_rich_message }
+                : { rich_message: text_or_rich_message }),
             ...other,
-        }, signal);
+        }, signal) as Message;
     }
-    // TODO: split inline
     /**
-     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} inline messages. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagetext}
+     * @param inline_message_id Identifier of the inline message
+     * @param text_or_rich_message New text of the message, 1-4096 characters after entity parsing; or new rich content of the message. Direct upload of new files isn't supported.
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async editMessageTextInline(
+        inline_message_id: string,
+        text_or_rich_message: string | InputRichMessage,
+        other?: Partial<ApiParameters<"editMessageText", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.editMessageText({
+            inline_message_id,
+            ...(typeof text_or_rich_message === "string"
+                ? { text: text_or_rich_message }
+                : { rich_message: text_or_rich_message }),
+            ...other,
+        }, signal) as true;
+    }
+    /**
+     * Use this method to edit captions of messages. On success, the edited {@link Message} is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message to edit.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message to edit
      * @param caption New caption of the message, 0-1024 characters after entities parsing
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
@@ -3078,27 +3141,44 @@ export class Api<R extends RawApi = RawApi> {
     async editMessageCaption(
         chat_id: number | string,
         message_id: number,
+        caption: string | undefined,
+        other?: Partial<ApiParameters<"editMessageCaption", R>>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
+        return await this.raw.editMessageCaption({
+            chat_id,
+            message_id,
+            caption,
+            ...other,
+        }, signal) as Message;
+    }
+    /**
+     * Use this method to edit captions of inline messages. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
+     * @param inline_message_id Identifier of the inline message
+     * @param caption New caption of the message, 0-1024 characters after entities parsing
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async editMessageCaptionInline(
         inline_message_id: string,
         caption: string | undefined,
         other?: Partial<ApiParameters<"editMessageCaption", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<true> {
         return await this.raw.editMessageCaption({
-            chat_id,
-            message_id,
             inline_message_id,
             caption,
             ...other,
-        }, signal);
+        }, signal) as true;
     }
-    // TODO: split inline
     /**
-     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. On success, the edited {@link Message} is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message to edit.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message to edit
      * @param media An object for the new media content of the message
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
@@ -3106,27 +3186,44 @@ export class Api<R extends RawApi = RawApi> {
     async editMessageMedia(
         chat_id: number | string,
         message_id: number,
+        media: InputMedia,
+        other?: Partial<ApiParameters<"editMessageMedia", R>>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
+        return await this.raw.editMessageMedia({
+            chat_id,
+            message_id,
+            media,
+            ...other,
+        }, signal) as Message;
+    }
+    /**
+     * Use this method to edit animation, audio, document, live photo, photo, or video inline messages, or to replace a text or a rich inline message with a media. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
+     * @param inline_message_id Identifier of the inline message
+     * @param media An object for the new media content of the message
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async editMessageMediaInline(
         inline_message_id: string,
         media: InputMedia,
         other?: Partial<ApiParameters<"editMessageMedia", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<true> {
         return await this.raw.editMessageMedia({
-            chat_id,
-            message_id,
             inline_message_id,
             media,
             ...other,
-        }, signal);
+        }, signal) as true;
     }
-    // TODO: split inline
     /**
-     * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned.
+     * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, the edited {@link Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message to edit.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message to edit
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
      * @param other Options object with all optional parameters
@@ -3135,46 +3232,83 @@ export class Api<R extends RawApi = RawApi> {
     async editMessageLiveLocation(
         chat_id: number | string,
         message_id: number,
+        latitude: number,
+        longitude: number,
+        other?: Partial<ApiParameters<"editMessageLiveLocation", R>>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
+        return await this.raw
+            .editMessageLiveLocation({
+                chat_id,
+                message_id,
+                latitude,
+                longitude,
+                ...other,
+            }, signal) as Message;
+    }
+    /**
+     * Use this method to edit live location inline messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
+     * @param inline_message_id Identifier of the inline message
+     * @param latitude Latitude of new location
+     * @param longitude Longitude of new location
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async editMessageLiveLocationInline(
         inline_message_id: string,
         latitude: number,
         longitude: number,
         other?: Partial<ApiParameters<"editMessageLiveLocation", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<true> {
         return await this.raw
             .editMessageLiveLocation({
-                chat_id,
-                message_id,
                 inline_message_id,
                 latitude,
                 longitude,
                 ...other,
-            }, signal);
+            }, signal) as true;
     }
-    // TODO: split inline
     /**
-     * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned.
+     * Use this method to stop updating a live location message before _live_period_ expires. On success, the edited {@link Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message with live location to stop.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message with live location to stop
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
     async stopMessageLiveLocation(
         chat_id: number | string,
         message_id: number,
+        other?: Partial<ApiParameters<"stopMessageLiveLocation", R>>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
+        return await this.raw.stopMessageLiveLocation({
+            chat_id,
+            message_id,
+            ...other,
+        }, signal) as Message;
+    }
+    /**
+     * Use this method to stop updating a live location inline message before _live_period_ expires. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
+     * @param inline_message_id Identifier of the inline message
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async stopMessageLiveLocationInline(
         inline_message_id: string,
         other?: Partial<ApiParameters<"stopMessageLiveLocation", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
-        return await this.stopMessageLiveLocation({
-            chat_id,
-            message_id,
+    ): Promise<true> {
+        return await this.raw.stopMessageLiveLocation({
             inline_message_id,
             ...other,
-        }, signal);
+        }, signal) as true;
     }
     /**
      * Use this method to edit a checklist on behalf of a connected business account. On success, the edited {@link Message} is returned.
@@ -3203,14 +3337,12 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split inline
     /**
-     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     * Use this method to edit only the reply markup of messages. On success, the edited {@link Message} is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the message to edit.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param message_id Identifier of the message to edit
      * @param reply_markup An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
@@ -3218,18 +3350,37 @@ export class Api<R extends RawApi = RawApi> {
     async editMessageReplyMarkup(
         chat_id: number | string,
         message_id: number,
+        reply_markup: InlineKeyboardMarkup | undefined,
+        other?: Partial<ApiParameters<"editMessageReplyMarkup", R>>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
+        return await this.raw.editMessageReplyMarkup({
+            chat_id,
+            message_id,
+            reply_markup,
+            ...other,
+        }, signal) as Message;
+    }
+    /**
+     * Use this method to edit only the reply markup of inline messages. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
+     * @param inline_message_id Identifier of the inline message
+     * @param reply_markup An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async editMessageReplyMarkupInline(
         inline_message_id: string,
         reply_markup: InlineKeyboardMarkup | undefined,
         other?: Partial<ApiParameters<"editMessageReplyMarkup", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<true> {
         return await this.raw.editMessageReplyMarkup({
-            chat_id,
-            message_id,
             inline_message_id,
             reply_markup,
             ...other,
-        }, signal);
+        }, signal) as true;
     }
     /**
      * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll} is returned.
@@ -3477,23 +3628,20 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split actor
     /**
      * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_id Identifier of the target message
-     * @param user_id Identifier of the user whose reaction will be removed, if the reaction was added by a user
-     * @param actor_chat_id Identifier of the chat whose reaction will be removed, if the reaction was added by a chat
+     * @param user_id Identifier of the user whose reaction will be removed
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteMessageReaction(
+    async deleteMessageReactionByUser(
         chat_id: number | string,
         message_id: number,
         user_id: number,
-        actor_chat_id: number,
         other?: Partial<ApiParameters<"deleteMessageReaction", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
@@ -3501,31 +3649,71 @@ export class Api<R extends RawApi = RawApi> {
             chat_id,
             message_id,
             user_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param message_id Identifier of the target message
+     * @param actor_chat_id Identifier of the chat whose reaction will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteMessageReactionByChat(
+        chat_id: number | string,
+        message_id: number,
+        actor_chat_id: number,
+        other?: Partial<ApiParameters<"deleteMessageReaction", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.deleteMessageReaction({
+            chat_id,
+            message_id,
             actor_chat_id,
             ...other,
         }, signal);
     }
-    // TODO: split actor
     /**
-     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
-     * @param user_id Identifier of the user whose reactions will be removed, if the reactions were added by a user
-     * @param actor_chat_id Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
+     * @param user_id Identifier of the user whose reactions will be removed
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteAllMessageReactions(
+    async deleteAllMessageReactionsByUser(
         chat_id: number | string,
         user_id: number,
-        actor_chat_id: number,
         other?: Partial<ApiParameters<"deleteAllMessageReactions", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.deleteAllMessageReactions({
             chat_id,
             user_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param actor_chat_id Identifier of the chat whose reactions will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteAllMessageReactionsByChat(
+        chat_id: number | string,
+        actor_chat_id: number,
+        other?: Partial<ApiParameters<"deleteAllMessageReactions", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.deleteAllMessageReactions({
+            chat_id,
             actor_chat_id,
             ...other,
         }, signal);
@@ -4009,47 +4197,88 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split ok
     /**
      * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, `true` is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Pass `true` if delivery to the specified address is possible and `false` if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param shipping_options An Array of available shipping options
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async answerShippingQuery(
+    async answerShippingQueryOk(
         shipping_query_id: string,
-        ok: boolean,
+        shipping_options: ShippingOption[],
         other?: Partial<ApiParameters<"answerShippingQuery", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.answerShippingQuery({
             shipping_query_id,
-            ok,
+            ok: true,
+            shipping_options,
             ...other,
         }, signal);
     }
-    // TODO: split ok
+    /**
+     * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, `true` is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answershippingquery}
+     * @param shipping_query_id Unique identifier for the query to be answered
+     * @param error_message Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async answerShippingQueryError(
+        shipping_query_id: string,
+        error_message: string,
+        other?: Partial<ApiParameters<"answerShippingQuery", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.answerShippingQuery({
+            shipping_query_id,
+            ok: false,
+            error_message,
+            ...other,
+        }, signal);
+    }
     /**
      * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
      *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
      * @param pre_checkout_query_id Unique identifier for the query to be answered
-     * @param ok Specify `true` if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use `false` if there are any problems.
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async answerPreCheckoutQuery(
+    async answerPreCheckoutQueryOk(
         pre_checkout_query_id: string,
-        ok: boolean,
         other?: Partial<ApiParameters<"answerPreCheckoutQuery", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.answerPreCheckoutQuery({
             pre_checkout_query_id,
-            ok,
+            ok: true,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
+     * @param pre_checkout_query_id Unique identifier for the query to be answered
+     * @param error_message Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async answerPreCheckoutQueryError(
+        pre_checkout_query_id: string,
+        error_message: string,
+        other?: Partial<ApiParameters<"answerPreCheckoutQuery", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.answerPreCheckoutQuery({
+            pre_checkout_query_id,
+            ok: false,
+            error_message,
             ...other,
         }, signal);
     }
@@ -4172,16 +4401,14 @@ export class Api<R extends RawApi = RawApi> {
             ...other,
         }, signal);
     }
-    // TODO: split inline
     /**
-     * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message} is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is `false`.
+     * Use this method to set the score of the specified user in a game message. On success, the {@link Message} is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is `false`.
      *
      * @see {@link https://core.telegram.org/bots/api#setgamescore}
      * @param user_id User identifier
      * @param score New score, must be non-negative
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the sent message.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Identifier of the sent message
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -4190,20 +4417,41 @@ export class Api<R extends RawApi = RawApi> {
         score: number,
         chat_id: number,
         message_id: number,
-        inline_message_id: string,
         other?: Partial<ApiParameters<"setGameScore", R>>,
         signal?: AbortSignal,
-    ): Promise<true | Message> {
+    ): Promise<Message> {
         return await this.raw.setGameScore({
             user_id,
             score,
             chat_id,
             message_id,
+            ...other,
+        }, signal) as Message;
+    }
+    /**
+     * Use this method to set the score of the specified user in a game inline message. On success, `true` is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is `false`.
+     *
+     * @see {@link https://core.telegram.org/bots/api#setgamescore}
+     * @param user_id User identifier
+     * @param score New score, must be non-negative
+     * @param inline_message_id Identifier of the inline message
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async setGameScoreInline(
+        user_id: number,
+        score: number,
+        inline_message_id: string,
+        other?: Partial<ApiParameters<"setGameScore", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.setGameScore({
+            user_id,
+            score,
             inline_message_id,
             ...other,
-        }, signal);
+        }, signal) as true;
     }
-    // TODO: split inline
     /**
      * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of {@link GameHighScore} objects.
      *
@@ -4211,9 +4459,8 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#getgamehighscores}
      * @param user_id Target user id
-     * @param chat_id Required if _inline_message_id_ is not specified. Unique identifier for the target chat.
-     * @param message_id Required if _inline_message_id_ is not specified. Identifier of the sent message.
-     * @param inline_message_id Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Identifier of the sent message
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
@@ -4221,7 +4468,6 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         chat_id: number,
         message_id: number,
-        inline_message_id: string,
         other?: Partial<ApiParameters<"getGameHighScores", R>>,
         signal?: AbortSignal,
     ): Promise<GameHighScore[]> {
@@ -4229,6 +4475,28 @@ export class Api<R extends RawApi = RawApi> {
             user_id,
             chat_id,
             message_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of {@link GameHighScore} objects.
+     *
+     * > This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getgamehighscores}
+     * @param user_id Target user id
+     * @param inline_message_id Identifier of the inline message
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async getGameHighScoresInline(
+        user_id: number,
+        inline_message_id: string,
+        other?: Partial<ApiParameters<"getGameHighScores", R>>,
+        signal?: AbortSignal,
+    ): Promise<GameHighScore[]> {
+        return await this.raw.getGameHighScores({
+            user_id,
             inline_message_id,
             ...other,
         }, signal);
