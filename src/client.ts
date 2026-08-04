@@ -1,5 +1,5 @@
 import { createDebug } from "@grammyjs/debug";
-import type { ApiMethods, ApiResult, Present } from "./types.ts";
+import type { ApiMethods, ApiResponse, Present } from "./types.ts";
 import { toBotApiError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
@@ -122,7 +122,7 @@ export type ApiCallResult<
 export type ApiCallFn<R extends RawApi = RawApi> = <D extends CallData<R>>(
     data: D,
     signal?: AbortSignal,
-) => Promise<ApiResult<ApiCallResult<D["method"], R>>>;
+) => Promise<ApiResponse<ApiCallResult<D["method"], R>>>;
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -137,7 +137,7 @@ export type Transformer<R extends RawApi = RawApi> = <D extends CallData<R>>(
     prev: ApiCallFn<R>,
     data: D,
     signal?: AbortSignal,
-) => Promise<ApiResult<ApiCallResult<D["method"], R>>>;
+) => Promise<ApiResponse<ApiCallResult<D["method"], R>>>;
 export type TransformerConsumer<R extends RawApi> = TransformableApi<
     R
 >["transform"];
