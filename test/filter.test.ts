@@ -100,6 +100,34 @@ describe("matchFilter", () => {
         assert(matchFilter(":left_chat_member:is_bot")(ctx));
     });
 
+    it("should match new object and discriminant filters", () => {
+        let ctx = {
+            update: {
+                message: { chat_owner_left: { new_owner: {} } },
+            },
+        } as Context;
+        assert(matchFilter("message:chat_owner_left:new_owner")(ctx));
+
+        ctx = {
+            update: { message: { entities: [{ type: "date_time" }] } },
+        } as Context;
+        assert(matchFilter("message:entities:date_time")(ctx));
+    });
+
+    it("should match subscription states", () => {
+        const ctx = {
+            update: { subscription: { state: "active" } },
+        } as Context;
+        assert(matchFilter("subscription")(ctx));
+        assert(matchFilter("subscription:state")(ctx));
+        assert(matchFilter("subscription:state:active")(ctx));
+        assert(!matchFilter("subscription:state:canceled")(ctx));
+        assert(!matchFilter("subscription:state:failed")(ctx));
+        assertThrows(() =>
+            matchFilter("subscription:state:paused" as FilterQuery)
+        );
+    });
+
     it("should match multiple filters", () => {
         const entity = { type: "" };
         const ctx = {

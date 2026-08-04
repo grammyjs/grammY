@@ -189,7 +189,10 @@ function arborist(tree: LTree): Pred {
                         return testMaybeArray(obj, (u) => u.id === me);
                     }
                     : (obj) =>
-                        testMaybeArray(obj, (e) => e[l3] || e.type === l3);
+                        testMaybeArray(
+                            obj,
+                            (e) => e === l3 || e[l3] || e.type === l3,
+                        );
                 return l3Pred;
             });
             return l3Predicates.length === 0
