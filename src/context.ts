@@ -709,10 +709,16 @@ export class Context implements CamelCaseUpdate {
     // AGGREGATION SHORTCUTS
 
     /**
-     * Get the message object from wherever possible. Alias for `this.message ??
-     * this.editedMessage ?? this.channelPost ?? this.editedChannelPost ??
-     * this.businessMessage ?? this.editedBusinessMessage ??
-     * this.callbackQuery?.message`.
+     * Get the message object from wherever possible. Source are:
+     *
+     * - {@link message | ctx.message}
+     * - {@link editedMessage | ctx.editedMessage}
+     * - {@link channelPost | ctx.channelPost}
+     * - {@link editedChannelPost | ctx.editedChannelPost}
+     * - {@link businessMessage | ctx.businessMessage}
+     * - {@link editedBusinessMessage | ctx.editedBusinessMessage}
+     * - {@link guestMessage | ctx.guestMessage}
+     * - {@link callbackQuery | ctx.callbackQuery}{@link CallbackQuery.message | ?.message}
      */
     get msg(): Message | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -728,18 +734,22 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
-     * Get the message text from wherever possible. Alias for `this.msg?.text ??
-     * this.msg?.caption`.
+     * Get the message text from wherever possible. Sources are:
+     *
+     * - {@link msg | ctx.msg}{@link Message.text | ?.text}
+     * - {@link msg | ctx.msg}{@link Message.caption | ?.caption}
      */
     get txt(): string | undefined {
         // Keep in sync with types in `filter.ts`.
-        const msg = this.msg;
-        return msg?.text ?? msg?.caption;
+        const m = this.msg;
+        return m?.text ?? m?.caption;
     }
     /**
-     * Get the message identifier from wherever possible. Alias for
-     * `this.msg?.message_id ?? this.messageReaction?.message_id ??
-     * this.messageReactionCount?.message_id`.
+     * Get the message identifier from wherever possible. Sources are:
+     *
+     * - {@link msg | ctx.msg}{@link Message.message_id | ?.message_id}
+     * - {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.message_id | ?.message_id}
+     * - {@link messageReactionCount | ctx.messageReactionCount}{@link MessageReactionCountUpdated.message_id | ?.message_id}
      */
     get msgId(): number | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -747,8 +757,10 @@ export class Context implements CamelCaseUpdate {
             this.messageReactionCount?.message_id;
     }
     /**
-     * Get the inline message identifier from wherever possible. Alias for
-     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`.
+     * Get the inline message identifier from wherever possible. Sources are:
+     *
+     * - {@link callbackQuery | ctx.callbackQuery}{@link CallbackQuery.inline_message_id | ?.inline_message_id}
+     * - {@link chosenInlineResult | ctx.chosenInlineResult}{@link ChosenInlineResult.inline_message_id | ?.inline_message_id}
      */
     get inlineMessageId(): string | undefined {
         return (
@@ -757,10 +769,17 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
-     * Get the chat object from wherever possible. Alias for `(this.msg ??
-     * this.deletedBusinessMessages ?? this.messageReaction ??
-     * this.messageReactionCount ?? this.myChatMember ??  this.chatMember ??
-     * this.chatJoinRequest ?? this.chatBoost ??  this.removedChatBoost)?.chat`.
+     * Get the chat object from wherever possible. Sources are:
+     *
+     * - {@link msg | ctx.msg}{@link Message.chat | ?.chat}
+     * - {@link deletedBusinessMessages | ctx.deletedBusinessMessages}{@link BusinessMessagesDeleted.chat | ?.chat}
+     * - {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.chat | ?.chat}
+     * - {@link messageReactionCount | ctx.messageReactionCount}{@link MessageReactionCountUpdated.chat | ?.chat}
+     * - {@link myChatMember | ctx.myChatMember}{@link ChatMemberUpdated.chat | ?.chat}
+     * - {@link chatMember | ctx.chatMember}{@link ChatMemberUpdated.chat | ?.chat}
+     * - {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | ?.chat}
+     * - {@link chatBoost | ctx.chatBoost}{@link ChatBoostUpdated.chat | ?.chat}
+     * - {@link removedChatBoost | ctx.removedChatBoost}{@link ChatBoostRemoved.chat | ?.chat}
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -777,9 +796,10 @@ export class Context implements CamelCaseUpdate {
         )?.chat;
     }
     /**
-     * Gets the chat identifier from wherever possible. Alias for
-     * `this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
-     * this.businessConnection?.user_chat_id`.
+     * Gets the chat identifier from wherever possible. Sources are:
+     * - {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.user_chat_id | ?.user_chat_id}
+     * - {@link chat | ctx.chat}{@link Chat.id | ?.id}
+     * - {@link businessConnection | ctx.businessConnection}{@link BusinessConnection.user_chat_id | ?.user_chat_id}
      */
     get chatId(): number | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -787,13 +807,22 @@ export class Context implements CamelCaseUpdate {
             this.businessConnection?.user_chat_id;
     }
     /**
-     * Get the user object from wherever possible. Alias for
-     * `(this.businessConnection ?? this.messageReaction ??
-     * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
-     * (this.callbackQuery ?? this.msg ?? this.inlineQuery ??
-     * this.chosenInlineResult ?? this.shippingQuery ?? this.preCheckoutQuery ??
-     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest ??
-     * this.purchasedPaidMedia)?.from`.
+     * Get the user object from wherever possible. Sources are:
+     *
+     * - {@link businessConnection | ctx.businessConnection}{@link BusinessConnection.user | ?.user}
+     * - {@link messageReaction | ctx.messageReaction}{@link MessageReactionUpdated.user | ?.user}
+     * - {@link chatBoost | ctx.chatBoost}{@link ChatBoostUpdated.boost | ?.boost}{@link ChatBoost.user | ?.user}
+     * - {@link removedChatBoost | ctx.removedChatBoost}{@link ChatBoostRemoved.source | ?.source}{@link ChatBoostSource.user | ?.user}
+     * - {@link callbackQuery | ctx.callbackQuery}{@link CallbackQuery.from | ?.from}
+     * - {@link msg | ctx.msg}{@link Message.from | ?.from}
+     * - {@link inlineQuery | ctx.inlineQuery}{@link InlineQuery.from | ?.from}
+     * - {@link chosenInlineResult | ctx.chosenInlineResult}{@link ChosenInlineResult.from | ?.from}
+     * - {@link shippingQuery | ctx.shippingQuery}{@link ShippingQuery.from | ?.from}
+     * - {@link preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.from | ?.from}
+     * - {@link myChatMember | ctx.myChatMember}{@link ChatMemberUpdated.from | ?.from}
+     * - {@link chatMember | ctx.chatMember}{@link ChatMemberUpdated.from | ?.from}
+     * - {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.from | ?.from}
+     * - {@link purchasedPaidMedia | ctx.purchasedPaidMedia}{@link PaidMediaPurchased.from | ?.from}
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -816,17 +845,19 @@ export class Context implements CamelCaseUpdate {
             )?.from;
     }
     /**
-     * Get the user identifier from wherever possible. Alias for
-     * `this.from?.id`.
+     * Get the user identifier from wherever possible. Sources are:
+     *
+     * - {@link from | ctx.from}{@link User.id | ?.id}
      */
     get fromId(): number | undefined {
         // Keep in sync with types in `filter.ts`.
         return this.from?.id;
     }
     /**
-     * Get the business connection identifier from wherever possible. Alias for
-     * `this.msg?.business_connection_id ?? this.businessConnection?.id ??
-     * this.deletedBusinessMessages?.business_connection_id`.
+     * Get the business connection identifier from wherever possible. Sources are:
+     * - {@link msg | ctx.msg}{@link Message.business_connection_id | ?.business_connection_id}
+     * - {@link businessConnection | ctx.businessConnection}{@link BusinessConnection.id | ?.id}
+     * - {@link deletedBusinessMessages | ctx.deletedBusinessMessages}{@link BusinessMessagesDeleted.business_connection_id | ?.business_connection_id}
      */
     get businessConnectionId(): string | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -888,10 +919,11 @@ export class Context implements CamelCaseUpdate {
     }
     /**
      * Find out which reactions were added and removed in a `message_reaction`
-     * update. This method looks at `ctx.messageReaction` and computes the
-     * difference between the old reaction and the new reaction. It also groups
-     * the reactions by emoji reactions and custom emoji reactions. For example,
-     * the resulting object could look like this:
+     * update. This method looks at
+     * {@link messageReaction | ctx.messageReaction} and computes the difference
+     * between the old reaction and the new reaction. It also groups the
+     * reactions by emoji reactions and custom emoji reactions. For example, the
+     * resulting object could look like this:
      * ```ts
      * {
      *   emoji: ['👍', '🎉']
