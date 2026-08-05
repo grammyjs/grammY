@@ -9,9 +9,14 @@ export class EntityString {
         this.rawEntities = entities ?? [];
     }
 
-    append(text: string, ...entities: MessageEntity[]): this {
-        this.rawText += text;
-        this.rawEntities.push(...entities);
+    append(other: string | EntityString, ...entities: MessageEntity[]): this {
+        const { txt, ent } = typeof other === "string"
+            ? { txt: other, ent: entities }
+            : { txt: other.rawText, ent: entities.concat(other.rawEntities) };
+        const off = this.length;
+        const shifted = ent.map((e) => ({ ...e, offset: off + e.offset }));
+        this.rawText += txt;
+        this.rawEntities.push(...shifted);
         return this;
     }
     concat(other: EntityString) {
@@ -26,138 +31,117 @@ export class EntityString {
         return this.append(text);
     }
     mention(text: string): this {
-        return this.append(text, {
-            type: "mention",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "mention", offset: 0, length: text.length },
+        );
     }
     hashtag(text: string): this {
-        return this.append(text, {
-            type: "hashtag",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "hashtag", offset: 0, length: text.length },
+        );
     }
     cashtag(text: string): this {
-        return this.append(text, {
-            type: "cashtag",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "cashtag", offset: 0, length: text.length },
+        );
     }
     botCommand(text: string): this {
-        return this.append(text, {
-            type: "bot_command",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "bot_command", offset: 0, length: text.length },
+        );
     }
     url(text: string): this {
-        return this.append(text, {
-            type: "url",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "url", offset: 0, length: text.length },
+        );
     }
     email(text: string): this {
-        return this.append(text, {
-            type: "email",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "email", offset: 0, length: text.length },
+        );
     }
     phoneNumber(text: string): this {
-        return this.append(text, {
-            type: "phone_number",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "phone_number", offset: 0, length: text.length },
+        );
     }
     bold(text: string): this {
-        return this.append(text, {
-            type: "bold",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "bold", offset: 0, length: text.length },
+        );
     }
     italic(text: string): this {
-        return this.append(text, {
-            type: "italic",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "italic", offset: 0, length: text.length },
+        );
     }
     underline(text: string): this {
-        return this.append(text, {
-            type: "underline",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "underline", offset: 0, length: text.length },
+        );
     }
     strikethrough(text: string): this {
-        return this.append(text, {
-            type: "strikethrough",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "strikethrough", offset: 0, length: text.length },
+        );
     }
     spoiler(text: string): this {
-        return this.append(text, {
-            type: "spoiler",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "spoiler", offset: 0, length: text.length },
+        );
     }
     blockquote(text: string): this {
-        return this.append(text, {
-            type: "blockquote",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "blockquote", offset: 0, length: text.length },
+        );
     }
     expandableBlockquote(text: string): this {
-        return this.append(text, {
-            type: "expandable_blockquote",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "expandable_blockquote", offset: 0, length: text.length },
+        );
     }
     code(text: string): this {
-        return this.append(text, {
-            type: "code",
-            offset: this.length,
-            length: text.length,
-        });
+        return this.append(
+            text,
+            { type: "code", offset: 0, length: text.length },
+        );
     }
     pre(text: string, language?: string): this {
-        return this.append(text, {
-            type: "pre",
-            offset: this.length,
-            length: text.length,
-            language,
-        });
+        return this.append(
+            text,
+            { type: "pre", offset: 0, length: text.length, language },
+        );
     }
     textLink(text: string, url: string): this {
-        return this.append(text, {
-            type: "text_link",
-            offset: this.length,
-            length: text.length,
-            url,
-        });
+        return this.append(
+            text,
+            { type: "text_link", offset: 0, length: text.length, url },
+        );
     }
     textMention(text: string, user: User): this {
-        return this.append(text, {
-            type: "text_mention",
-            offset: this.length,
-            length: text.length,
-            user,
-        });
+        return this.append(
+            text,
+            { type: "text_mention", offset: 0, length: text.length, user },
+        );
     }
     customEmoji(text: string, custom_emoji_id: string): this {
         return this.append(text, {
             type: "custom_emoji",
-            offset: this.length,
+            offset: 0,
             length: text.length,
             custom_emoji_id,
         });
@@ -169,7 +153,7 @@ export class EntityString {
     ): this {
         return this.append(text, {
             type: "date_time",
-            offset: this.length,
+            offset: 0,
             length: text.length,
             unix_time,
             date_time_format,
