@@ -3,6 +3,7 @@ import type { MessageEntity, User } from "./types.ts";
 export class EntityString {
     private rawText: string;
     private rawEntities: MessageEntity[];
+
     constructor(text?: string, entities?: MessageEntity[]) {
         this.rawText = text ?? "";
         this.rawEntities = entities ?? [];
@@ -12,6 +13,13 @@ export class EntityString {
         this.rawText += text;
         this.rawEntities.push(...entities);
         return this;
+    }
+    concat(other: EntityString) {
+        const off = this.rawText.length;
+        this.rawText += other.rawText;
+        const shifted = other.rawEntities
+            .map((e) => ({ ...e, offset: off + e.offset }));
+        this.rawEntities.push(...shifted);
     }
 
     plain(text: string): this {
