@@ -396,6 +396,16 @@ const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const INLINE_QUERY_KEYS = {
+    chat_type: {
+        sender: {},
+        private: {},
+        group: {},
+        supergroup: {},
+        channel: {},
+    },
+} as const;
+const POLL_KEYS = { type: { regular: {}, quiz: {} } };
 const SUBSCRIPTION_KEYS = {
     state: { canceled: {}, active: {}, failed: {} },
 } as const;
@@ -411,12 +421,12 @@ const UPDATE_KEYS = {
     edited_business_message: MESSAGE_KEYS,
     deleted_business_messages: {},
     guest_message: MESSAGE_KEYS,
-    inline_query: {},
+    inline_query: INLINE_QUERY_KEYS,
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
     shipping_query: {},
     pre_checkout_query: {},
-    poll: {},
+    poll: POLL_KEYS,
     poll_answer: {},
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
