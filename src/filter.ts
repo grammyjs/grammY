@@ -174,9 +174,6 @@ function concat(get: Pred, test: Pred): Pred {
         return nextObj && test(nextObj, ctx);
     };
 }
-function leaf(pred: Pred): Pred {
-    return (obj, ctx) => pred(obj, ctx) != null;
-}
 function arborist(tree: LTree): Pred {
     const l1Predicates = Object.entries(tree).map(([l1, subtree]) => {
         const l1Pred: Pred = (obj) => obj[l1];
@@ -196,11 +193,11 @@ function arborist(tree: LTree): Pred {
                 return l3Pred;
             });
             return l3Predicates.length === 0
-                ? leaf(l2Pred)
+                ? l2Pred
                 : concat(l2Pred, l3Predicates.reduce(or));
         });
         return l2Predicates.length === 0
-            ? leaf(l1Pred)
+            ? l1Pred
             : concat(l1Pred, l2Predicates.reduce(or));
     });
     if (l1Predicates.length === 0) {

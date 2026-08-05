@@ -29,14 +29,25 @@ describe("matchFilter", () => {
     });
 
     it("should perform L2 filtering", () => {
-        const ctx = { update: { message: { text: "" } } } as Context;
+        const empty = { update: { message: { text: "" } } } as Context;
+        assert(!matchFilter("message:text")(empty));
+        const ctx = { update: { message: { text: "t" } } } as Context;
         assert(matchFilter("message:text")(ctx));
         assert(!matchFilter("edited_message")(ctx));
         assert(!matchFilter("edited_message:text")(ctx));
+
+        const notViaRequest = {
+            update: { chat_member: { via_join_request: false } },
+        } as Context;
+        assert(!matchFilter("chat_member:via_join_request")(notViaRequest));
+        const viaRequest = {
+            update: { chat_member: { via_join_request: true } },
+        } as Context;
+        assert(matchFilter("chat_member:via_join_request")(viaRequest));
     });
 
     it("should fill in L1 defaults", () => {
-        const ctx = { update: { message: { text: "" } } } as Context;
+        const ctx = { update: { message: { text: "text" } } } as Context;
         assert(matchFilter(":text")(ctx));
         assert(!matchFilter(":entities")(ctx));
         assert(!matchFilter(":caption")(ctx));
@@ -53,7 +64,7 @@ describe("matchFilter", () => {
     });
 
     it("should expand L1 shortcuts", () => {
-        const ctxNew = { update: { message: { text: "" } } } as Context;
+        const ctxNew = { update: { message: { text: "text" } } } as Context;
         assert(matchFilter("msg")(ctxNew));
         assert(matchFilter("msg:text")(ctxNew));
         assert(!matchFilter("msg:entities")(ctxNew));
@@ -62,7 +73,7 @@ describe("matchFilter", () => {
         assert(!matchFilter(":audio")(ctxNew));
 
         const ctxEdited = {
-            update: { edited_message: { text: "" } },
+            update: { edited_message: { text: "text" } },
         } as Context;
         assert(!matchFilter(":text")(ctxEdited));
         assert(matchFilter("edit")(ctxEdited));
@@ -73,7 +84,7 @@ describe("matchFilter", () => {
 
     it("should expand L2 shortcuts", () => {
         const ctx = {
-            update: { edited_message: { photo: {}, caption: "" } },
+            update: { edited_message: { photo: {}, caption: "caption" } },
         } as Context;
         assert(matchFilter("edit")(ctx));
         assert(matchFilter("edit:photo")(ctx));
