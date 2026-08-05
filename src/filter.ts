@@ -290,6 +290,8 @@ const COMMON_MESSAGE_KEYS = {
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
+    has_protected_content: {},
+    is_from_offline: {},
 
     paid_star_count: {},
     text: {},
@@ -399,11 +401,19 @@ const BUSINESS_CONNECTION_KEYS = {
     is_enabled: {},
 } as const;
 const MESSAGE_REACTION_KEYS = {
+    user: USER_KEYS,
+    actor_chat: {},
     old_reaction: REACTION_KEYS,
     new_reaction: REACTION_KEYS,
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
-const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const CHAT_MEMBER_UPDATED_KEYS = {
+    from: USER_KEYS,
+    invite_link: {},
+    via_join_request: {},
+    via_chat_folder_invite_link: {},
+} as const;
+const CHAT_JOIN_REQUEST_KEYS = { invite_link: {}, query_id: {} } as const;
 const INLINE_QUERY_KEYS = {
     chat_type: {
         sender: {},
@@ -412,8 +422,15 @@ const INLINE_QUERY_KEYS = {
         supergroup: {},
         channel: {},
     },
+    location: {},
 } as const;
-const POLL_KEYS = { type: { regular: {}, quiz: {} } };
+const CHOSEN_INLINE_RESULT_KEYS = { location: {} } as const;
+const POLL_KEYS = {
+    type: { regular: {}, quiz: {} },
+    open_period: {},
+    close_date: {},
+};
+const POLL_ANSWER_KEYS = { voter_chat: {}, user: USER_KEYS } as const;
 const SUBSCRIPTION_KEYS = {
     state: { canceled: {}, active: {}, failed: {} },
 } as const;
@@ -432,16 +449,16 @@ const UPDATE_KEYS = {
     message_reaction: MESSAGE_REACTION_KEYS,
     message_reaction_count: {},
     inline_query: INLINE_QUERY_KEYS,
-    chosen_inline_result: {},
+    chosen_inline_result: CHOSEN_INLINE_RESULT_KEYS,
     callback_query: CALLBACK_QUERY_KEYS,
     shipping_query: {},
     pre_checkout_query: {},
     purchased_paid_media: {},
     poll: POLL_KEYS,
-    poll_answer: {},
+    poll_answer: POLL_ANSWER_KEYS,
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
-    chat_join_request: {},
+    chat_join_request: CHAT_JOIN_REQUEST_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
     managed_bot: {},
