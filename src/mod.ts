@@ -21,6 +21,8 @@ export {
     type ReactionContext,
 } from "./context.ts";
 
+export { EntityString } from "./format.ts";
+
 // A little more advanced stuff
 export {
     type CallbackQueryMiddleware,

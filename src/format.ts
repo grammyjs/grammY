@@ -1,0 +1,162 @@
+import type { MessageEntity, User } from "./types.ts";
+
+export class EntityString {
+    private rawText: string;
+    private rawEntities: MessageEntity[];
+
+    constructor(text = "", entities: MessageEntity[] = []) {
+        this.rawText = text;
+        this.rawEntities = entities;
+    }
+
+    append(other: string | EntityString, ...entities: MessageEntity[]): this {
+        const { txt, ent } = typeof other === "string"
+            ? { txt: other, ent: entities }
+            : { txt: other.rawText, ent: entities.concat(other.rawEntities) };
+        const off = this.length;
+        const shifted = ent.map((e) => ({ ...e, offset: off + e.offset }));
+        this.rawText += txt;
+        this.rawEntities.push(...shifted);
+        return this;
+    }
+
+    plain(text: string): this {
+        return this.append(text);
+    }
+    mention(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "mention", offset: 0, length: text.length },
+        );
+    }
+    hashtag(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "hashtag", offset: 0, length: text.length },
+        );
+    }
+    cashtag(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "cashtag", offset: 0, length: text.length },
+        );
+    }
+    botCommand(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "bot_command", offset: 0, length: text.length },
+        );
+    }
+    url(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "url", offset: 0, length: text.length },
+        );
+    }
+    email(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "email", offset: 0, length: text.length },
+        );
+    }
+    phoneNumber(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "phone_number", offset: 0, length: text.length },
+        );
+    }
+    bold(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "bold", offset: 0, length: text.length },
+        );
+    }
+    italic(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "italic", offset: 0, length: text.length },
+        );
+    }
+    underline(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "underline", offset: 0, length: text.length },
+        );
+    }
+    strikethrough(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "strikethrough", offset: 0, length: text.length },
+        );
+    }
+    spoiler(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "spoiler", offset: 0, length: text.length },
+        );
+    }
+    blockquote(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "blockquote", offset: 0, length: text.length },
+        );
+    }
+    expandableBlockquote(text: string | EntityString): this {
+        return this.append(
+            text,
+            { type: "expandable_blockquote", offset: 0, length: text.length },
+        );
+    }
+    code(text: string): this {
+        return this.append(
+            text,
+            { type: "code", offset: 0, length: text.length },
+        );
+    }
+    pre(text: string, language?: string): this {
+        return this.append(
+            text,
+            { type: "pre", offset: 0, length: text.length, language },
+        );
+    }
+    textLink(text: string | EntityString, url: string): this {
+        return this.append(
+            text,
+            { type: "text_link", offset: 0, length: text.length, url },
+        );
+    }
+    textMention(text: string | EntityString, user: User): this {
+        return this.append(
+            text,
+            { type: "text_mention", offset: 0, length: text.length, user },
+        );
+    }
+    customEmoji(text: string, custom_emoji_id: string): this {
+        return this.append(text, {
+            type: "custom_emoji",
+            offset: 0,
+            length: text.length,
+            custom_emoji_id,
+        });
+    }
+    dateTime(
+        text: string,
+        unix_time: number,
+        date_time_format: MessageEntity.DateTime["date_time_format"],
+    ): this {
+        return this.append(text, {
+            type: "date_time",
+            offset: 0,
+            length: text.length,
+            unix_time,
+            date_time_format,
+        });
+    }
+
+    get length(): number {
+        return this.rawText.length;
+    }
+    build(): { text: string; entities: MessageEntity[] } {
+        return { text: this.rawText, entities: this.rawEntities };
+    }
+}
