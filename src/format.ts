@@ -4,9 +4,9 @@ export class EntityString {
     private rawText: string;
     private rawEntities: MessageEntity[];
 
-    constructor(text?: string, entities?: MessageEntity[]) {
-        this.rawText = text ?? "";
-        this.rawEntities = entities ?? [];
+    constructor(text = "", entities: MessageEntity[] = []) {
+        this.rawText = text;
+        this.rawEntities = entities;
     }
 
     append(other: string | EntityString, ...entities: MessageEntity[]): this {
