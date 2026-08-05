@@ -164,9 +164,9 @@ export interface TransformableApi<R extends RawApi = RawApi> {
 // Transformer base functions
 function concatTransformer<R extends RawApi>(
     prev: ApiCallFn<R>,
-    trans: Transformer<R>,
+    andFirst: Transformer<R>,
 ): ApiCallFn<R> {
-    return (data, signal) => trans(prev, data, signal);
+    return (data, signal) => andFirst(prev, data, signal);
 }
 
 export interface BuildUrlOptions {
