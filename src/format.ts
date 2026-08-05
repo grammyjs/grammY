@@ -19,13 +19,6 @@ export class EntityString {
         this.rawEntities.push(...shifted);
         return this;
     }
-    concat(other: EntityString) {
-        const off = this.rawText.length;
-        this.rawText += other.rawText;
-        const shifted = other.rawEntities
-            .map((e) => ({ ...e, offset: off + e.offset }));
-        this.rawEntities.push(...shifted);
-    }
 
     plain(text: string): this {
         return this.append(text);
