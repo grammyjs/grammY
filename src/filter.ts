@@ -191,7 +191,7 @@ function arborist(tree: LTree): Pred {
                     : (obj) =>
                         testMaybeArray(
                             obj,
-                            (e) => e === l3 || e[l3] || e.type === l3,
+                            (e) => e[l3] || e.type === l3 || e === l3,
                         );
                 return l3Pred;
             });
