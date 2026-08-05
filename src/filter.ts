@@ -396,6 +396,9 @@ const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const SUBSCRIPTION_KEYS = {
+    state: { canceled: {}, active: {}, failed: {} },
+} as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -424,7 +427,7 @@ const UPDATE_KEYS = {
     chat_boost: {},
     removed_chat_boost: {},
     purchased_paid_media: {},
-    subscription: { state: { canceled: {}, active: {}, failed: {} } },
+    subscription: SUBSCRIPTION_KEYS,
 } as const satisfies Record<Exclude<keyof Update, "update_id">, NestedObj>;
 
 // === Build up all possible filter queries from the above validation structure
