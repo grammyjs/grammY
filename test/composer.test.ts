@@ -122,7 +122,7 @@ describe("Composer", () => {
         it("should allow chaining filter queries", async () => {
             composer.on([":text"]).on("message").use(middleware);
             await exec();
-            await exec({ update: { channel_post: { text: "" } } } as Context);
+            await exec({ update: { channel_post: { text: "t" } } } as Context);
             assertEquals(middleware.calls.length, 1);
             assertEquals(middleware.calls[0].args[0], ctx);
         });

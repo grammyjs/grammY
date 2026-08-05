@@ -174,9 +174,6 @@ function concat(get: Pred, test: Pred): Pred {
         return nextObj && test(nextObj, ctx);
     };
 }
-function leaf(pred: Pred): Pred {
-    return (obj, ctx) => pred(obj, ctx) != null;
-}
 function arborist(tree: LTree): Pred {
     const l1Predicates = Object.entries(tree).map(([l1, subtree]) => {
         const l1Pred: Pred = (obj) => obj[l1];
@@ -191,16 +188,16 @@ function arborist(tree: LTree): Pred {
                     : (obj) =>
                         testMaybeArray(
                             obj,
-                            (e) => e === l3 || e[l3] || e.type === l3,
+                            (e) => e[l3] || e.type === l3 || e === l3,
                         );
                 return l3Pred;
             });
             return l3Predicates.length === 0
-                ? leaf(l2Pred)
+                ? l2Pred
                 : concat(l2Pred, l3Predicates.reduce(or));
         });
         return l2Predicates.length === 0
-            ? leaf(l1Pred)
+            ? l1Pred
             : concat(l1Pred, l2Predicates.reduce(or));
     });
     if (l1Predicates.length === 0) {
@@ -252,8 +249,8 @@ const FORWARD_ORIGIN_KEYS = {
     channel: {},
 } as const;
 const STICKER_KEYS = {
-    is_video: {},
     is_animated: {},
+    is_video: {},
     premium_animation: {},
 } as const;
 const REACTION_KEYS = {
@@ -262,20 +259,47 @@ const REACTION_KEYS = {
     paid: {},
 } as const;
 const GIFT_INFO_KEYS = {
-    can_be_upgraded: {},
     is_upgrade_separate: {},
+    can_be_upgraded: {},
     is_private: {},
 };
+const BUSINESS_BOT_RIGHTS_KEYS = {
+    can_reply: {},
+    can_read_messages: {},
+    can_delete_sent_messages: {},
+    can_delete_all_messages: {},
+    can_edit_name: {},
+    can_edit_bio: {},
+    can_edit_profile_photo: {},
+    can_edit_username: {},
+    can_change_gift_settings: {},
+    can_view_gifts_and_stars: {},
+    can_convert_gifts_to_stars: {},
+    can_transfer_and_upgrade_gifts: {},
+    can_transfer_stars: {},
+    can_manage_stories: {},
+} as const;
 
 // L2
 const COMMON_MESSAGE_KEYS = {
+    guest_query_id: {},
+    business_connection_id: {},
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
-    guest_query_id: {},
-    business_connection_id: {},
+    has_protected_content: {},
+    is_from_offline: {},
 
+    paid_star_count: {},
     text: {},
+    entities: ENTITY_KEYS,
+    link_preview_options: {
+        url: {},
+        prefer_small_media: {},
+        prefer_large_media: {},
+        show_above_text: {},
+    },
+    effect_id: {},
     rich_message: {},
     animation: {},
     audio: {},
@@ -288,6 +312,9 @@ const COMMON_MESSAGE_KEYS = {
     video: {},
     video_note: {},
     voice: {},
+    caption: {},
+    caption_entities: ENTITY_KEYS,
+    has_media_spoiler: {},
     contact: {},
     dice: {},
     game: {},
@@ -295,35 +322,21 @@ const COMMON_MESSAGE_KEYS = {
     venue: {},
     location: {},
 
-    entities: ENTITY_KEYS,
-    caption_entities: ENTITY_KEYS,
-    caption: {},
-
-    link_preview_options: {
-        url: {},
-        prefer_small_media: {},
-        prefer_large_media: {},
-        show_above_text: {},
-    },
-    effect_id: {},
-    paid_star_count: {},
-    has_media_spoiler: {},
-
     new_chat_title: {},
     new_chat_photo: {},
     delete_chat_photo: {},
     message_auto_delete_timer_changed: {},
     pinned_message: {},
     invoice: {},
+    gift: GIFT_INFO_KEYS,
+    unique_gift: { transfer_star_count: {} },
+    gift_upgrade_sent: GIFT_INFO_KEYS,
     proximity_alert_triggered: {},
     chat_background_set: {},
     giveaway_created: {},
     giveaway: { only_new_members: {}, has_public_winners: {} },
     giveaway_winners: { only_new_members: {}, was_refunded: {} },
     giveaway_completed: {},
-    gift: GIFT_INFO_KEYS,
-    gift_upgrade_sent: GIFT_INFO_KEYS,
-    unique_gift: { transfer_star_count: {} },
     paid_message_price_changed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
@@ -335,11 +348,14 @@ const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
 
     direct_messages_topic: {},
+    sender_boost_count: {},
+    suggested_post_info: {},
+    checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
 
-    chat_owner_left: { new_owner: {} },
-    chat_owner_changed: {},
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
+    chat_owner_left: { new_owner: {} },
+    chat_owner_changed: {},
     group_chat_created: {},
     supergroup_chat_created: {},
     migrate_to_chat_id: {},
@@ -349,53 +365,72 @@ const MESSAGE_KEYS = {
     users_shared: {},
     chat_shared: {},
     connected_website: {},
-    managed_bot_created: {},
     write_access_allowed: {},
     passport_data: {},
     boost_added: {},
+    checklist_tasks_done: {},
+    checklist_tasks_added: {},
+    community_chat_added: {},
+    community_chat_removed: {},
     forum_topic_created: { is_name_implicit: {} },
     forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
     forum_topic_closed: {},
     forum_topic_reopened: {},
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
-
-    checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
-    checklist_tasks_done: {},
-    checklist_tasks_added: {},
-    community_chat_added: {},
-    community_chat_removed: {},
+    managed_bot_created: {},
     poll_option_added: {},
     poll_option_deleted: {},
-
-    suggested_post_info: {},
     suggested_post_approved: {},
     suggested_post_approval_failed: {},
     suggested_post_declined: {},
     suggested_post_paid: {},
     suggested_post_refunded: {},
-
-    sender_boost_count: {},
 } as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
+    is_paid_post: {},
     channel_chat_created: {},
     direct_message_price_changed: {},
-    is_paid_post: {},
 } as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const BUSINESS_CONNECTION_KEYS = {
-    can_reply: {},
+    rights: BUSINESS_BOT_RIGHTS_KEYS,
     is_enabled: {},
 } as const;
 const MESSAGE_REACTION_KEYS = {
+    user: USER_KEYS,
+    actor_chat: {},
     old_reaction: REACTION_KEYS,
     new_reaction: REACTION_KEYS,
 } as const;
-const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
-    reactions: REACTION_KEYS,
-} as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
-const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const CHAT_MEMBER_UPDATED_KEYS = {
+    from: USER_KEYS,
+    invite_link: {},
+    via_join_request: {},
+    via_chat_folder_invite_link: {},
+} as const;
+const CHAT_JOIN_REQUEST_KEYS = { invite_link: {}, query_id: {} } as const;
+const INLINE_QUERY_KEYS = {
+    chat_type: {
+        sender: {},
+        private: {},
+        group: {},
+        supergroup: {},
+        channel: {},
+    },
+    location: {},
+} as const;
+const CHOSEN_INLINE_RESULT_KEYS = { location: {} } as const;
+const POLL_KEYS = {
+    type: { regular: {}, quiz: {} },
+    open_period: {},
+    close_date: {},
+};
+const POLL_ANSWER_KEYS = { voter_chat: {}, user: USER_KEYS } as const;
+const SUBSCRIPTION_KEYS = {
+    state: { canceled: {}, active: {}, failed: {} },
+} as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -408,23 +443,23 @@ const UPDATE_KEYS = {
     edited_business_message: MESSAGE_KEYS,
     deleted_business_messages: {},
     guest_message: MESSAGE_KEYS,
-    inline_query: {},
-    chosen_inline_result: {},
+    message_reaction: MESSAGE_REACTION_KEYS,
+    message_reaction_count: {},
+    inline_query: INLINE_QUERY_KEYS,
+    chosen_inline_result: CHOSEN_INLINE_RESULT_KEYS,
     callback_query: CALLBACK_QUERY_KEYS,
     shipping_query: {},
     pre_checkout_query: {},
-    poll: {},
-    poll_answer: {},
+    purchased_paid_media: {},
+    poll: POLL_KEYS,
+    poll_answer: POLL_ANSWER_KEYS,
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
-    managed_bot: {},
-    chat_join_request: {},
-    message_reaction: MESSAGE_REACTION_KEYS,
-    message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
+    chat_join_request: CHAT_JOIN_REQUEST_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
-    purchased_paid_media: {},
-    subscription: { state: { canceled: {}, active: {}, failed: {} } },
+    managed_bot: {},
+    subscription: SUBSCRIPTION_KEYS,
 } as const satisfies Record<Exclude<keyof Update, "update_id">, NestedObj>;
 
 // === Build up all possible filter queries from the above validation structure

@@ -267,7 +267,7 @@ describe("Context", () => {
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chatId, up.message?.chat.id);
-        up = { business_connection: up.business_connection } as Update;
+        up = { business_connection: update.business_connection } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chatId, up.business_connection?.user_chat_id);
     });
