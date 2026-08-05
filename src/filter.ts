@@ -266,6 +266,22 @@ const GIFT_INFO_KEYS = {
     can_be_upgraded: {},
     is_private: {},
 };
+const BUSINESS_BOT_RIGHTS_KEYS = {
+    can_reply: {},
+    can_read_messages: {},
+    can_delete_sent_messages: {},
+    can_delete_all_messages: {},
+    can_edit_name: {},
+    can_edit_bio: {},
+    can_edit_profile_photo: {},
+    can_edit_username: {},
+    can_change_gift_settings: {},
+    can_view_gifts_and_stars: {},
+    can_convert_gifts_to_stars: {},
+    can_transfer_and_upgrade_gifts: {},
+    can_transfer_stars: {},
+    can_manage_stories: {},
+} as const;
 
 // L2
 const COMMON_MESSAGE_KEYS = {
@@ -379,7 +395,7 @@ const CHANNEL_POST_KEYS = {
     direct_message_price_changed: {},
 } as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const BUSINESS_CONNECTION_KEYS = {
-    can_reply: {},
+    rights: BUSINESS_BOT_RIGHTS_KEYS,
     is_enabled: {},
 } as const;
 const MESSAGE_REACTION_KEYS = {
