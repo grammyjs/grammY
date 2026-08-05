@@ -2198,7 +2198,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
@@ -2210,7 +2210,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.banChatMember(
-            ensureChatId("banChatMember", this, other),
+            ensureCurrentChatId("banChatMember", this, other),
             ensureUserId("banChatMember", this, other),
             other,
             signal,
@@ -2249,7 +2249,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
@@ -2261,7 +2261,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.unbanChatMember(
-            ensureChatId("unbanChatMember", this, other),
+            ensureCurrentChatId("unbanChatMember", this, other),
             ensureUserId("unbanChatMember", this, other),
             other,
             signal,
@@ -2300,7 +2300,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.restrictChatMember | ctx.api.restrictChatMember}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
@@ -2316,7 +2316,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.restrictChatMember(
-            ensureChatId("restrictChatMember", this, other),
+            ensureCurrentChatId("restrictChatMember", this, other),
             ensureUserId("restrictChatMember", this, other),
             permissions,
             other,
@@ -2361,7 +2361,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#promotechatmember}
@@ -2373,7 +2373,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.promoteChatMember(
-            ensureChatId("promoteChatMember", this, other),
+            ensureCurrentChatId("promoteChatMember", this, other),
             ensureUserId("promoteChatMember", this, other),
             other,
             signal,
@@ -2412,7 +2412,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
@@ -2426,7 +2426,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.setChatAdministratorCustomTitle(
-            ensureChatId("setChatAdministratorCustomTitle", this, other),
+            ensureCurrentChatId("setChatAdministratorCustomTitle", this, other),
             ensureUserId("setChatAdministratorCustomTitle", this, other),
             custom_title,
             other,
@@ -2469,7 +2469,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#setchatmembertag}
@@ -2483,7 +2483,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.setChatMemberTag(
-            ensureChatId("setChatMemberTag", this, other),
+            ensureCurrentChatId("setChatMemberTag", this, other),
             ensureUserId("setChatMemberTag", this, other),
             tag,
             other,
@@ -2811,7 +2811,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id}, falling back to {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
@@ -2823,11 +2823,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.approveChatJoinRequest(
-            ensureChatJoinRequestChatId(
-                "approveChatJoinRequest",
-                this,
-                other,
-            ),
+            ensureCurrentChatId("approveChatJoinRequest", this, other),
             ensureUserId("approveChatJoinRequest", this, other),
             other,
             signal,
@@ -2840,7 +2836,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id}, falling back to {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
@@ -2852,11 +2848,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.declineChatJoinRequest(
-            ensureChatJoinRequestChatId(
-                "declineChatJoinRequest",
-                this,
-                other,
-            ),
+            ensureCurrentChatId("declineChatJoinRequest", this, other),
             ensureUserId("declineChatJoinRequest", this, other),
             other,
             signal,
@@ -3205,7 +3197,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getchatmember}
@@ -3217,7 +3209,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<ChatMember> {
         return await this.api.getChatMember(
-            ensureChatId("getChatMember", this, other),
+            ensureCurrentChatId("getChatMember", this, other),
             ensureUserId("getChatMember", this, other),
             other,
             signal,
@@ -3676,7 +3668,7 @@ export class Context implements CamelCaseUpdate {
      *
      * The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `chat_id` from {@link chatId | ctx.chatId}, except for chat join requests, where the current chat from {@link chatJoinRequest | ctx.chatJoinRequest}{@link ChatJoinRequest.chat | .chat}{@link Chat.id | .id} is used instead of the newly opened DM with the user
      * - `user_id` from {@link fromId | ctx.fromId}
      *
      * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
@@ -3688,7 +3680,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<UserChatBoosts> {
         return await this.api.getUserChatBoosts(
-            ensureChatId("getUserChatBoosts", this, other),
+            ensureCurrentChatId("getUserChatBoosts", this, other),
             ensureUserId("getUserChatBoosts", this, other),
             other,
             signal,
@@ -6554,7 +6546,7 @@ function ensureChatId<T extends number | string>(
     }
     return chatId;
 }
-function ensureChatJoinRequestChatId<T extends number | string>(
+function ensureCurrentChatId<T extends number | string>(
     method: keyof ApiMethods,
     ctx: {
         chatId?: number;
