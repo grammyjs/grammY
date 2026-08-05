@@ -23,85 +23,85 @@ export class EntityString {
     plain(text: string): this {
         return this.append(text);
     }
-    mention(text: string): this {
+    mention(text: string | EntityString): this {
         return this.append(
             text,
             { type: "mention", offset: 0, length: text.length },
         );
     }
-    hashtag(text: string): this {
+    hashtag(text: string | EntityString): this {
         return this.append(
             text,
             { type: "hashtag", offset: 0, length: text.length },
         );
     }
-    cashtag(text: string): this {
+    cashtag(text: string | EntityString): this {
         return this.append(
             text,
             { type: "cashtag", offset: 0, length: text.length },
         );
     }
-    botCommand(text: string): this {
+    botCommand(text: string | EntityString): this {
         return this.append(
             text,
             { type: "bot_command", offset: 0, length: text.length },
         );
     }
-    url(text: string): this {
+    url(text: string | EntityString): this {
         return this.append(
             text,
             { type: "url", offset: 0, length: text.length },
         );
     }
-    email(text: string): this {
+    email(text: string | EntityString): this {
         return this.append(
             text,
             { type: "email", offset: 0, length: text.length },
         );
     }
-    phoneNumber(text: string): this {
+    phoneNumber(text: string | EntityString): this {
         return this.append(
             text,
             { type: "phone_number", offset: 0, length: text.length },
         );
     }
-    bold(text: string): this {
+    bold(text: string | EntityString): this {
         return this.append(
             text,
             { type: "bold", offset: 0, length: text.length },
         );
     }
-    italic(text: string): this {
+    italic(text: string | EntityString): this {
         return this.append(
             text,
             { type: "italic", offset: 0, length: text.length },
         );
     }
-    underline(text: string): this {
+    underline(text: string | EntityString): this {
         return this.append(
             text,
             { type: "underline", offset: 0, length: text.length },
         );
     }
-    strikethrough(text: string): this {
+    strikethrough(text: string | EntityString): this {
         return this.append(
             text,
             { type: "strikethrough", offset: 0, length: text.length },
         );
     }
-    spoiler(text: string): this {
+    spoiler(text: string | EntityString): this {
         return this.append(
             text,
             { type: "spoiler", offset: 0, length: text.length },
         );
     }
-    blockquote(text: string): this {
+    blockquote(text: string | EntityString): this {
         return this.append(
             text,
             { type: "blockquote", offset: 0, length: text.length },
         );
     }
-    expandableBlockquote(text: string): this {
+    expandableBlockquote(text: string | EntityString): this {
         return this.append(
             text,
             { type: "expandable_blockquote", offset: 0, length: text.length },
@@ -119,13 +119,13 @@ export class EntityString {
             { type: "pre", offset: 0, length: text.length, language },
         );
     }
-    textLink(text: string, url: string): this {
+    textLink(text: string | EntityString, url: string): this {
         return this.append(
             text,
             { type: "text_link", offset: 0, length: text.length, url },
         );
     }
-    textMention(text: string, user: User): this {
+    textMention(text: string | EntityString, user: User): this {
         return this.append(
             text,
             { type: "text_mention", offset: 0, length: text.length, user },
