@@ -386,9 +386,6 @@ const MESSAGE_REACTION_KEYS = {
     old_reaction: REACTION_KEYS,
     new_reaction: REACTION_KEYS,
 } as const;
-const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
-    reactions: REACTION_KEYS,
-} as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
 const INLINE_QUERY_KEYS = {
@@ -417,7 +414,7 @@ const UPDATE_KEYS = {
     deleted_business_messages: {},
     guest_message: MESSAGE_KEYS,
     message_reaction: MESSAGE_REACTION_KEYS,
-    message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
+    message_reaction_count: {},
     inline_query: INLINE_QUERY_KEYS,
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
