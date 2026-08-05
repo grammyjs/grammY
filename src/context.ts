@@ -5278,7 +5278,7 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteMessageReactionByUser(
+    async deleteMessageReactionByAuthor(
         other?: Partial<ApiParameters<"deleteMessageReaction">>,
         signal?: AbortSignal,
     ): Promise<true> {
@@ -5286,6 +5286,34 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("deleteMessageReaction", this, other),
             ensureMessageId("deleteMessageReaction", this, other),
             ensureUserId("deleteMessageReaction", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.deleteMessageReactionByUser | ctx.api.deleteMessageReactionByUser}.
+     *
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
+     * @param user_id Identifier of the user whose reaction will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteMessageReactionByUser(
+        user_id: number,
+        other?: Partial<ApiParameters<"deleteMessageReaction">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.deleteMessageReactionByUser(
+            ensureChatId("deleteMessageReaction", this, other),
+            ensureMessageId("deleteMessageReaction", this, other),
+            user_id,
             other,
             signal,
         );
@@ -5305,7 +5333,7 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteMessageReactionByChat(
+    async deleteMessageReactionByChatAuthor(
         other?: Partial<ApiParameters<"deleteMessageReaction">>,
         signal?: AbortSignal,
     ): Promise<true> {
@@ -5313,6 +5341,34 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("deleteMessageReaction", this, other),
             ensureMessageId("deleteMessageReaction", this, other),
             ensureActorChatId("deleteMessageReaction", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.deleteMessageReactionByChat | ctx.api.deleteMessageReactionByChat}.
+     *
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     * - `message_id` from {@link msgId | ctx.msgId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
+     * @param actor_chat_id Identifier of the chat whose reaction will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteMessageReactionByChat(
+        actor_chat_id: number,
+        other?: Partial<ApiParameters<"deleteMessageReaction">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.deleteMessageReactionByChat(
+            ensureChatId("deleteMessageReaction", this, other),
+            ensureMessageId("deleteMessageReaction", this, other),
+            actor_chat_id,
             other,
             signal,
         );
@@ -5331,13 +5387,39 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteAllMessageReactionsByUser(
+    async deleteAllMessageReactionsByAuthor(
         other?: Partial<ApiParameters<"deleteAllMessageReactions">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.deleteAllMessageReactionsByUser(
             ensureChatId("deleteAllMessageReactions", this, other),
             ensureUserId("deleteAllMessageReactions", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.deleteAllMessageReactionsByUser | ctx.api.deleteAllMessageReactionsByUser}.
+     *
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
+     * @param user_id Identifier of the user whose reactions will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteAllMessageReactionsByUser(
+        user_id: number,
+        other?: Partial<ApiParameters<"deleteAllMessageReactions">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.deleteAllMessageReactionsByUser(
+            ensureChatId("deleteAllMessageReactions", this, other),
+            user_id,
             other,
             signal,
         );
@@ -5356,13 +5438,39 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional {@link AbortSignal} to cancel the request
      */
-    async deleteAllMessageReactionsByChat(
+    async deleteAllMessageReactionsByChatAuthor(
         other?: Partial<ApiParameters<"deleteAllMessageReactions">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.deleteAllMessageReactionsByChat(
             ensureChatId("deleteAllMessageReactions", this, other),
             ensureActorChatId("deleteAllMessageReactions", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.deleteAllMessageReactionsByChat | ctx.api.deleteAllMessageReactionsByChat}.
+     *
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
+     *
+     * The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from {@link chatId | ctx.chatId}
+     *
+     * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
+     * @param actor_chat_id Identifier of the chat whose reactions will be removed
+     * @param other Options object with all optional parameters
+     * @param signal Optional {@link AbortSignal} to cancel the request
+     */
+    async deleteAllMessageReactionsByChat(
+        actor_chat_id: number,
+        other?: Partial<ApiParameters<"deleteAllMessageReactions">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.deleteAllMessageReactionsByChat(
+            ensureChatId("deleteAllMessageReactions", this, other),
+            actor_chat_id,
             other,
             signal,
         );
@@ -6447,7 +6555,7 @@ function ensureChatId<T extends number | string>(
     return chatId;
 }
 function ensureChatJoinRequestChatId<T extends number | string>(
-    method: "approveChatJoinRequest" | "declineChatJoinRequest",
+    method: keyof ApiMethods,
     ctx: {
         chatId?: number;
         chatJoinRequest?: { chat: { id: number } };
