@@ -300,7 +300,8 @@ class ApiClient<R extends RawApi> {
             return { ok: true, result: true as ApiCallResult<M, R> };
         }
         // Handle timeouts and errors in the underlying form-data stream
-        const controller = createAbortControllerFromSignal(signal);
+        const { controller, unregisterSignal } =
+            createAbortControllerFromSignal(signal);
         const timeout = createTimeout(controller, opts.timeoutSeconds, method);
         const streamErr = createStreamError(controller);
         // Build request URL and config
@@ -327,6 +328,7 @@ class ApiClient<R extends RawApi> {
             throw toHttpError(method, opts.sensitiveLogs, error);
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
+            unregisterSignal?.();
         }
     };
 
@@ -471,16 +473,24 @@ function createStreamError(abortController: AbortController): StreamError {
 }
 
 function createAbortControllerFromSignal(signal?: AbortSignal) {
-    const abortController = new AbortController();
-    if (signal === undefined) return abortController;
+    const controller = new AbortController();
+    if (signal === undefined) {
+        return { controller, unregisterSignal: undefined };
+    }
     const sig = signal;
     function abort() {
-        abortController.abort();
+        controller.abort();
+        unregisterSignal();
+    }
+    function unregisterSignal() {
         sig.removeEventListener("abort", abort);
     }
     if (sig.aborted) abort();
     else sig.addEventListener("abort", abort);
-    return { abort, signal: abortController.signal };
+    return {
+        controller: { abort, signal: controller.signal },
+        unregisterSignal,
+    };
 }
 
 function validateSignal(
