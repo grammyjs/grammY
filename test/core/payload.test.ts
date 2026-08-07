@@ -7,7 +7,6 @@ import {
     assert,
     assertEquals,
     assertFalse,
-    assertSnapshot,
     convertToUint8Array,
     describe,
     it,
@@ -60,7 +59,7 @@ describe("requiresFormDataUpload", () => {
         const actual = new TextDecoder().decode(body);
         // the random values in the payload are stable because of the testing
         // seed, so they can be stored in a snapshot
-        await assertSnapshot(t, { headers: payload.headers, body: actual });
+        await t.assertSnapshot({ headers: payload.headers, body: actual });
     });
 
     it("builds multipart/form-data streams from the same payload repeatedly", async (t) => {
@@ -80,7 +79,7 @@ describe("requiresFormDataUpload", () => {
             const actual = new TextDecoder().decode(body);
             // the random values in the payload are stable because of the
             // testing seed, so they can be stored in a snapshot
-            await assertSnapshot(t, { headers: payload.headers, body: actual });
+            await t.assertSnapshot({ headers: payload.headers, body: actual });
         }
     });
 });
