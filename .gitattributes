@@ -1,0 +1,3 @@
+# Deno's native snapshot runner compares snapshot file contents literally,
+# so they must keep LF line endings even on Windows checkouts.
+*.snap text eol=lf
