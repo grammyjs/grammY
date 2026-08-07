@@ -7,6 +7,7 @@ import {
     assert,
     assertEquals,
     assertFalse,
+    assertSnapshot,
     convertToUint8Array,
     describe,
     it,
@@ -44,7 +45,7 @@ describe("requiresFormDataUpload", () => {
 
     // TODO: json payloads, including nullish values
 
-    it("builds multipart/form-data streams", async () => {
+    it("builds multipart/form-data streams", async (t) => {
         const fileContent = "abc";
         const buffer = new TextEncoder().encode(fileContent);
         const document = new InputFile(buffer, "my-file");
@@ -54,146 +55,33 @@ describe("requiresFormDataUpload", () => {
             throw err;
         });
 
-        // based on testing seed which generates stable randomness
-        const boundary = "----------vhx5wv89se7u2lhws1ql3ut4s602uxn2";
-        const attachId = "mv50m88n6luur5ie";
-
         assertEquals(payload.method, "POST");
-        const headers = {
-            "content-type": `multipart/form-data; boundary=${boundary}`,
-            connection: "keep-alive",
-        };
-        assertEquals(payload.headers, headers);
         const body = await convertToUint8Array(payload.body);
         const actual = new TextDecoder().decode(body);
-        const expected = `--${boundary}\r
-content-disposition:form-data;name="chat_id"\r
-\r
-42\r
---${boundary}\r
-content-disposition:form-data;name="document"\r
-\r
-attach://${attachId}\r
---${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
-content-type:application/octet-stream\r
-\r
-${fileContent}\r
---${boundary}--\r
-`;
-        assertEquals(actual, expected);
+        // the random values in the payload are stable because of the testing
+        // seed, so they can be stored in a snapshot
+        await assertSnapshot(t, { headers: payload.headers, body: actual });
     });
 
-    it("builds multipart/form-data streams from the same payload repeatedly", async () => {
+    it("builds multipart/form-data streams from the same payload repeatedly", async (t) => {
         const fileContent = "abc";
         const buffer = new TextEncoder().encode(fileContent);
         const document = new InputFile(buffer, "my-file");
         const parameters = { chat_id: 42, document };
 
-        // First run
-        let payload = createFormDataPayload(parameters, (err) => {
-            // cannot happen
-            throw err;
-        });
+        for (let run = 0; run < 3; run++) {
+            const payload = createFormDataPayload(parameters, (err) => {
+                // cannot happen
+                throw err;
+            });
 
-        // based on testing seed which generates stable randomness
-        let boundary = "----------4qvsl001q0jnp0i43wr1wrdu7824j82y";
-        let attachId = "lvu849pj5l0dvrm0";
-
-        assertEquals(payload.method, "POST");
-        let headers = {
-            "content-type": `multipart/form-data; boundary=${boundary}`,
-            connection: "keep-alive",
-        };
-        assertEquals(payload.headers, headers);
-        let body = await convertToUint8Array(payload.body);
-        let actual = new TextDecoder().decode(body);
-        let expected = `--${boundary}\r
-content-disposition:form-data;name="chat_id"\r
-\r
-42\r
---${boundary}\r
-content-disposition:form-data;name="document"\r
-\r
-attach://${attachId}\r
---${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
-content-type:application/octet-stream\r
-\r
-${fileContent}\r
---${boundary}--\r
-`;
-        assertEquals(actual, expected);
-
-        // Second run
-        payload = createFormDataPayload(parameters, (err) => {
-            // cannot happen
-            throw err;
-        });
-
-        // based on testing seed which generates stable randomness
-        boundary = "----------eozappglguzwxj1fvd8o1m3jgm2661ct";
-        attachId = "ehb6rv1ft96bdprd";
-
-        assertEquals(payload.method, "POST");
-        headers = {
-            "content-type": `multipart/form-data; boundary=${boundary}`,
-            connection: "keep-alive",
-        };
-        assertEquals(payload.headers, headers);
-        body = await convertToUint8Array(payload.body);
-        actual = new TextDecoder().decode(body);
-        expected = `--${boundary}\r
-content-disposition:form-data;name="chat_id"\r
-\r
-42\r
---${boundary}\r
-content-disposition:form-data;name="document"\r
-\r
-attach://${attachId}\r
---${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
-content-type:application/octet-stream\r
-\r
-${fileContent}\r
---${boundary}--\r
-`;
-        assertEquals(actual, expected);
-
-        // Third run
-        payload = createFormDataPayload(parameters, (err) => {
-            // cannot happen
-            throw err;
-        });
-
-        // based on testing seed which generates stable randomness
-        boundary = "----------ny047x6awv6r18dse1gxf4uhc3eztimx";
-        attachId = "l737ba67axsbk2kj";
-
-        assertEquals(payload.method, "POST");
-        headers = {
-            "content-type": `multipart/form-data; boundary=${boundary}`,
-            connection: "keep-alive",
-        };
-        assertEquals(payload.headers, headers);
-        body = await convertToUint8Array(payload.body);
-        actual = new TextDecoder().decode(body);
-        expected = `--${boundary}\r
-content-disposition:form-data;name="chat_id"\r
-\r
-42\r
---${boundary}\r
-content-disposition:form-data;name="document"\r
-\r
-attach://${attachId}\r
---${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
-content-type:application/octet-stream\r
-\r
-${fileContent}\r
---${boundary}--\r
-`;
-        assertEquals(actual, expected);
+            assertEquals(payload.method, "POST");
+            const body = await convertToUint8Array(payload.body);
+            const actual = new TextDecoder().decode(body);
+            // the random values in the payload are stable because of the
+            // testing seed, so they can be stored in a snapshot
+            await assertSnapshot(t, { headers: payload.headers, body: actual });
+        }
     });
 });
 

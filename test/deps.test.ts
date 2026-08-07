@@ -11,6 +11,7 @@ export {
     assertThrows,
 } from "jsr:@std/assert";
 export { afterEach, beforeEach, describe, it } from "jsr:@std/testing/bdd";
+export { assertSnapshot } from "jsr:@std/testing/snapshot";
 export { type Spy, spy, type Stub, stub } from "jsr:@std/testing/mock";
 export { FakeTime } from "jsr:@std/testing/time";
 export { assertType, type IsExact } from "jsr:@std/testing/types";
