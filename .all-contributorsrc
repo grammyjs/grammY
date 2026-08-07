@@ -446,7 +446,7 @@
     },
     {
       "login": "taotie111",
-      "name": "taotie111",
+      "name": "runzhu",
       "avatar_url": "https://avatars.githubusercontent.com/u/44166322?v=4",
       "profile": "https://github.com/taotie111",
       "contributions": [
@@ -722,10 +722,10 @@
       "user_id": 2511553
     },
     {
-      "login": "northen-mindset",
-      "name": "northen-mindset",
+      "login": "northern-mindset",
+      "name": "northern-mindset",
       "avatar_url": "https://avatars.githubusercontent.com/u/6065071?v=4",
-      "profile": "https://github.com/northen-mindset",
+      "profile": "https://github.com/northern-mindset",
       "contributions": [
         "doc"
       ],
@@ -784,7 +784,7 @@
     },
     {
       "login": "Ryukaizen",
-      "name": "Akash",
+      "name": "Ryukaizen",
       "avatar_url": "https://avatars.githubusercontent.com/u/55140313?v=4",
       "profile": "https://github.com/Ryukaizen",
       "contributions": [
@@ -1128,7 +1128,7 @@
     },
     {
       "login": "arunr-inji",
-      "name": "ArunR",
+      "name": "Arunachaleshwar R",
       "avatar_url": "https://avatars.githubusercontent.com/u/5071242?v=4",
       "profile": "https://github.com/arunr-inji",
       "contributions": [
@@ -1176,7 +1176,7 @@
     },
     {
       "login": "kiyasov",
-      "name": "Islam Kiiasov",
+      "name": "Islam",
       "avatar_url": "https://avatars.githubusercontent.com/u/16527461?v=4",
       "profile": "https://github.com/kiyasov",
       "contributions": [
@@ -1732,7 +1732,7 @@
     },
     {
       "login": "dotvhs",
-      "name": ".vhs",
+      "name": "dot",
       "avatar_url": "https://avatars.githubusercontent.com/u/681416?v=4",
       "profile": "https://github.com/dotvhs",
       "contributions": [
@@ -1796,7 +1796,8 @@
       "contributions": [
         "bug",
         "code"
-      ]
+      ],
+      "user_id": 14023814
     }
   ]
 }
