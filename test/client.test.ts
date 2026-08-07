@@ -5,6 +5,7 @@ import {
     afterEach,
     assertEquals,
     assertRejects,
+    assertSpyCalls,
     beforeEach,
     describe,
     it,
@@ -55,6 +56,20 @@ describe("API client", () => {
             BotApiError,
             "Call to 'getMe' failed! (42: evil)",
         );
+    });
+
+    it("should combine abort signals without registering listeners", async () => {
+        response = { ok: true, result: { testValue: 0 } };
+        const controller = new AbortController();
+        using addEventListener = spy(controller.signal, "addEventListener");
+
+        await api.raw.getMe({}, controller.signal);
+
+        assertSpyCalls(addEventListener, 0);
+        const signal = fetchStub.calls[0].args[1]?.signal;
+        assertEquals(signal?.aborted, false);
+        controller.abort();
+        assertEquals(signal?.aborted, true);
     });
 });
 

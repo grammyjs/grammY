@@ -339,7 +339,7 @@ class ApiClient<R extends RawApi> {
             return { ok: true, result: true as ApiCallResult<D["method"], R> };
         }
         // Handle timeouts and errors in the underlying form-data stream
-        const controller = createAbortControllerFromSignal(signal);
+        const controller = new AbortController();
         const timeout = createTimeout(controller, opts.timeoutSeconds, method);
         const streamErr = createStreamError(controller);
         // Build request URL and config
@@ -352,7 +352,9 @@ class ApiClient<R extends RawApi> {
         const config = formDataRequired
             ? createFormDataPayload(payload, (err) => streamErr.catch(err))
             : createJsonPayload(payload);
-        const sig = controller.signal;
+        const sig = signal === undefined
+            ? controller.signal
+            : AbortSignal.any([signal, controller.signal]);
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(url, options)
@@ -491,19 +493,6 @@ function createStreamError(abortController: AbortController): StreamError {
         };
     });
     return { promise, catch: onError };
-}
-
-function createAbortControllerFromSignal(signal?: AbortSignal) {
-    const abortController = new AbortController();
-    if (signal === undefined) return abortController;
-    const sig = signal;
-    function abort() {
-        abortController.abort();
-        sig.removeEventListener("abort", abort);
-    }
-    if (sig.aborted) abort();
-    else sig.addEventListener("abort", abort);
-    return { abort, signal: abortController.signal };
 }
 
 function validateSignal(
