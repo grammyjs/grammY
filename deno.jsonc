@@ -6,7 +6,7 @@
         "check": "deno check --allow-import src/mod.ts",
         "backport": "deno --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.16.0/src/cli.ts tsconfig.json",
         "test": "deno test --seed=123456 --parallel --allow-import ./test/",
-        "test:update": "deno task test -u",
+        "test:update": "deno task test --update-snapshots",
         "dev": "deno fmt && deno lint && deno task test && deno task check",
         "coverage": "rm -rf ./test/cov_profile && deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
         "report": "genhtml ./coverage.lcov --output-directory ./test/coverage/ && echo 'Point your browser to test/coverage/index.html to see the test coverage report.'",
