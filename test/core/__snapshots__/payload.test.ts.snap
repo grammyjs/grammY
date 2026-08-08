@@ -1,0 +1,97 @@
+export const snapshot = {};
+
+snapshot[`requiresFormDataUpload > builds multipart/form-data streams 1`] = `
+{
+  body: '------------vhx5wv89se7u2lhws1ql3ut4s602uxn2\\r
+content-disposition:form-data;name="chat_id"\\r
+\\r
+42\\r
+------------vhx5wv89se7u2lhws1ql3ut4s602uxn2\\r
+content-disposition:form-data;name="document"\\r
+\\r
+attach://mv50m88n6luur5ie\\r
+------------vhx5wv89se7u2lhws1ql3ut4s602uxn2\\r
+content-disposition:form-data;name="mv50m88n6luur5ie";filename=my-file\\r
+content-type:application/octet-stream\\r
+\\r
+abc\\r
+------------vhx5wv89se7u2lhws1ql3ut4s602uxn2--\\r
+',
+  headers: {
+    "content-type": "multipart/form-data; boundary=----------vhx5wv89se7u2lhws1ql3ut4s602uxn2",
+    connection: "keep-alive",
+  },
+}
+`;
+
+snapshot[`requiresFormDataUpload > builds multipart/form-data streams from the same payload repeatedly 1`] = `
+{
+  body: '------------4qvsl001q0jnp0i43wr1wrdu7824j82y\\r
+content-disposition:form-data;name="chat_id"\\r
+\\r
+42\\r
+------------4qvsl001q0jnp0i43wr1wrdu7824j82y\\r
+content-disposition:form-data;name="document"\\r
+\\r
+attach://lvu849pj5l0dvrm0\\r
+------------4qvsl001q0jnp0i43wr1wrdu7824j82y\\r
+content-disposition:form-data;name="lvu849pj5l0dvrm0";filename=my-file\\r
+content-type:application/octet-stream\\r
+\\r
+abc\\r
+------------4qvsl001q0jnp0i43wr1wrdu7824j82y--\\r
+',
+  headers: {
+    "content-type": "multipart/form-data; boundary=----------4qvsl001q0jnp0i43wr1wrdu7824j82y",
+    connection: "keep-alive",
+  },
+}
+`;
+
+snapshot[`requiresFormDataUpload > builds multipart/form-data streams from the same payload repeatedly 2`] = `
+{
+  body: '------------eozappglguzwxj1fvd8o1m3jgm2661ct\\r
+content-disposition:form-data;name="chat_id"\\r
+\\r
+42\\r
+------------eozappglguzwxj1fvd8o1m3jgm2661ct\\r
+content-disposition:form-data;name="document"\\r
+\\r
+attach://ehb6rv1ft96bdprd\\r
+------------eozappglguzwxj1fvd8o1m3jgm2661ct\\r
+content-disposition:form-data;name="ehb6rv1ft96bdprd";filename=my-file\\r
+content-type:application/octet-stream\\r
+\\r
+abc\\r
+------------eozappglguzwxj1fvd8o1m3jgm2661ct--\\r
+',
+  headers: {
+    "content-type": "multipart/form-data; boundary=----------eozappglguzwxj1fvd8o1m3jgm2661ct",
+    connection: "keep-alive",
+  },
+}
+`;
+
+snapshot[`requiresFormDataUpload > builds multipart/form-data streams from the same payload repeatedly 3`] = `
+{
+  body: '------------ny047x6awv6r18dse1gxf4uhc3eztimx\\r
+content-disposition:form-data;name="chat_id"\\r
+\\r
+42\\r
+------------ny047x6awv6r18dse1gxf4uhc3eztimx\\r
+content-disposition:form-data;name="document"\\r
+\\r
+attach://l737ba67axsbk2kj\\r
+------------ny047x6awv6r18dse1gxf4uhc3eztimx\\r
+content-disposition:form-data;name="l737ba67axsbk2kj";filename=my-file\\r
+content-type:application/octet-stream\\r
+\\r
+abc\\r
+------------ny047x6awv6r18dse1gxf4uhc3eztimx--\\r
+',
+  headers: {
+    "content-type": "multipart/form-data; boundary=----------ny047x6awv6r18dse1gxf4uhc3eztimx",
+    connection: "keep-alive",
+  },
+}
+`;
