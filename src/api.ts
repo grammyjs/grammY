@@ -10,7 +10,7 @@ import {
     type SendData,
     type WebhookReplyEnvelope,
 } from "./client.ts";
-import type { TransformerComposer, TransformerFn } from "./transform.ts";
+import type { Transformer, TransformerComposer } from "./transform.ts";
 import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
     AcceptedGiftTypes,
     // deno-lint-ignore no-unused-vars
@@ -119,7 +119,7 @@ export class Api<R extends RawApi = RawApi> {
      * upstream transformer function.
      */
     public readonly transform: (
-        ...transformers: TransformerFn<R>[]
+        ...transformers: Transformer<R>[]
     ) => TransformerComposer<R>;
 
     /**
