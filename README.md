@@ -10,16 +10,19 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-9.3-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
-[![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
-[![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
+[![Bot API](https://img.shields.io/badge/Bot%20API-10.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![JSR](https://shield.deno.dev/x/grammy)](https://jsr.io/badges/@grammyjs/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
 
 <!-- deno-fmt-ignore-end -->
 
-## _[docs.](https://grammy.dev) [reference.](https://grammy.dev/ref) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
+## [documentation](https://grammy.dev) | [news](https://telegram.me/grammyjs_news) | [chat](https://telegram.me/grammyjs)
 
 </div>
+
+> This is the unreleased grammY 2.0 preview.
+> Most things are not documented, but as of today, the core library is feature complete.
+> Join [the news channel](https://telegram.me/grammyjs_news) to be notified when the 2.0 release happens!
 
 **grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
@@ -27,24 +30,31 @@ You want grammY because it is easy to use. It is very powerful and always up to 
 
 Are you ready? 🤖🚀
 
-Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/) or [Deno](#deno-support).
+Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and can run anywhere JavaScript runs.
 
 ## Quickstart
+
+Get grammY from JSR:
+
+```sh
+deno add jsr:@grammyjs/grammy@2.0.0-beta.5
+npx  jsr add @grammyjs/grammy@2.0.0-beta.5
+pnpm i   jsr:@grammyjs/grammy@2.0.0-beta.5
+yarn add jsr:@grammyjs/grammy@2.0.0-beta.5
+bunx jsr add @grammyjs/grammy@2.0.0-beta.5
+```
+
+Note that we will mirror grammY 2.0 to npm once it is released.
+All 2.0 beta versions are exclusively on JSR.
 
 > If you are new to Telegram bots, read the official [Introduction for Developers](https://core.telegram.org/bots) written by the Telegram team.
 
 Visit [@BotFather](https://t.me/BotFather) and create a new bot. You will obtain a **bot token**.
 
-Create a new directory and run
-
-```bash
-npm install grammy
-```
-
-inside it. Then create a file `bot.js` with this content:
+Next, create this source file:
 
 ```ts
-const { Bot } = require("grammy");
+import { Bot } from "@grammyjs/grammy";
 
 // Create a bot object
 const bot = new Bot(""); // <-- place your bot token in this string
@@ -56,19 +66,19 @@ bot.on("message:text", (ctx) => ctx.send("Echo: " + ctx.message.text));
 bot.start();
 ```
 
-Now you can run the bot via
+Now you can run the bot with your favorite JavaScript runtime.
 
 ```bash
-node bot.js
+deno bot.ts
+node bot.ts
+bun  bot.ts
 ```
-
-and it will echo all received text messages.
 
 Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://grammy.dev/ref). It even integrates with your code editor, e.g. [VS Code](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has excellent [documentation](https://grammy.dev), including an [API Reference](https://grammy.dev/ref). It even integrates with your code editor, e.g. [VS Code](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
@@ -110,24 +120,6 @@ The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
 —documentation of the API that Telegram offers, and that grammY connects to under the hood.
-
-## Deno Support
-
-All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively on [Deno](https://deno.land). We are compiling every codebase to still run on Node.js.
-
-However, given that most bot developers are still using Node.js, all documentation is written Node.js-first. We may migrate it if Deno overtakes Node.js. If you are already on Deno today, import grammY from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
-
-You may also be interested in [why we support Deno](https://grammy.dev/resources/faq.html#why-do-you-support-deno).
-
-## JavaScript Bundles
-
-The grammY core package in this repository is available as a JavaScript bundle via <https://bundle.deno.dev/>.
-This lets you transpile all published versions including current `main` branch to standalone JavaScript files.
-For example, the most recent source on `main` is available from <https://bundle.deno.dev/https://raw.githubusercontent.com/grammyjs/grammY/main/src/mod.ts>.
-
-Being compatible with browsers is especially useful for running bots on Cloudflare Workers.
-For this reason, we also include a web bundle in our npm package.
-You can simply do `import { Bot } from "grammy/web"`.
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 
