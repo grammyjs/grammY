@@ -37,11 +37,11 @@ Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript
 Get grammY from JSR:
 
 ```sh
-deno add jsr:@grammyjs/grammy@2.0.0-beta.5
-npx  jsr add @grammyjs/grammy@2.0.0-beta.5
-pnpm i   jsr:@grammyjs/grammy@2.0.0-beta.5
-yarn add jsr:@grammyjs/grammy@2.0.0-beta.5
-bunx jsr add @grammyjs/grammy@2.0.0-beta.5
+deno add jsr:@grammyjs/grammy@2.0.0-beta.6
+npx  jsr add @grammyjs/grammy@2.0.0-beta.6
+pnpm i   jsr:@grammyjs/grammy@2.0.0-beta.6
+yarn add jsr:@grammyjs/grammy@2.0.0-beta.6
+bunx jsr add @grammyjs/grammy@2.0.0-beta.6
 ```
 
 Note that we will mirror grammY 2.0 to npm once it is released.
