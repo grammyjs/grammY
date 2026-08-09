@@ -1,28 +1,25 @@
+import { EntityString } from "./format.ts";
 import { InputFile } from "./types.ts";
 
 // === Payload types (JSON vs. form data)
 /**
- * Determines for a given payload if it may be sent as JSON, or if it has to be
- * uploaded via multipart/form-data. Returns `true` in the latter case and
- * `false` in the former.
+ * Rewrites all instances of {@link EntityString} and collects all instances of
+ * {@link InputFile} in a given payload.
  *
- * @param payload The payload to analyze
+ * @param payload The payload to prepare
  */
-export function requiresFormDataUpload(payload: unknown): boolean {
-    return payload instanceof InputFile || (
-        typeof payload === "object" &&
-        payload !== null &&
-        Object.values(payload).some((v) =>
-            Array.isArray(v)
-                ? v.some(requiresFormDataUpload)
-                : requiresFormDataUpload(v)
-        )
-    );
+export function preparePayload(payload: unknown):
+    | { requiresFormDataUpload: false }
+    | { requiresFormDataUpload: true; files: CollectedFile[] } {
+    const files = applyEntitiesAndCollectFiles(payload, "file");
+    return files.length === 0
+        ? { requiresFormDataUpload: false }
+        : { requiresFormDataUpload: true, files };
 }
 /**
  * Turns a payload into an options object that can be passed to a `fetch` call
- * by setting the necessary headers and method. May only be called for payloads
- * `P` that let `requiresFormDataUpload(P)` return `false`.
+ * by setting the necessary headers and method. May only be called after
+ * {@link preparePayload} returned `requiresFormDataUpload: false`.
  *
  * @param payload The payload to wrap
  */
@@ -38,8 +35,8 @@ export function createJsonPayload(payload: Record<string, unknown>) {
 }
 /**
  * Turns a payload into a string that can be passes as a body to a `fetch` call.
- * May only be called for payloads `P` that let `requiresFormDataUpload(P)`
- * return `false`.
+ * May only be called after {@link preparePayload} returned
+ * `requiresFormDataUpload: false`.
  *
  * @param payload The payload to stringify
  */
@@ -63,13 +60,16 @@ async function* protectItr<T>(
  * be created instead for performance reasons.
  *
  * @param payload The payload to wrap
+ * @param files Files collected by {@link preparePayload}
+ * @param onError Error handler to call if file access fails
  */
 export function createFormDataPayload(
     payload: Record<string, unknown>,
+    files: CollectedFile[],
     onError: (err: unknown) => void,
 ) {
     const boundary = createBoundary();
-    const itr = payloadToMultipartItr(payload, boundary);
+    const itr = payloadToMultipartItr(payload, files, boundary);
     const safeItr = protectItr(itr, onError);
     const stream = ReadableStream.from(safeItr);
     return {
@@ -98,9 +98,9 @@ const enc = new TextEncoder();
  */
 async function* payloadToMultipartItr(
     payload: Record<string, unknown>,
+    files: CollectedFile[],
     boundary: string,
 ): AsyncIterableIterator<Uint8Array> {
-    const files = collectFiles(payload);
     // Start multipart/form-data protocol
     yield enc.encode(`--${boundary}\r\n`);
     // Send all payload fields
@@ -137,23 +137,41 @@ type CollectedFile = {
     file: InputFile;
 };
 /**
- * Recursively finds all instances of {@link InputFile} in a given payload.
+ * Rewrites all instances of {@link EntityString} and recursively collects all
+ * instances of {@link InputFile} in a given payload.
  *
  * @param value a payload object, or a part of it
  *
  * @returns the discovered `InputFile` instances alongside their origins
  */
-function collectFiles(value: unknown): CollectedFile[] {
+function applyEntitiesAndCollectFiles(
+    value: unknown,
+    origin = "file",
+    isNested = false,
+): CollectedFile[] {
+    if (value instanceof InputFile) return [{ origin, file: value }];
+    if (value instanceof EntityString) return [];
+    if (Array.isArray(value)) {
+        return value.flatMap((item) =>
+            applyEntitiesAndCollectFiles(item, origin, true)
+        );
+    }
     if (typeof value !== "object" || value === null) return [];
-    return Object.entries(value).flatMap(([k, v]) => {
-        if (Array.isArray(v)) return v.flatMap((p) => collectFiles(p));
-        else if (v instanceof InputFile) {
-            const origin = k === "media" &&
-                    "type" in value && typeof value.type === "string"
-                ? value.type // use `type` for `InputMedia*`
-                : k; // use property key otherwise
-            return { origin, file: v };
-        } else return collectFiles(v);
+
+    const record = value as Record<string, unknown>;
+    return Object.entries(record).flatMap(([k, v]) => {
+        if (v instanceof EntityString) {
+            const entityKey = getEntitiesKey(k, isNested);
+            const { text, entities } = v.build();
+            record[k] = text;
+            if (record[entityKey] === undefined) record[entityKey] = entities;
+            return [];
+        }
+        const origin = isNested &&
+                k === "media" && typeof record.type === "string"
+            ? record.type // use `type` for `InputMedia*`
+            : k; // use property key otherwise
+        return applyEntitiesAndCollectFiles(v, origin, true);
     });
 }
 
@@ -182,6 +200,17 @@ ${filename}
         `content-disposition:form-data;name="${input._id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
     );
     yield* input;
+}
+/** Returns the property name of the entities for a text property name */
+function getEntitiesKey(key: string, isNested: boolean) {
+    switch (key) {
+        case "text":
+            return isNested ? "text_entities" : "entities";
+        case "message_text":
+            return "entities";
+        default:
+            return key + "_entities";
+    }
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {
