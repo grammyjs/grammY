@@ -1,8 +1,5 @@
-import {
-    createFormDataPayload,
-    requiresFormDataUpload,
-} from "../src/payload.ts";
-import { InputFile } from "../src/mod.ts";
+import { createFormDataPayload, preparePayload } from "../src/payload.ts";
+import { EntityString, InputFile } from "../src/mod.ts";
 import {
     assert,
     assertEquals,
@@ -12,7 +9,10 @@ import {
     it,
 } from "./deps.test.ts";
 
-describe("requiresFormDataUpload", () => {
+const requiresFormDataUpload = (payload: unknown) =>
+    preparePayload(payload).requiresFormDataUpload;
+
+describe("preparePayload", () => {
     it("should ignore primitives", () => {
         assertFalse(requiresFormDataUpload(0));
         assertFalse(requiresFormDataUpload(""));
@@ -55,10 +55,16 @@ describe("requiresFormDataUpload", () => {
         const buffer = new TextEncoder().encode(fileContent);
         const document = new InputFile(buffer, "my-file");
         const parameters = { chat_id: 42, document };
-        const payload = createFormDataPayload(parameters, (err) => {
-            // cannot happen
-            throw err;
-        });
+        const prepared = preparePayload(parameters);
+        assert(prepared.requiresFormDataUpload);
+        const payload = createFormDataPayload(
+            parameters,
+            prepared.files,
+            (err) => {
+                // cannot happen
+                throw err;
+            },
+        );
 
         // based on testing seed which generates stable randomness
         const boundary = "----------f4c6da38cec27403ee00e1cd26c1cf80";
@@ -95,12 +101,18 @@ ${fileContent}\r
         const buffer = new TextEncoder().encode(fileContent);
         const document = new InputFile(buffer, "my-file");
         const parameters = { chat_id: 42, document };
+        const prepared = preparePayload(parameters);
+        assert(prepared.requiresFormDataUpload);
 
         // First run
-        let payload = createFormDataPayload(parameters, (err) => {
-            // cannot happen
-            throw err;
-        });
+        let payload = createFormDataPayload(
+            parameters,
+            prepared.files,
+            (err) => {
+                // cannot happen
+                throw err;
+            },
+        );
 
         // based on testing seed which generates stable randomness
         let boundary = "----------799cf44a254f6e15c3e2ef8c3f6e83a2";
@@ -132,7 +144,7 @@ ${fileContent}\r
         assertEquals(actual, expected);
 
         // Second run
-        payload = createFormDataPayload(parameters, (err) => {
+        payload = createFormDataPayload(parameters, prepared.files, (err) => {
             // cannot happen
             throw err;
         });
@@ -166,7 +178,7 @@ ${fileContent}\r
         assertEquals(actual, expected);
 
         // Third run
-        payload = createFormDataPayload(parameters, (err) => {
+        payload = createFormDataPayload(parameters, prepared.files, (err) => {
             // cannot happen
             throw err;
         });
@@ -198,6 +210,97 @@ ${fileContent}\r
 --${boundary}--\r
 `;
         assertEquals(actual, expected);
+    });
+
+    it("collects files with origin hints", () => {
+        const root = new InputFile({ path: "" });
+        const rootResult = preparePayload(root);
+        assert(rootResult.requiresFormDataUpload);
+        assertEquals(rootResult.files, [{ origin: "file", file: root }]);
+
+        const media = new InputFile({ path: "" });
+        const photo = new InputFile({ path: "" });
+        const thumbnail = new InputFile({ path: "" });
+        const result = preparePayload({
+            type: "video",
+            media,
+            album: [{ type: "photo", media: photo, thumbnail }],
+        });
+        assert(result.requiresFormDataUpload);
+        assertEquals(result.files, [
+            { origin: "media", file: media },
+            { origin: "photo", file: photo },
+            { origin: "thumbnail", file: thumbnail },
+        ]);
+    });
+
+    it("rewrites EntityStrings throughout the payload", () => {
+        const entity = { type: "bold" as const, offset: 0, length: 4 };
+        const payload: Record<string, unknown> = {
+            text: new EntityString("root", [entity]),
+            nested: {
+                text: new EntityString("nest", [entity]),
+                message_text: new EntityString("msg!", [entity]),
+                caption: new EntityString("capt", [entity]),
+            },
+            items: [{ title: new EntityString("titl", [entity]) }],
+        };
+
+        const result = preparePayload(payload);
+
+        assertFalse(result.requiresFormDataUpload);
+        assertEquals(payload, {
+            text: "root",
+            entities: [entity],
+            nested: {
+                text: "nest",
+                text_entities: [entity],
+                message_text: "msg!",
+                entities: [entity],
+                caption: "capt",
+                caption_entities: [entity],
+            },
+            items: [{ title: "titl", title_entities: [entity] }],
+        });
+    });
+
+    it("preserves existing entities and continues after finding files", () => {
+        const document = new InputFile(new Uint8Array(), "document.dat");
+        const generated = { type: "bold" as const, offset: 0, length: 4 };
+        const existing = { type: "italic" as const, offset: 0, length: 4 };
+        const payload: Record<string, unknown> = {
+            document,
+            text: new EntityString("root", [generated]),
+            entities: [existing],
+            parse_mode: "MarkdownV2",
+            nested: {
+                text: new EntityString("nest", [generated]),
+                text_entities: [],
+                caption: new EntityString("capt"),
+                caption_entities: undefined,
+                quote: new EntityString("quot", [generated]),
+                quote_entities: null,
+            },
+        };
+
+        const result = preparePayload(payload);
+
+        assert(result.requiresFormDataUpload);
+        assertEquals(result.files, [{ origin: "document", file: document }]);
+        assertEquals(payload, {
+            document,
+            text: "root",
+            entities: [existing],
+            parse_mode: "MarkdownV2",
+            nested: {
+                text: "nest",
+                text_entities: [],
+                caption: "capt",
+                caption_entities: [],
+                quote: "quot",
+                quote_entities: null,
+            },
+        });
     });
 });
 
