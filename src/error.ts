@@ -93,11 +93,20 @@ function isTelegramError(
     return (typeof err === "object" && err !== null &&
         "status" in err && "statusText" in err);
 }
-export function toHttpError(method: string, sensitiveLogs: boolean) {
+export function toHttpError(
+    method: string,
+    token: string,
+    sensitiveLogs: boolean,
+) {
     return (err: unknown) => {
         let msg = `Network request for '${method}' failed!`;
         if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
-        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
+        if (err instanceof Error) {
+            const detail = sensitiveLogs
+                ? err.message
+                : err.message.replaceAll(token, "<token>");
+            msg += ` ${detail}`;
+        }
         throw new HttpError(msg, err);
     };
 }

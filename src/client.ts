@@ -282,7 +282,7 @@ export interface ApiClientOptions {
      *
      * If you are sure that no logs are ever posted in Telegram chats, GitHub
      * issues, or otherwise shared, you can set this option to `true` in order
-     * to obtain more detailed logs that may help you debug your bot. The
+     * to obtain raw unredacted logs that may help you debug your bot. The
      * default value is `false`, meaning that the bot token is not logged.
      */
     sensitiveLogs?: boolean;
@@ -359,7 +359,7 @@ class ApiClient<R extends RawApi> {
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(url, options)
-            .catch(toHttpError(method, opts.sensitiveLogs));
+            .catch(toHttpError(method, this.token, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
