@@ -20,16 +20,6 @@ export function requiresFormDataUpload(payload: unknown): boolean {
     );
 }
 /**
- * Calls `JSON.stringify` but removes `null` values from objects before
- * serialization
- *
- * @param value value
- * @returns stringified value
- */
-function str(value: unknown) {
-    return JSON.stringify(value, (_, v) => v ?? undefined);
-}
-/**
  * Turns a payload into an options object that can be passed to a `fetch` call
  * by setting the necessary headers and method. May only be called for payloads
  * `P` that let `requiresFormDataUpload(P)` return `false`.
@@ -54,7 +44,7 @@ export function createJsonPayload(payload: Record<string, unknown>) {
  * @param payload The payload to stringify
  */
 export function createJsonPayloadBody(payload: Record<string, unknown>) {
-    return str(payload);
+    return JSON.stringify(payload);
 }
 async function* protectItr<T>(
     itr: AsyncIterableIterator<T>,
@@ -124,7 +114,7 @@ async function* payloadToMultipartItr(
             value instanceof InputFile
                 ? value.toJSON()
                 : typeof value === "object"
-                ? str(value)
+                ? JSON.stringify(value)
                 : value,
         );
         first = false;
