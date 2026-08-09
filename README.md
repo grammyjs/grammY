@@ -11,7 +11,7 @@
 <!-- deno-fmt-ignore-start -->
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-10.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
-[![JSR](https://shield.deno.dev/x/grammy)](https://jsr.io/badges/@grammyjs/grammy)
+[![JSR](https://jsr.io/badges/@grammyjs/grammy)](https://jsr.io/@grammyjs/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
 
 <!-- deno-fmt-ignore-end -->
