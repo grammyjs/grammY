@@ -1,5 +1,4 @@
 import { createDebug } from "@grammyjs/debug";
-import type { ApiMethods, ApiResponse, Present } from "./types.ts";
 import { toBotApiError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
@@ -7,6 +6,8 @@ import {
     createJsonPayloadBody,
     preparePayload,
 } from "./payload.ts";
+import { type Transformer, TransformerComposer } from "./transform.ts";
+import type { ApiMethods, ApiResponse, Present } from "./types.ts";
 const debug = createDebug("grammy:core");
 
 // Available under `bot.api.raw`
@@ -131,23 +132,6 @@ export type ApiCallFn<R extends RawApi = RawApi> = <D extends CallData<R>>(
 ) => Promise<ApiResponse<ApiCallResult<D["method"], R>>>;
 
 /**
- * API call transformers are functions that can access and modify the method and
- * payload of an API call on the fly. This can be useful if you want to
- * implement rate limiting or other things against the Telegram Bot API.
- *
- * Confer the grammY
- * [documentation](https://grammy.dev/advanced/transformers) to read more
- * about how to use transformers.
- */
-export type Transformer<R extends RawApi = RawApi> = <D extends CallData<R>>(
-    prev: ApiCallFn<R>,
-    data: D,
-    signal?: AbortSignal,
-) => Promise<ApiResponse<ApiCallResult<D["method"], R>>>;
-export type TransformerConsumer<R extends RawApi> = TransformableApi<
-    R
->["transform"];
-/**
  * A transformable API enhances the `RawApi` type by transformers.
  */
 export interface TransformableApi<R extends RawApi = RawApi> {
@@ -158,15 +142,7 @@ export interface TransformableApi<R extends RawApi = RawApi> {
     /**
      * Can be used to register any number of transformers on the API.
      */
-    transform: (...transformers: Transformer<R>[]) => this;
-}
-
-// Transformer base functions
-function concatTransformer<R extends RawApi>(
-    prev: ApiCallFn<R>,
-    andFirst: Transformer<R>,
-): ApiCallFn<R> {
-    return (data, signal) => andFirst(prev, data, signal);
+    transform: (...transformers: Transformer<R>[]) => TransformerComposer<R>;
 }
 
 export interface BuildUrlOptions {
@@ -289,6 +265,8 @@ export interface ApiClientOptions {
 }
 
 class ApiClient<R extends RawApi> {
+    private readonly transformer = new TransformerComposer<R>();
+
     private readonly options: Required<ApiClientOptions>;
 
     private hasUsedWebhookReply = false;
@@ -316,10 +294,8 @@ class ApiClient<R extends RawApi> {
         };
     }
 
-    private call: ApiCallFn<R> = async <D extends CallData<R>>(
-        { method, payload: p }: D,
-        signal?: AbortSignal,
-    ) => {
+    private async call<D extends CallData<R>>(data: D, signal?: AbortSignal) {
+        const { method, payload: p } = data;
         debug(`Calling ${method}`);
         const payload: Present = p ?? {};
         if (signal !== undefined) validateSignal(method, payload, signal);
@@ -369,18 +345,20 @@ class ApiClient<R extends RawApi> {
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
         }
-    };
+    }
 
-    use(...transformers: Transformer<R>[]) {
-        this.call = transformers.reduce(concatTransformer, this.call);
-        return this;
+    transform(...tf: Array<Transformer<R>>) {
+        return this.transformer.use(...tf);
     }
 
     async callApi<D extends CallData<R>>(
         callData: D,
         signal?: AbortSignal,
     ) {
-        const data = await this.call(callData, signal);
+        const tf = this.transformer.transformer();
+        const call: ApiCallFn<R> = (method, signal) =>
+            this.call(method, signal);
+        const data = await tf(call, callData, signal);
         if (data.ok) return data.result;
         else throw toBotApiError(data, callData);
     }
@@ -405,7 +383,6 @@ export function createRawApi<R extends RawApi>(
     webhookReplyEnvelope?: WebhookReplyEnvelope,
 ): TransformableApi<R> {
     const client = new ApiClient<R>(token, options, webhookReplyEnvelope);
-
     const proxyHandler: ProxyHandler<R> = {
         get(_, method: string & keyof R | "toJSON") {
             return method === "toJSON" ? "__internal" : (
@@ -416,15 +393,7 @@ export function createRawApi<R extends RawApi>(
         ...proxyMethods,
     };
     const raw = new Proxy<R>({} as R, proxyHandler);
-    const api: TransformableApi<R> = {
-        raw,
-        transform: (...t) => {
-            client.use(...t);
-            return api;
-        },
-    };
-
-    return api;
+    return { raw, transform: (...t) => client.transform(...t) };
 }
 
 const defaultBuildUrl: NonNullable<ApiClientOptions["buildUrl"]> = (

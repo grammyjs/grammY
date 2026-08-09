@@ -52,7 +52,12 @@ export {
     type ApiClientOptions,
     type RawApi,
     type TransformableApi,
-    type Transformer,
     type WebhookReplyEnvelope,
 } from "./client.ts";
 export { BotApiError, HttpError } from "./error.ts";
+export {
+    type Transformer,
+    TransformerComposer,
+    type TransformerFn,
+    type TransformerObj,
+} from "./transform.ts";

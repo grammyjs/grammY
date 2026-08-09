@@ -1,4 +1,16 @@
 // deno-lint-ignore-file camelcase
+import {
+    type ApiCallResult,
+    type ApiClientOptions,
+    type ApiParameters,
+    type CallData,
+    createRawApi,
+    type EditData,
+    type RawApi,
+    type SendData,
+    type WebhookReplyEnvelope,
+} from "./client.ts";
+import type { TransformerComposer, TransformerFn } from "./transform.ts";
 import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
     AcceptedGiftTypes,
     // deno-lint-ignore no-unused-vars
@@ -70,18 +82,6 @@ import type { // unused types are in fact used in TSDoc strings, see https://git
     UserProfilePhotos,
     WebhookInfo,
 } from "./types.ts";
-import {
-    type ApiCallResult,
-    type ApiClientOptions,
-    type ApiParameters,
-    type CallData,
-    createRawApi,
-    type EditData,
-    type RawApi,
-    type SendData,
-    type TransformerConsumer,
-    type WebhookReplyEnvelope,
-} from "./client.ts";
 
 /**
  * This class provides access to the full Telegram Bot API. All methods of the
@@ -118,7 +118,9 @@ export class Api<R extends RawApi = RawApi> {
      * This includes the method as string, the payload as object and the
      * upstream transformer function.
      */
-    public readonly transform: TransformerConsumer<R>;
+    public readonly transform: (
+        ...transformers: TransformerFn<R>[]
+    ) => TransformerComposer<R>;
 
     /**
      * Constructs a new instance of `Api`. It is independent from all other
