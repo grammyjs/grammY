@@ -22,8 +22,12 @@ export type Transformer<R extends RawApi = RawApi> =
     | TransformerFn<R>
     | TransformerObj<R>;
 
-function pass<R extends RawApi>(): TransformerFn<R> {
-    return (prev, data, signal) => prev(data, signal);
+function pass<R extends RawApi>(
+    prev: ApiCallFn<R>,
+    data: CallData<R>,
+    signal?: AbortSignal,
+) {
+    return prev(data, signal);
 }
 function flatten<R extends RawApi = RawApi>(
     tf: Transformer<R>,
@@ -36,8 +40,10 @@ function concat<R extends RawApi>(
     last: TransformerFn<R>,
     andBefore: TransformerFn<R>,
 ): TransformerFn<R> {
-    return (prev, data, signal) =>
-        last((d, s) => andBefore(prev, d, s), data, signal);
+    return last === pass
+        ? andBefore
+        : (prev, data, signal) =>
+            last((d, s) => andBefore(prev, d, s), data, signal);
 }
 
 export class TransformerComposer<R extends RawApi>
@@ -46,7 +52,7 @@ export class TransformerComposer<R extends RawApi>
 
     constructor(...transformers: Array<Transformer<R>>) {
         this.handler = transformers.length === 0
-            ? pass()
+            ? pass
             : transformers.map(flatten).reduce(concat);
     }
 
