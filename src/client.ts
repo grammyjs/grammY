@@ -5,7 +5,7 @@ import {
     createFormDataPayload,
     createJsonPayload,
     createJsonPayloadBody,
-    requiresFormDataUpload,
+    preparePayload,
 } from "./payload.ts";
 const debug = createDebug("grammy:core");
 
@@ -170,7 +170,7 @@ function concatTransformer<R extends RawApi>(
 }
 
 export interface BuildUrlOptions {
-    test?: boolean;
+    test: boolean;
 }
 
 /**
@@ -210,7 +210,7 @@ export interface ApiClientOptions {
         root: string,
         token: string,
         method: string,
-        options?: BuildUrlOptions,
+        options: BuildUrlOptions,
     ) => string;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
@@ -325,12 +325,12 @@ class ApiClient<R extends RawApi> {
         if (signal !== undefined) validateSignal(method, payload, signal);
         // General config
         const opts = this.options;
-        const formDataRequired = requiresFormDataUpload(payload);
+        const prepared = preparePayload(payload);
         // Short-circuit on webhook reply
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
-            !formDataRequired &&
+            !prepared.requiresFormDataUpload &&
             opts.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
@@ -349,8 +349,9 @@ class ApiClient<R extends RawApi> {
             method,
             { test: opts.environment === "test" },
         );
-        const config = formDataRequired
-            ? createFormDataPayload(payload, (err) => streamErr.catch(err))
+        const onErr = (err: unknown) => streamErr.catch(err);
+        const config = prepared.requiresFormDataUpload
+            ? createFormDataPayload(payload, prepared.files, onErr)
             : createJsonPayload(payload);
         const sig = signal === undefined
             ? controller.signal
@@ -430,7 +431,7 @@ const defaultBuildUrl: NonNullable<ApiClientOptions["buildUrl"]> = (
     root,
     token,
     method,
-    { test = false } = {},
+    { test },
 ) => {
     return `${root}/bot${token}/${test ? "test/" : ""}${method}`;
 };
