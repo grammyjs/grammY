@@ -15,7 +15,7 @@ export function requiresFormDataUpload(payload: unknown): boolean {
         Object.values(payload).some((v) =>
             Array.isArray(v)
                 ? v.some(requiresFormDataUpload)
-                : v instanceof InputFile || requiresFormDataUpload(v)
+                : requiresFormDataUpload(v)
         )
     );
 }
