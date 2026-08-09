@@ -78,6 +78,23 @@ export class TransformerComposer<
         return composer;
     }
 
+    on<M extends D["method"]>(
+        method: M,
+        ...transformers: Array<Transformer<R, Extract<D, { method: M }>>>
+    ): TransformerComposer<R, Extract<D, { method: M }>> {
+        return Array.isArray(method)
+            ? this.filter(
+                (data): data is Extract<D, { method: M }> =>
+                    method.includes(data.method),
+                ...transformers,
+            )
+            : this.filter(
+                (data): data is Extract<D, { method: M }> =>
+                    data.method === method,
+                ...transformers,
+            );
+    }
+
     filter<E extends D>(
         predicate: (data: D, signal?: AbortSignal) => data is E,
         ...transformers: Array<Transformer<R, E>>
