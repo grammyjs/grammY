@@ -14,8 +14,13 @@ import {
     type Trigger,
 } from "./context.ts";
 import type { FilterQuery, FilterQueryContext } from "./filter.ts";
-import type { Chat, ReactionType, ReactionTypeEmoji } from "./types.ts";
-import type { MaybeArray, MaybePromise } from "./types.ts";
+import type {
+    Chat,
+    MaybeArray,
+    MaybePromise,
+    ReactionType,
+    ReactionTypeEmoji,
+} from "./types.ts";
 
 // === Middleware types
 /**

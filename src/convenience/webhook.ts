@@ -1,8 +1,8 @@
-import type { Update } from "../types.ts";
 import { createDebug } from "@grammyjs/debug";
 import type { Bot } from "../bot.ts";
-import type { Context } from "../context.ts";
 import type { WebhookReplyEnvelope } from "../client.ts";
+import type { Context } from "../context.ts";
+import type { Update } from "../types.ts";
 const debugErr = createDebug("grammy:error");
 
 // TODO: add docs examples for each adapter
