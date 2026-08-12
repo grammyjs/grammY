@@ -1,6 +1,6 @@
 import { createDebug } from "@grammyjs/debug";
-import type { ApiError, Present, ResponseParameters } from "./types.ts";
 import type { CallData, RawApi } from "./client.ts";
+import type { ApiError, Present, ResponseParameters } from "./types.ts";
 const debug = createDebug("grammy:warn");
 
 /**

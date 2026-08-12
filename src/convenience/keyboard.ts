@@ -10,8 +10,8 @@ import type {
     WebAppInfo,
 } from "../types.ts";
 
-type KeyboardButtonSource = string | KeyboardButton;
-type KeyboardSource = KeyboardButtonSource[][] | Keyboard;
+export type KeyboardButtonSource = string | KeyboardButton;
+export type KeyboardSource = KeyboardButtonSource[][] | Keyboard;
 /**
  * Use this class to simplify building a custom keyboard (something like this:
  * https://core.telegram.org/bots/features#keyboards).
@@ -477,7 +477,7 @@ export class Keyboard {
     }
 }
 
-type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
+export type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
 /**
  * Use this class to simplify building an inline keyboard (something like this:
  * https://core.telegram.org/bots/features#inline-keyboards).
@@ -976,7 +976,7 @@ function transpose<T>(grid: T[][]): T[][] {
     }
     return transposed;
 }
-interface FlowOptions {
+export interface FlowOptions {
     /** Set to `true` to completely fill up the last row */
     fillLastRow?: boolean;
 }

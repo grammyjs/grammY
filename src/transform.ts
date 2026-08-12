@@ -1,8 +1,5 @@
 import type { ApiCallFn, ApiCallResult, CallData, RawApi } from "./client.ts";
-import type { MaybeArray } from "./context.ts";
-import type { ApiResponse } from "./types.ts";
-
-type MaybePromise<T> = T | Promise<T>;
+import type { ApiResponse, MaybeArray, MaybePromise } from "./types.ts";
 
 /**
  * API call transformers are functions that can access and modify the method and

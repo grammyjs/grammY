@@ -74,6 +74,7 @@ import type {
     // deno-lint-ignore no-unused-vars
     ManagedBotUpdated,
     MaskPosition,
+    MaybeArray,
     Message,
     MessageEntity,
     MessageId,
@@ -108,10 +109,9 @@ import type {
     UserProfileAudios,
     UserProfilePhotos,
 } from "./types.ts";
+export type { EditData, SendData };
 
 // === Util types
-/** A value or an array of such values. */
-export type MaybeArray<T> = T | T[];
 /** A string or a regular expression */
 export type Trigger = string | RegExp;
 /** Permits `string` but gives hints. */

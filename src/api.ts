@@ -11,7 +11,8 @@ import {
     type WebhookReplyEnvelope,
 } from "./client.ts";
 import type { Transformer, TransformerComposer } from "./transform.ts";
-import type { // unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
+// unused types are in fact used in TSDoc strings, see https://github.com/denoland/deno_lint/issues/1472
+import type {
     AcceptedGiftTypes,
     // deno-lint-ignore no-unused-vars
     Audio,

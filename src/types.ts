@@ -8,6 +8,14 @@ export type Empty = Record<string, never>;
  */
 export type Present = NonNullable<unknown>;
 /**
+ * A value or a promise of a value
+ */
+export type MaybePromise<T> = T | Promise<T>;
+/**
+ * A value or an array of such values
+ */
+export type MaybeArray<T> = T | T[];
+/**
  * A two-letter ISO 639-1 language code.
  *
  * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}

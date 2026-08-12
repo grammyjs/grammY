@@ -7,7 +7,6 @@ import {
     type GameQueryContext,
     type HearsContext,
     type InlineQueryContext,
-    type MaybeArray,
     type PreCheckoutQueryContext,
     type ReactionContext,
     type ShippingQueryContext,
@@ -16,8 +15,7 @@ import {
 } from "./context.ts";
 import type { FilterQuery, FilterQueryContext } from "./filter.ts";
 import type { Chat, ReactionType, ReactionTypeEmoji } from "./types.ts";
-
-type MaybePromise<T> = T | Promise<T>;
+import type { MaybeArray, MaybePromise } from "./types.ts";
 
 // === Middleware types
 /**
