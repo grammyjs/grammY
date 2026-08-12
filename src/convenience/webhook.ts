@@ -7,28 +7,28 @@ const debugErr = createDebug("grammy:error");
 
 // TODO: add docs examples for each adapter
 export interface WebhookAdapterMap {
-    callback: CallbackAdapter;
-    awsLambda: LambdaAdapter;
-    awsLambdaAsync: LambdaAsyncAdapter;
-    azure: AzureAdapter;
-    azureV4: AzureAdapterV4;
-    bun: BunAdapter;
-    cloudflare: CloudflareAdapter;
-    cloudflareModule: CloudflareModuleAdapter;
-    elysia: ElysiaAdapter;
-    express: ExpressAdapter;
-    fastify: FastifyAdapter;
-    hono: HonoAdapter;
-    http: HttpAdapter;
-    https: HttpAdapter;
-    koa: KoaAdapter;
-    nextJs: NextAdapter;
-    nhttp: NHttpAdapter;
-    oak: OakAdapter;
-    serveHttp: ServeHttpAdapter;
-    stdHttp: StdHttpAdapter;
-    sveltekit: SveltekitAdapter;
-    worktop: WorktopAdapter;
+    callback: WebhookAdapterCallback;
+    awsLambda: WebhookAdapterLambda;
+    awsLambdaAsync: WebhookAdapterLambdaAsync;
+    azure: WebhookAdapterAzure;
+    azureV4: WebhookAdapterAzureV4;
+    bun: WebhookAdapterBun;
+    cloudflare: WebhookAdapterCloudflare;
+    cloudflareModule: WebhookAdapterCloudflareModule;
+    elysia: WebhookAdapterElysia;
+    express: WebhookAdapterExpress;
+    fastify: WebhookAdapterFastify;
+    hono: WebhookAdapterHono;
+    http: WebhookAdapterHttp;
+    https: WebhookAdapterHttp;
+    koa: WebhookAdapterKoa;
+    nextJs: WebhookAdapterNext;
+    nhttp: WebhookAdapterNHttp;
+    oak: WebhookAdapterOak;
+    serveHttp: WebhookAdapterServeHttp;
+    stdHttp: WebhookAdapterStdHttp;
+    sveltekit: WebhookAdapterSveltekit;
+    worktop: WebhookAdapterWorktop;
 }
 export type WebhookAdapters = {
     readonly [A in keyof WebhookAdapterMap]: WebhookAdapter<A>;
@@ -277,7 +277,7 @@ export interface ReqResHandler<T = void> {
     handlerReturn?: Promise<T>;
 }
 
-export type CallbackAdapter = (
+export type WebhookAdapterCallback = (
     update: Update,
     callback: (json: string) => unknown,
     request?: { header?: string; method?: string; path?: string },
@@ -288,7 +288,7 @@ export type CallbackAdapter = (
     },
 ) => ReqResHandler;
 
-export type LambdaAdapter = (
+export type WebhookAdapterLambda = (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
@@ -302,7 +302,7 @@ export type LambdaAdapter = (
     ) => Promise<unknown>,
 ) => ReqResHandler;
 
-export type LambdaAsyncAdapter = (
+export type WebhookAdapterLambdaAsync = (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
@@ -311,7 +311,7 @@ export type LambdaAsyncAdapter = (
     _context: unknown,
 ) => ReqResHandler;
 
-export type AzureAdapter = (context: {
+export type WebhookAdapterAzure = (context: {
     res?: {
         // deno-lint-ignore no-explicit-any
         [key: string]: any;
@@ -322,7 +322,7 @@ export type AzureAdapter = (context: {
     url: string;
 }) => ReqResHandler;
 
-export type AzureAdapterV4 = (
+export type WebhookAdapterAzureV4 = (
     request: {
         headers: { get(name: string): string | null };
         json(): Promise<unknown>;
@@ -331,14 +331,14 @@ export type AzureAdapterV4 = (
     },
 ) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
-export type BunAdapter = (request: {
+export type WebhookAdapterBun = (request: {
     headers: Headers;
     json: () => Promise<unknown>;
     method: string;
     url: string;
 }) => ReqResHandler<Response>;
 
-export type CloudflareAdapter = (event: {
+export type WebhookAdapterCloudflare = (event: {
     request: Body & {
         method: string;
         url: string;
@@ -347,7 +347,7 @@ export type CloudflareAdapter = (event: {
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
-export type CloudflareModuleAdapter = (
+export type WebhookAdapterCloudflareModule = (
     request: Body & {
         method: string;
         url: string;
@@ -355,7 +355,7 @@ export type CloudflareModuleAdapter = (
     },
 ) => ReqResHandler<Response>;
 
-export type ElysiaAdapter = (ctx: {
+export type WebhookAdapterElysia = (ctx: {
     body: unknown;
     headers: Record<string, string | undefined>;
     set: {
@@ -365,7 +365,7 @@ export type ElysiaAdapter = (ctx: {
     request: Request;
 }) => ReqResHandler<string>;
 
-export type ExpressAdapter = (req: {
+export type WebhookAdapterExpress = (req: {
     body: Update;
     header: (header: string) => string | undefined;
     method: string;
@@ -377,7 +377,7 @@ export type ExpressAdapter = (req: {
     status: (code: number) => typeof res;
 }) => ReqResHandler;
 
-export type FastifyAdapter = (request: {
+export type WebhookAdapterFastify = (request: {
     body: unknown;
     // deno-lint-ignore no-explicit-any
     headers: any;
@@ -393,7 +393,7 @@ export type FastifyAdapter = (request: {
     };
 }) => ReqResHandler;
 
-export type HonoAdapter = (c: {
+export type WebhookAdapterHono = (c: {
     req: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
@@ -407,7 +407,7 @@ export type HonoAdapter = (c: {
     json: (json: string) => Response;
 }) => ReqResHandler<Response>;
 
-export type HttpAdapter = (req: {
+export type WebhookAdapterHttp = (req: {
     headers: Record<string, string | string[] | undefined>;
     method?: string;
     url?: string;
@@ -421,7 +421,7 @@ export type HttpAdapter = (req: {
     end: (json?: string) => void;
 }) => ReqResHandler;
 
-export type KoaAdapter = (ctx: {
+export type WebhookAdapterKoa = (ctx: {
     get: (header: string) => string | undefined;
     set: (key: string, value: string) => void;
     status: number;
@@ -437,7 +437,7 @@ export type KoaAdapter = (ctx: {
     path: string;
 }) => ReqResHandler;
 
-export type NextAdapter = (req: {
+export type WebhookAdapterNext = (req: {
     body: Update;
     headers: Record<string, string | string[] | undefined>;
     method?: string;
@@ -451,7 +451,7 @@ export type NextAdapter = (req: {
     send: (json: string) => any;
 }) => ReqResHandler;
 
-export type NHttpAdapter = (rev: {
+export type WebhookAdapterNHttp = (rev: {
     body: unknown;
     headers: {
         get: (header: string) => string | null;
@@ -466,7 +466,7 @@ export type NHttpAdapter = (rev: {
     path: string;
 }) => ReqResHandler;
 
-export type OakAdapter = (ctx: {
+export type WebhookAdapterOak = (ctx: {
     request: {
         body: {
             json: () => Promise<Update>;
@@ -484,22 +484,22 @@ export type OakAdapter = (ctx: {
     };
 }) => ReqResHandler;
 
-export type ServeHttpAdapter = (
+export type WebhookAdapterServeHttp = (
     requestEvent: {
         request: Request;
         respondWith: (response: Response) => void;
     },
 ) => ReqResHandler;
 
-export type StdHttpAdapter = (
+export type WebhookAdapterStdHttp = (
     req: Request,
 ) => ReqResHandler<Response>;
 
-export type SveltekitAdapter = (
+export type WebhookAdapterSveltekit = (
     { request }: { request: Request },
 ) => ReqResHandler<unknown>;
 
-export type WorktopAdapter = (req: {
+export type WebhookAdapterWorktop = (req: {
     json: () => Promise<Update>;
     headers: {
         get: (header: string) => string | null;
@@ -511,7 +511,7 @@ export type WorktopAdapter = (req: {
     send: (status: number, json: string) => void;
 }) => ReqResHandler;
 
-export function makeAdapters(): WebhookAdapterMap {
+function makeAdapters(): WebhookAdapterMap {
     const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
     const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
     const NOT_FOUND_ERROR = "not found";
@@ -559,7 +559,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** AWS lambda serverless functions */
-    const awsLambda: LambdaAdapter = (event, _context, callback) => ({
+    const awsLambda: WebhookAdapterLambda = (event, _context, callback) => ({
         // TODO: add safe parse workaround
         update: () => JSON.parse(event.body ?? "{}"),
         header: event.headers[SECRET_HEADER],
@@ -578,7 +578,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** AWS lambda async/await serverless functions */
-    const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
+    const awsLambdaAsync: WebhookAdapterLambdaAsync = (event, _context) => {
         // deno-lint-ignore no-explicit-any
         const ret = Promise.withResolvers<any>();
 
@@ -603,7 +603,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Azure Functions v3 and v4 */
-    const azure: AzureAdapter = (context, request) => ({
+    const azure: WebhookAdapterAzure = (context, request) => ({
         update: () => request.body as Update,
         header: context.res?.headers?.[SECRET_HEADER],
         method: request.method,
@@ -626,9 +626,9 @@ export function makeAdapters(): WebhookAdapterMap {
             context.res?.send?.(404, NOT_FOUND_ERROR);
         },
     });
-    const azureV4: AzureAdapterV4 = (request) => {
+    const azureV4: WebhookAdapterAzureV4 = (request) => {
         type Res = NonNullable<
-            Awaited<ReturnType<AzureAdapterV4>["handlerReturn"]>
+            Awaited<ReturnType<WebhookAdapterAzureV4>["handlerReturn"]>
         >;
         const ret = Promise.withResolvers<Res>();
         return {
@@ -648,7 +648,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Bun.serve */
-    const bun: BunAdapter = (request) => {
+    const bun: WebhookAdapterBun = (request) => {
         const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
@@ -665,7 +665,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Native CloudFlare workers (service worker) */
-    const cloudflare: CloudflareAdapter = (event) => {
+    const cloudflare: WebhookAdapterCloudflare = (event) => {
         const ret = Promise.withResolvers<Response>();
         event.respondWith(ret.promise);
         return {
@@ -682,7 +682,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Native CloudFlare workers (module worker) */
-    const cloudflareModule: CloudflareModuleAdapter = (request) => {
+    const cloudflareModule: WebhookAdapterCloudflareModule = (request) => {
         const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
@@ -699,7 +699,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** express web framework */
-    const express: ExpressAdapter = (req, res) => ({
+    const express: WebhookAdapterExpress = (req, res) => ({
         update: () => req.body as Update,
         header: req.header(SECRET_HEADER),
         method: req.method,
@@ -721,7 +721,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** fastify web framework */
-    const fastify: FastifyAdapter = (request, reply) => ({
+    const fastify: WebhookAdapterFastify = (request, reply) => ({
         update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE],
         method: request.method,
@@ -735,7 +735,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** hono web framework */
-    const hono: HonoAdapter = (c) => {
+    const hono: WebhookAdapterHono = (c) => {
         const ret = Promise.withResolvers<Response>();
         return {
             update: () => c.req.json<Update>().catch(empty),
@@ -761,7 +761,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Node.js native 'http' and 'https' modules */
-    const http: HttpAdapter = (req, res) => {
+    const http: WebhookAdapterHttp = (req, res) => {
         const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
         return {
             update: () =>
@@ -794,7 +794,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** koa web framework */
-    const koa: KoaAdapter = (ctx) => ({
+    const koa: WebhookAdapterKoa = (ctx) => ({
         update: () => ctx.request.body as Update,
         header: ctx.get(SECRET_HEADER) || undefined,
         method: ctx.method,
@@ -818,7 +818,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** Next.js Serverless Functions */
-    const nextJs: NextAdapter = (request, response) => ({
+    const nextJs: WebhookAdapterNext = (request, response) => ({
         update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE] as string,
         method: request.method ?? "POST",
@@ -831,7 +831,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** nhttp web framework */
-    const nhttp: NHttpAdapter = (rev) => ({
+    const nhttp: WebhookAdapterNHttp = (rev) => ({
         update: () => rev.body as Update,
         header: rev.headers.get(SECRET_HEADER) || undefined,
         method: rev.method,
@@ -844,7 +844,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** oak web framework */
-    const oak: OakAdapter = (ctx) => ({
+    const oak: WebhookAdapterOak = (ctx) => ({
         update: () => ctx.request.body.json().catch(empty) as Promise<Update>,
         header: ctx.request.headers.get(SECRET_HEADER) || undefined,
         method: ctx.request.method,
@@ -868,7 +868,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** Deno.serve */
-    const serveHttp: ServeHttpAdapter = (requestEvent) => ({
+    const serveHttp: WebhookAdapterServeHttp = (requestEvent) => ({
         update: () =>
             requestEvent.request.json().catch(empty) as Promise<Update>,
         header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
@@ -882,7 +882,7 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     /** std/http web server */
-    const stdHttp: StdHttpAdapter = (req) => {
+    const stdHttp: WebhookAdapterStdHttp = (req) => {
         const ret = Promise.withResolvers<Response>();
         return {
             update: () => req.json().catch(empty) as Promise<Update>,
@@ -899,7 +899,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** Sveltekit Serverless Functions */
-    const sveltekit: SveltekitAdapter = ({ request }) => {
+    const sveltekit: WebhookAdapterSveltekit = ({ request }) => {
         const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
@@ -916,7 +916,7 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 
     /** worktop Cloudflare workers framework */
-    const worktop: WorktopAdapter = (req, res) => ({
+    const worktop: WebhookAdapterWorktop = (req, res) => ({
         update: () => req.json().catch(empty) as Promise<Update>,
         header: req.headers.get(SECRET_HEADER) ?? undefined,
         method: req.method,
@@ -928,7 +928,7 @@ export function makeAdapters(): WebhookAdapterMap {
         notFound: () => res.send(404, NOT_FOUND_ERROR),
     });
 
-    const elysia: ElysiaAdapter = (ctx) => {
+    const elysia: WebhookAdapterElysia = (ctx) => {
         const ret = Promise.withResolvers<string>();
         return {
             update: () => ctx.body as Update,
