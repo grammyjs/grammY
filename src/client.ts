@@ -122,7 +122,7 @@ export type ApiCallResult<
     M extends string & keyof R,
     R extends RawApi = RawApi,
 > // deno-lint-ignore no-explicit-any
- = R[M] extends (...args: any[]) => infer R ? R : never;
+ = R[M] extends (...args: any[]) => infer R ? Awaited<R> : never;
 /**
  * Type of a function that can perform an API call. Used for Transformers.
  */
