@@ -14345,6 +14345,7 @@ export interface ApiMethods {
  */
 export type RichText =
     | string
+    | RichText[]
     | RichTextBold
     | RichTextItalic
     | RichTextUnderline
