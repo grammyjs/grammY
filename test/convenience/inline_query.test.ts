@@ -1767,6 +1767,27 @@ describe("InlineQueryResultBuilder", () => {
                     },
                 });
             });
+            it("should build an HTML InlineQueryResultVideo without options", () => {
+                const video = InlineQueryResultBuilder.videoHtml(
+                    "id",
+                    "title",
+                    "https://grammy.dev/",
+                    "https://grammy.dev/thumb",
+                ).text("#Text", { parse_mode: "Markdown" });
+
+                assertObjectMatch(video, {
+                    type: "video",
+                    mime_type: "text/html",
+                    id: "id",
+                    title: "title",
+                    video_url: "https://grammy.dev/",
+                    thumbnail_url: "https://grammy.dev/thumb",
+                    input_message_content: {
+                        message_text: "#Text",
+                        parse_mode: "Markdown",
+                    },
+                });
+            });
             it("should build an HTML InlineQueryResultVideo from URLs", () => {
                 const video = InlineQueryResultBuilder.videoHtml(
                     "id",

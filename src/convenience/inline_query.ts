@@ -478,7 +478,7 @@ export interface InlineQueryResultBuilder {
         title: string,
         video_url: string | URL,
         thumbnail_url: string | URL,
-        options_: InlineQueryResultOptions<
+        options_?: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
         >,
