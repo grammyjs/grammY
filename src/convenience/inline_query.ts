@@ -666,8 +666,8 @@ export const InlineQueryResultBuilder: InlineQueryResultBuilder = {
             type: "photo",
             id,
             photo_url: photoUrl,
-            thumbnail_url: photoUrl,
             ...options,
+            thumbnail_url: options.thumbnail_url ?? photoUrl,
         });
     },
     photoCached(id, photo_file_id, options = {}) {
