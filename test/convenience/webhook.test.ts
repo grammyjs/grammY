@@ -314,6 +314,53 @@ describe("webhook functionality", () => {
                 1,
             );
         });
+
+        it("should accept lowercase AWS Lambda secret headers", async () => {
+            const bot = createTestBot();
+            bot.handleUpdate = spy(() => Promise.resolve());
+            const handler = webhookAdapters.awsLambda(bot, {
+                secretToken: "correct-token",
+            });
+
+            await handler(
+                {
+                    body: JSON.stringify(testUpdate),
+                    headers: {
+                        "x-telegram-bot-api-secret-token": "correct-token",
+                    },
+                    httpMethod: "POST",
+                    path: "/",
+                },
+                undefined,
+                async () => {},
+            );
+
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
+        });
+
+        it("should accept lowercase AWS Lambda async secret headers", async () => {
+            const bot = createTestBot();
+            bot.handleUpdate = spy(() => Promise.resolve());
+            const handler = webhookAdapters.awsLambdaAsync(bot, {
+                secretToken: "correct-token",
+            });
+
+            await handler({
+                body: JSON.stringify(testUpdate),
+                headers: {
+                    "x-telegram-bot-api-secret-token": "correct-token",
+                },
+                requestContext: { http: { method: "POST", path: "/" } },
+            }, undefined);
+
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
+        });
     });
 
     describe("bot initialization", () => {
