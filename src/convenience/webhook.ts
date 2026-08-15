@@ -562,7 +562,8 @@ function makeAdapters(): WebhookAdapterMap {
     const awsLambda: WebhookAdapterLambda = (event, _context, callback) => ({
         // TODO: add safe parse workaround
         update: () => JSON.parse(event.body ?? "{}"),
-        header: event.headers[SECRET_HEADER],
+        header: event.headers[SECRET_HEADER] ??
+            event.headers[SECRET_HEADER_LOWERCASE],
         method: event.httpMethod,
         path: event.path,
         end: () => callback(null, { statusCode: 200 }),
@@ -585,7 +586,8 @@ function makeAdapters(): WebhookAdapterMap {
         return {
             // TODO: add safe parse workaround
             update: () => JSON.parse(event.body ?? "{}"),
-            header: event.headers[SECRET_HEADER],
+            header: event.headers[SECRET_HEADER] ??
+                event.headers[SECRET_HEADER_LOWERCASE],
             method: event.requestContext.http.method,
             path: event.requestContext.http.path,
             end: () => ret.resolve({ statusCode: 200 }),
