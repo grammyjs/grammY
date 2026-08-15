@@ -24,6 +24,7 @@ export const DEFAULT_UPDATE_TYPES = [
     "business_message",
     "edited_business_message",
     "deleted_business_messages",
+    "guest_message",
     "inline_query",
     "chosen_inline_result",
     "callback_query",
@@ -33,9 +34,11 @@ export const DEFAULT_UPDATE_TYPES = [
     "poll",
     "poll_answer",
     "my_chat_member",
+    "managed_bot",
     "chat_join_request",
     "chat_boost",
     "removed_chat_boost",
+    "subscription",
 ] as const;
 
 /**
@@ -68,6 +71,7 @@ export const ALL_UPDATE_TYPES = [
     "business_message",
     "edited_business_message",
     "deleted_business_messages",
+    "guest_message",
     "inline_query",
     "chosen_inline_result",
     "callback_query",
@@ -77,9 +81,11 @@ export const ALL_UPDATE_TYPES = [
     "poll",
     "poll_answer",
     "my_chat_member",
+    "managed_bot",
     "chat_join_request",
     "chat_boost",
     "removed_chat_boost",
+    "subscription",
     // ...DEFAULT_UPDATE_TYPES,
     // https://github.com/jsr-io/jsr/issues/1258
     "chat_member",
