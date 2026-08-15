@@ -318,6 +318,7 @@ export type WebhookAdapterAzure = (context: {
     };
 }, request: {
     body?: unknown;
+    headers?: Record<string, string | undefined>;
     method: string;
     url: string;
 }) => ReqResHandler;
@@ -605,7 +606,7 @@ function makeAdapters(): WebhookAdapterMap {
     /** Azure Functions v3 and v4 */
     const azure: WebhookAdapterAzure = (context, request) => ({
         update: () => request.body as Update,
-        header: context.res?.headers?.[SECRET_HEADER],
+        header: request.headers?.[SECRET_HEADER_LOWERCASE],
         method: request.method,
         path: new URL(request.url).pathname,
         end: () => (context.res = {

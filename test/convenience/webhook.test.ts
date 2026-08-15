@@ -314,6 +314,34 @@ describe("webhook functionality", () => {
                 1,
             );
         });
+
+        it("should read Azure v3 secret headers from the request", async () => {
+            const bot = createTestBot();
+            bot.handleUpdate = spy(() => Promise.resolve());
+            const handler = webhookAdapters.azure(bot, {
+                secretToken: "correct-token",
+            });
+            const context = {
+                res: {
+                    set: () => {},
+                    send: () => {},
+                },
+            };
+
+            await handler(context, {
+                body: testUpdate,
+                headers: {
+                    "x-telegram-bot-api-secret-token": "correct-token",
+                },
+                method: "POST",
+                url: "https://example.com/",
+            });
+
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
+        });
     });
 
     describe("bot initialization", () => {
