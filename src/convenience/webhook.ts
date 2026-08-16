@@ -777,7 +777,11 @@ function makeAdapters(): WebhookAdapterMap {
                             const raw = globalThis.process
                                 .getBuiltinModule("node:buffer")
                                 .Buffer.concat(chunks).toString("utf-8");
-                            resolve(JSON.parse(raw));
+                            try {
+                                resolve(JSON.parse(raw));
+                            } catch (err) {
+                                reject(err);
+                            }
                         })
                         .once("error", reject);
                 }).catch(empty) as Promise<Update>,
