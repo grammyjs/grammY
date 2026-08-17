@@ -162,6 +162,32 @@ describe("Bot initialization", () => {
         assertEquals(callCount, 2);
     });
 
+    it("should back off in milliseconds after repeated HttpErrors", async () => {
+        using time = new FakeTime();
+        const bot = new Bot(token);
+        const controller = new AbortController();
+        let callCount = 0;
+        using _ = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount < 3) {
+                throw new HttpError("Network error", {
+                    error: "ECONNREFUSED",
+                });
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        const init = bot.init(controller.signal);
+        await time.tickAsync(0);
+        await time.tickAsync(100);
+        await time.tickAsync(100);
+        const callsAfterDelay = callCount;
+        controller.abort();
+        await init.catch(() => {});
+
+        assertEquals(callsAfterDelay, 3);
+    });
+
     it("should retry on 5xx errors during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
