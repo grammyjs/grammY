@@ -195,7 +195,7 @@ export class TransformerComposer<
             boolean | ((data: D, signal?: AbortSignal) => boolean)
         >,
         trueTransformer: MaybeArray<Transformer<R, D>>,
-        falseTransformer: MaybeArray<Transformer<R, D>>,
+        falseTransformer: MaybeArray<Transformer<R, D>> = [],
     ) {
         const then = Array.isArray(trueTransformer)
             ? new TransformerComposer(...trueTransformer)
