@@ -239,6 +239,48 @@ describe("Bot initialization", () => {
         // Initial attempt + 1 retry
         assertEquals(callCount, 2);
     });
+
+    it("should wait for retry_after during initialization", async () => {
+        const bot = new Bot(token);
+        let callCount = 0;
+        using _ = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount === 1) {
+                throw new GrammyError(
+                    "Too Many Requests",
+                    {
+                        ok: false,
+                        error_code: 429,
+                        description: "Too Many Requests",
+                        parameters: { retry_after: 0 },
+                    },
+                    "getMe",
+                    {},
+                );
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        const init = bot.init();
+        await init;
+
+        assertEquals(callCount, 2);
+    });
+
+    it("should reject an already-aborted initialization", async () => {
+        const bot = new Bot(token);
+        const controller = new AbortController();
+        controller.abort();
+        using getMe = spy(bot.api, "getMe");
+
+        await assertRejects(
+            () => bot.init(controller.signal),
+            Error,
+            "Operation aborted",
+        );
+
+        assertEquals(getMe.calls.length, 0);
+    });
 });
 
 describe("Bot handleUpdate", () => {
@@ -800,6 +842,31 @@ describe("Bot polling lifecycle", () => {
 
         await Promise.all([firstStart, duplicateStart, stop]);
         assertEquals(bot.isRunning(), false);
+    });
+
+    it("should reject duplicate start when initialization fails", async () => {
+        const uninitializedBot = new Bot(token);
+        const { promise: getMe, reject: rejectGetMe } = Promise
+            .withResolvers<UserFromGetMe>();
+        const error = new Error("initialization failed");
+        using _getMe = stub(uninitializedBot.api, "getMe", () => getMe);
+        using _deleteWebhook = stub(
+            uninitializedBot.api,
+            "deleteWebhook",
+            () => Promise.resolve(true as const),
+        );
+
+        const firstStart = uninitializedBot.start();
+        const duplicateStart = uninitializedBot.start();
+        rejectGetMe(error);
+
+        await assertRejects(() => firstStart, Error, "initialization failed");
+        await assertRejects(
+            () => duplicateStart,
+            Error,
+            "initialization failed",
+        );
+        assertEquals(uninitializedBot.isRunning(), false);
     });
 
     it("should delete webhook on start", async () => {
