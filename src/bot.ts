@@ -673,7 +673,7 @@ async function withRetries<T>(
         if (delay) {
             // Do not sleep for the first retry
             if (lastDelay !== INITIAL_DELAY) {
-                await sleep(lastDelay, signal);
+                await sleep(lastDelay / 1000, signal);
             }
             const TWENTY_MINUTES = 20 * 60 * 1000; // ms
             lastDelay = Math.min(TWENTY_MINUTES, 2 * lastDelay);
