@@ -161,6 +161,9 @@ export class Bot<
 > extends Composer<C> {
     private pollingRunning = false;
     private pollingAbortController: AbortController | undefined;
+    private pollingStopPromise: Promise<void> | undefined;
+    private pollingStartAbortController: AbortController | undefined;
+    private pollingStopGeneration = 0;
     private lastTriedUpdateId = 0;
 
     /**
@@ -302,18 +305,36 @@ export class Bot<
      *
      * @param signal Optional `AbortSignal` to cancel the initialization
      */
-    async init(signal?: AbortSignal) {
+    async init(signal?: AbortSignal): Promise<void> {
         if (!this.isInited()) {
             debug("Initializing bot");
-            this.mePromise ??= withRetries(
+            const mePromise = this.mePromise ?? withRetries(
                 () => this.api.getMe(signal),
                 signal,
             );
+            if (this.mePromise === undefined) {
+                this.mePromise = mePromise;
+                mePromise.then(
+                    () => {
+                        if (this.mePromise === mePromise) {
+                            this.mePromise = undefined;
+                        }
+                    },
+                    () => {
+                        if (this.mePromise === mePromise) {
+                            this.mePromise = undefined;
+                        }
+                    },
+                );
+            }
             let me: UserFromGetMe;
             try {
-                me = await this.mePromise;
-            } finally {
-                this.mePromise = undefined;
+                me = await abortable(() => mePromise, signal);
+            } catch (err) {
+                if (err instanceof AbortError && !signal?.aborted) {
+                    return this.init(signal);
+                }
+                throw err;
             }
             if (this.me === undefined) this.me = me;
             else debug("Bot info was set by now, will not overwrite");
@@ -425,38 +446,87 @@ a known bot info object.",
      * @param options Options to use for simple long polling
      */
     async start(options?: PollingOptions) {
-        // Perform setup
-        const setup: Promise<void>[] = [];
-        if (!this.isInited()) {
-            setup.push(this.init(this.pollingAbortController?.signal));
-        }
         if (this.pollingRunning) {
-            await Promise.all(setup);
+            const controller = this.pollingAbortController;
+            try {
+                await this.init(controller?.signal);
+            } catch (err) {
+                if (err instanceof AbortError && controller?.signal.aborted) {
+                    return;
+                }
+                throw err;
+            }
+            if (controller?.signal.aborted) return;
             debug("Simple long polling already running!");
             return;
         }
+        const stopGeneration = this.pollingStopGeneration;
+        const stopPromise = this.pollingStopPromise;
+        let controller: AbortController;
+        if (stopPromise !== undefined) {
+            controller = this.pollingStartAbortController ??
+                new AbortController();
+            this.pollingStartAbortController ??= controller;
+            try {
+                await stopPromise;
+            } finally {
+                if (this.pollingStartAbortController === controller) {
+                    this.pollingStartAbortController = undefined;
+                }
+            }
+            if (
+                controller.signal.aborted ||
+                this.pollingStopGeneration !== stopGeneration ||
+                this.pollingStopPromise !== undefined
+            ) return;
+            if (this.pollingRunning) {
+                try {
+                    await this.init(controller.signal);
+                } catch (err) {
+                    if (
+                        err instanceof AbortError && controller.signal.aborted
+                    ) {
+                        return;
+                    }
+                    throw err;
+                }
+                if (controller.signal.aborted) return;
+                debug("Simple long polling already running!");
+                return;
+            }
+        } else {
+            controller = new AbortController();
+        }
 
         this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
+        this.pollingAbortController = controller;
 
+        // Perform setup
+        const setup: Promise<void>[] = [];
+        if (!this.isInited()) {
+            setup.push(this.init(controller.signal));
+        }
         setup.push(withRetries(async () => {
             await this.api.deleteWebhook({
                 drop_pending_updates: options?.drop_pending_updates,
-            }, this.pollingAbortController?.signal);
-        }, this.pollingAbortController?.signal));
+            }, controller.signal);
+        }, controller.signal));
 
         try {
             await Promise.all(setup);
             // All async ops of setup complete, run callback
             await options?.onStart?.(this.botInfo);
         } catch (err) {
-            this.pollingRunning = false;
-            this.pollingAbortController = undefined;
+            if (err instanceof AbortError && controller.signal.aborted) return;
+            if (this.pollingAbortController === controller) {
+                this.pollingRunning = false;
+                this.pollingAbortController = undefined;
+            }
             throw err;
         }
 
         // Bot was stopped during `onStart`
-        if (!this.pollingRunning) return;
+        if (controller.signal.aborted) return;
 
         // Prevent common misuse that leads to missing updates
         validateAllowedUpdates(
@@ -468,7 +538,7 @@ a known bot info object.",
 
         // Start polling
         debug("Starting simple long polling");
-        await this.loop(options);
+        await this.loop(options, controller.signal);
         debug("Middleware is done running");
     }
 
@@ -493,11 +563,37 @@ a known bot info object.",
     async stop() {
         if (this.pollingRunning) {
             debug("Stopping bot, saving update offset");
+            const controller = this.pollingAbortController;
             this.pollingRunning = false;
-            this.pollingAbortController?.abort();
+            this.pollingStopGeneration++;
+            const { promise: stopPromise, resolve, reject } = deferred<void>();
+            this.pollingStopPromise = stopPromise;
+            const finish = (failed: boolean, error?: unknown) => {
+                if (this.pollingAbortController === controller) {
+                    this.pollingAbortController = undefined;
+                }
+                if (this.pollingStopPromise === stopPromise) {
+                    this.pollingStopPromise = undefined;
+                }
+                if (failed) reject(error);
+                else resolve();
+            };
+            controller?.abort();
             const offset = this.lastTriedUpdateId + 1;
-            await this.api.getUpdates({ offset, limit: 1 })
-                .finally(() => this.pollingAbortController = undefined);
+            try {
+                this.api.getUpdates({ offset, limit: 1 }).then(
+                    () => finish(false),
+                    (error) => finish(true, error),
+                );
+            } catch (error) {
+                finish(true, error);
+            }
+            await stopPromise;
+        } else if (this.pollingStartAbortController !== undefined) {
+            debug("Stopping bot before startup");
+            this.pollingStopGeneration++;
+            this.pollingStartAbortController.abort();
+            await this.pollingStopPromise;
         } else {
             debug("Bot is not running!");
         }
@@ -541,20 +637,31 @@ a known bot info object.",
      * Internal. Do not call. Enters a loop that will perform long polling until
      * the bot is stopped.
      */
-    private async loop(options?: PollingOptions) {
+    private async loop(
+        options: PollingOptions | undefined,
+        signal: AbortSignal,
+    ) {
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
         let allowed_updates: PollingOptions["allowed_updates"] =
             options?.allowed_updates ?? []; // reset to default if unspecified
 
         try {
-            while (this.pollingRunning) {
+            while (
+                this.pollingRunning &&
+                this.pollingAbortController?.signal === signal
+            ) {
                 // fetch updates
                 const updates = await this.fetchUpdates(
                     { limit, timeout, allowed_updates },
+                    signal,
                 );
                 // check if polling stopped
-                if (updates === undefined) break;
+                if (
+                    updates === undefined ||
+                    signal.aborted ||
+                    this.pollingAbortController?.signal !== signal
+                ) break;
                 // handle updates
                 await this.handleUpdates(updates);
                 // Telegram uses the last setting if `allowed_updates` is omitted so
@@ -562,7 +669,9 @@ a known bot info object.",
                 allowed_updates = undefined;
             }
         } finally {
-            this.pollingRunning = false;
+            if (this.pollingAbortController?.signal === signal) {
+                this.pollingRunning = false;
+            }
         }
     }
 
@@ -576,6 +685,7 @@ a known bot info object.",
      */
     private async fetchUpdates(
         { limit, timeout, allowed_updates }: PollingOptions,
+        signal: AbortSignal,
     ) {
         const offset = this.lastTriedUpdateId + 1;
         let updates: Update[] | undefined = undefined;
@@ -583,12 +693,14 @@ a known bot info object.",
             try {
                 updates = await this.api.getUpdates(
                     { offset, limit, timeout, allowed_updates },
-                    this.pollingAbortController?.signal,
+                    signal,
                 );
             } catch (error) {
-                await this.handlePollingError(error);
+                await this.handlePollingError(error, signal);
             }
-        } while (updates === undefined && this.pollingRunning);
+        } while (
+            updates === undefined && this.pollingRunning && !signal.aborted
+        );
         return updates;
     }
 
@@ -596,8 +708,8 @@ a known bot info object.",
      * Internal. Do not call. Handles an error that occurred during long
      * polling.
      */
-    private async handlePollingError(error: unknown) {
-        if (!this.pollingRunning) {
+    private async handlePollingError(error: unknown, signal: AbortSignal) {
+        if (!this.pollingRunning || signal.aborted) {
             debug("Pending getUpdates request cancelled");
             return;
         }
@@ -615,7 +727,12 @@ a known bot info object.",
         debugErr(
             `Call to getUpdates failed, retrying in ${sleepSeconds} seconds ...`,
         );
-        await sleep(sleepSeconds);
+        try {
+            await sleep(sleepSeconds, signal);
+        } catch (err) {
+            if (err instanceof AbortError && signal.aborted) return;
+            throw err;
+        }
     }
 }
 
@@ -686,9 +803,10 @@ async function withRetries<T>(
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
     while (!result.ok) {
         try {
-            result = { ok: true, value: await task() };
+            result = { ok: true, value: await abortable(task, signal) };
         } catch (error) {
             debugErr(error);
+            if (error instanceof AbortError) throw error;
             const strategy = await handleError(error);
             switch (strategy) {
                 case "retry":
@@ -701,6 +819,45 @@ async function withRetries<T>(
     return result.value;
 }
 
+class AbortError extends Error {
+    constructor() {
+        super("Operation aborted");
+        this.name = "AbortError";
+    }
+}
+
+function deferred<T>() {
+    let resolve: (value: T | PromiseLike<T>) => void = () => {};
+    let reject: (reason?: unknown) => void = () => {};
+    const promise = new Promise<T>((res, rej) => {
+        resolve = res;
+        reject = rej;
+    });
+    return { promise, resolve, reject };
+}
+
+async function abortable<T>(
+    task: () => Promise<T>,
+    signal?: AbortSignal,
+): Promise<T> {
+    if (signal === undefined) return await task();
+    if (signal.aborted) throw new AbortError();
+
+    let reject: (err: AbortError) => void = () => {};
+    function abort() {
+        reject(new AbortError());
+    }
+    const aborted = new Promise<never>((_, rej) => {
+        reject = rej;
+        signal.addEventListener("abort", abort);
+    });
+    try {
+        return await Promise.race([task(), aborted]);
+    } finally {
+        signal.removeEventListener("abort", abort);
+    }
+}
+
 /**
  * Returns a new promise that resolves after the specified number of seconds, or
  * rejects as soon as the given signal is aborted.
@@ -709,7 +866,7 @@ async function sleep(seconds: number, signal?: AbortSignal) {
     let handle: Parameters<typeof clearTimeout>[0];
     let reject: ((err: Error) => void) | undefined;
     function abort() {
-        reject?.(new Error("Aborted delay"));
+        reject?.(new AbortError());
         if (handle !== undefined) clearTimeout(handle);
     }
     try {

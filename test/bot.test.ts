@@ -463,6 +463,41 @@ describe("Bot error handling", () => {
             assertEquals(getUpdatesStub.calls.length, 3);
         });
 
+        it("should cancel retry delay when stopped", async () => {
+            using time = new FakeTime();
+            let callCount = 0;
+            using getUpdatesStub = stub(
+                bot.api,
+                "getUpdates",
+                () => {
+                    callCount++;
+                    if (callCount === 1) {
+                        return Promise.reject(
+                            new GrammyError(
+                                "Too Many Requests",
+                                {
+                                    ok: false,
+                                    error_code: 429,
+                                    description: "Too Many Requests",
+                                    parameters: { retry_after: 30 },
+                                },
+                                "getUpdates",
+                                {},
+                            ),
+                        );
+                    }
+                    return Promise.resolve([]);
+                },
+            );
+
+            const startPromise = bot.start();
+            await time.tickAsync(0);
+            await bot.stop();
+            await startPromise;
+
+            assertEquals(getUpdatesStub.calls.length, 2);
+        });
+
         it("should call custom error handler for middleware errors", async () => {
             const { promise: errorHandled, resolve: notifyErrorHandled } =
                 Promise.withResolvers<void>();
@@ -627,6 +662,27 @@ describe("Bot polling lifecycle", () => {
         assertEquals(onStartSpy.calls[0].args[0], botInfo);
     });
 
+    it("should throw errors from onStart after stop", async () => {
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+        const error = new Error("onStart failed");
+
+        await assertRejects(
+            () =>
+                bot.start({
+                    onStart: async () => {
+                        await bot.stop();
+                        throw error;
+                    },
+                }),
+            Error,
+            "onStart failed",
+        );
+    });
+
     it("should handle stop when not running", async () => {
         assertEquals(bot.isRunning(), false);
         await bot.stop(); // Should not throw
@@ -712,6 +768,350 @@ describe("Bot polling lifecycle", () => {
         await startPromise;
 
         assertEquals(deleteWebhookStub.calls.length, 1);
+    });
+
+    it("should stop immediately after start", async () => {
+        using getUpdatesStub = stub(
+            bot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+
+        const startPromise = bot.start();
+        await bot.stop();
+        await startPromise;
+
+        assertEquals(getUpdatesStub.calls.length, 1);
+        assertEquals(bot.isRunning(), false);
+    });
+
+    it("should not retry setup after stop", async () => {
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+        let callCount = 0;
+        deleteWebhookStub.restore();
+        deleteWebhookStub = stub(
+            bot.api,
+            "deleteWebhook",
+            (_params, signal?: AbortSignal) => {
+                callCount++;
+                assertEquals(callCount, 1);
+                notifyFirstCall();
+                return new Promise((_, reject) => {
+                    signal!.addEventListener(
+                        "abort",
+                        () => reject(new HttpError("Aborted", new Error())),
+                    );
+                });
+            },
+        );
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+
+        const onStart = spy(() => {});
+        const startPromise = bot.start({ onStart });
+        await firstCallStarted;
+        await bot.stop();
+        await startPromise;
+
+        assertEquals(callCount, 1);
+        assertEquals(onStart.calls.length, 0);
+    });
+
+    it("should cancel initialization after stop", async () => {
+        const uninitializedBot = new Bot(token);
+        const { promise: getMeStarted, resolve: notifyGetMeStarted } = Promise
+            .withResolvers<void>();
+        let initSignal: AbortSignal | undefined;
+        let getMeCalls = 0;
+
+        using _getMe = stub(
+            uninitializedBot.api,
+            "getMe",
+            (signal?: AbortSignal) => {
+                getMeCalls++;
+                initSignal = signal;
+                notifyGetMeStarted();
+                return new Promise((_, reject) => {
+                    signal!.addEventListener(
+                        "abort",
+                        () => reject(new HttpError("Aborted", new Error())),
+                    );
+                });
+            },
+        );
+        using _deleteWebhook = stub(
+            uninitializedBot.api,
+            "deleteWebhook",
+            () => Promise.resolve(true as const),
+        );
+        using _getUpdates = stub(
+            uninitializedBot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+
+        const startPromise = uninitializedBot.start();
+        const duplicateStart = uninitializedBot.start();
+        await getMeStarted;
+        await uninitializedBot.stop();
+        await startPromise;
+        await duplicateStart;
+
+        assertEquals(initSignal?.aborted, true);
+        assertEquals(getMeCalls, 1);
+    });
+
+    it("should cancel startup while an external init is pending", async () => {
+        const uninitializedBot = new Bot(token);
+        const { promise: getMe, resolve: resolveGetMe } = Promise
+            .withResolvers<UserFromGetMe>();
+        const { promise: getMeStarted, resolve: notifyGetMeStarted } = Promise
+            .withResolvers<void>();
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        let getMeCalls = 0;
+        let getUpdatesCalls = 0;
+
+        using _getMe = stub(uninitializedBot.api, "getMe", () => {
+            getMeCalls++;
+            notifyGetMeStarted();
+            return getMe;
+        });
+        using _deleteWebhook = stub(
+            uninitializedBot.api,
+            "deleteWebhook",
+            () => Promise.resolve(true as const),
+        );
+        using _getUpdates = stub(
+            uninitializedBot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) return Promise.resolve([]);
+                if (getUpdatesCalls === 2) {
+                    notifyPollingStarted();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                return Promise.resolve([]);
+            },
+        );
+
+        const initPromise = uninitializedBot.init();
+        await getMeStarted;
+        const firstStart = uninitializedBot.start();
+        await uninitializedBot.stop();
+        await firstStart;
+
+        const restart = uninitializedBot.start();
+        resolveGetMe(botInfo);
+        await pollingStarted;
+        await uninitializedBot.stop();
+        await restart;
+        await initPromise;
+
+        assertEquals(getMeCalls, 1);
+    });
+
+    it("should throw setup errors that occur before stop", async () => {
+        const error = new Error("setup failed");
+        deleteWebhookStub.restore();
+        deleteWebhookStub = stub(
+            bot.api,
+            "deleteWebhook",
+            () => {
+                throw error;
+            },
+        );
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+
+        const startPromise = bot.start();
+        await bot.stop();
+
+        await assertRejects(() => startPromise, Error, "setup failed");
+    });
+
+    it("should wait for stop confirmation before restarting", async () => {
+        const { promise: firstSetupStarted, resolve: notifyFirstSetup } =
+            Promise
+                .withResolvers<void>();
+        const { promise: confirmation, resolve: confirmStop } = Promise
+            .withResolvers<Update[]>();
+        const { promise: secondPollingStarted, resolve: notifySecondPolling } =
+            Promise.withResolvers<void>();
+        let deleteWebhookCalls = 0;
+        let getUpdatesCalls = 0;
+        let secondStart: Promise<void> | undefined;
+        deleteWebhookStub.restore();
+        deleteWebhookStub = stub(
+            bot.api,
+            "deleteWebhook",
+            (_params, signal?: AbortSignal) => {
+                deleteWebhookCalls++;
+                if (deleteWebhookCalls === 1) {
+                    notifyFirstSetup();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => {
+                                secondStart = bot.start();
+                                reject(new HttpError("Aborted", new Error()));
+                            },
+                        );
+                    });
+                }
+                return Promise.resolve(true as const);
+            },
+        );
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) return confirmation;
+                if (getUpdatesCalls === 2) {
+                    notifySecondPolling();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                return Promise.resolve([]);
+            },
+        );
+
+        const firstStart = bot.start();
+        await firstSetupStarted;
+        const firstStop = bot.stop();
+
+        assertEquals(deleteWebhookCalls, 1);
+        confirmStop([]);
+        await firstStop;
+        await secondPollingStarted;
+        await bot.stop();
+        await firstStart;
+        await secondStart;
+
+        assertEquals(bot.isRunning(), false);
+    });
+
+    it("should cancel a restart while stop confirmation is pending", async () => {
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        const { promise: confirmation, resolve: confirmStop } = Promise
+            .withResolvers<Update[]>();
+        let getUpdatesCalls = 0;
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyPollingStarted();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                if (getUpdatesCalls === 2) return confirmation;
+                return Promise.resolve([]);
+            },
+        );
+
+        const firstStart = bot.start();
+        await pollingStarted;
+        const firstStop = bot.stop();
+        const restart = bot.start();
+        const cancelRestart = bot.stop();
+
+        confirmStop([]);
+        await firstStop;
+        await cancelRestart;
+        await firstStart;
+        await restart;
+
+        assertEquals(deleteWebhookStub.calls.length, 1);
+        assertEquals(bot.isRunning(), false);
+    });
+
+    it("should reject restart when stop confirmation fails", async () => {
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        const error = new Error("confirmation failed");
+        let getUpdatesCalls = 0;
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyPollingStarted();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                if (getUpdatesCalls === 2) return Promise.reject(error);
+                return Promise.resolve([]);
+            },
+        );
+
+        const firstStart = bot.start();
+        await pollingStarted;
+        const stop = bot.stop();
+        const restart = bot.start();
+
+        await assertRejects(() => stop, Error, "confirmation failed");
+        await assertRejects(() => restart, Error, "confirmation failed");
+        await firstStart;
+    });
+
+    it("should discard updates returned after stop", async () => {
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        const { promise: updates, resolve: resolveUpdates } = Promise
+            .withResolvers<Update[]>();
+        let getUpdatesCalls = 0;
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            () => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyPollingStarted();
+                    return updates;
+                }
+                return Promise.resolve([]);
+            },
+        );
+        const middlewareSpy = spy((_ctx: Context) => {});
+        bot.use(middlewareSpy);
+
+        const startPromise = bot.start();
+        await pollingStarted;
+        await bot.stop();
+        resolveUpdates([testUpdate]);
+        await startPromise;
+
+        assertEquals(middlewareSpy.calls.length, 0);
     });
 
     it("should process updates from polling", async () => {
