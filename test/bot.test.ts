@@ -145,6 +145,30 @@ describe("Bot initialization", () => {
         assertEquals(getMeStub.calls.length, 1);
     });
 
+    it("should continue init when another caller aborts", async () => {
+        const bot = new Bot(token);
+        const first = new AbortController();
+        const second = new AbortController();
+        let getMeCalls = 0;
+        using _ = stub(bot.api, "getMe", () => {
+            getMeCalls++;
+            if (getMeCalls === 1) {
+                return new Promise<UserFromGetMe>(() => {});
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        const firstInit = bot.init(first.signal);
+        const secondInit = bot.init(second.signal);
+        first.abort();
+
+        await assertRejects(() => firstInit, Error, "Operation aborted");
+        await secondInit;
+
+        assertEquals(getMeCalls, 2);
+        assertEquals(bot.botInfo, botInfo);
+    });
+
     it("should retry on HttpError during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
@@ -683,6 +707,19 @@ describe("Bot polling lifecycle", () => {
         );
     });
 
+    it("should stop from onStart", async () => {
+        using getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            () => Promise.resolve([]),
+        );
+
+        await bot.start({ onStart: () => bot.stop() });
+
+        assertEquals(getUpdates.calls.length, 1);
+        assertEquals(bot.isRunning(), false);
+    });
+
     it("should handle stop when not running", async () => {
         assertEquals(bot.isRunning(), false);
         await bot.stop(); // Should not throw
@@ -732,6 +769,37 @@ describe("Bot polling lifecycle", () => {
 
         await bot.stop();
         await startPromise1;
+    });
+
+    it("should abandon a duplicate start stopped during initialization", async () => {
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        let getUpdatesCalls = 0;
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyPollingStarted();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                return Promise.resolve([]);
+            },
+        );
+
+        const firstStart = bot.start();
+        await pollingStarted;
+        const duplicateStart = bot.start();
+        const stop = bot.stop();
+
+        await Promise.all([firstStart, duplicateStart, stop]);
+        assertEquals(bot.isRunning(), false);
     });
 
     it("should delete webhook on start", async () => {
@@ -937,10 +1005,8 @@ describe("Bot polling lifecycle", () => {
             () => Promise.resolve([]),
         );
 
-        const startPromise = bot.start();
-        await bot.stop();
-
-        await assertRejects(() => startPromise, Error, "setup failed");
+        await assertRejects(() => bot.start(), Error, "setup failed");
+        assertEquals(bot.isRunning(), false);
     });
 
     it("should wait for stop confirmation before restarting", async () => {
@@ -1006,6 +1072,58 @@ describe("Bot polling lifecycle", () => {
         await firstStart;
         await secondStart;
 
+        assertEquals(bot.isRunning(), false);
+    });
+
+    it("should serialize concurrent restarts after stop confirmation", async () => {
+        const { promise: firstPollingStarted, resolve: notifyFirstPolling } =
+            Promise.withResolvers<void>();
+        const { promise: confirmation, resolve: confirmStop } = Promise
+            .withResolvers<Update[]>();
+        const { promise: secondPollingStarted, resolve: notifySecondPolling } =
+            Promise.withResolvers<void>();
+        let getUpdatesCalls = 0;
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyFirstPolling();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                if (getUpdatesCalls === 2) return confirmation;
+                if (getUpdatesCalls === 3) {
+                    notifySecondPolling();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                return Promise.resolve([]);
+            },
+        );
+
+        const firstStart = bot.start();
+        await firstPollingStarted;
+        const firstStop = bot.stop();
+        const firstRestart = bot.start();
+        const secondRestart = bot.start();
+
+        confirmStop([]);
+        await firstStop;
+        await secondPollingStarted;
+        await bot.stop();
+        await Promise.all([firstStart, firstRestart, secondRestart]);
+
+        assertEquals(deleteWebhookStub.calls.length, 2);
         assertEquals(bot.isRunning(), false);
     });
 
@@ -1082,6 +1200,36 @@ describe("Bot polling lifecycle", () => {
         await assertRejects(() => stop, Error, "confirmation failed");
         await assertRejects(() => restart, Error, "confirmation failed");
         await firstStart;
+    });
+
+    it("should reject stop when confirmation throws synchronously", async () => {
+        const { promise: pollingStarted, resolve: notifyPollingStarted } =
+            Promise.withResolvers<void>();
+        const error = new Error("confirmation failed");
+        let getUpdatesCalls = 0;
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCalls++;
+                if (getUpdatesCalls === 1) {
+                    notifyPollingStarted();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                }
+                throw error;
+            },
+        );
+
+        const start = bot.start();
+        await pollingStarted;
+
+        await assertRejects(() => bot.stop(), Error, "confirmation failed");
+        await start;
     });
 
     it("should discard updates returned after stop", async () => {
