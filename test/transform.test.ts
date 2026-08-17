@@ -98,6 +98,70 @@ describe("TransformerComposer", () => {
         assertEquals(calls, ["sendMessage"]);
     });
 
+    it("should run a transformer scoped with .on for every method in an array", async () => {
+        const transformerComposer = new TransformerComposer();
+        const scoped = transformerComposer.on(["copyMessage", "deleteMessage"]);
+        const scopedCalls: string[] = [];
+        scoped.use((prev, data, signal) => {
+            scopedCalls.push(data.method);
+            return prev(data, signal);
+        });
+
+        const { calls, previous } = trackPrevious();
+        const transform = transformerComposer.transformer();
+        await transform(previous, {
+            method: "copyMessage",
+            payload: { chat_id: 1, from_chat_id: 2, message_id: 3 },
+        });
+        await transform(previous, {
+            method: "deleteMessage",
+            payload: { chat_id: 1, message_id: 3 },
+        });
+
+        assertEquals(scopedCalls, ["copyMessage", "deleteMessage"]);
+        assertEquals(calls, ["copyMessage", "deleteMessage"]);
+    });
+
+    it("should pass methods missing from the .on array to the previous transformer", async () => {
+        const transformerComposer = new TransformerComposer();
+        const scoped = transformerComposer.on(["copyMessage", "deleteMessage"]);
+        let scopedCalls = 0;
+        scoped.use((prev, data, signal) => {
+            scopedCalls++;
+            return prev(data, signal);
+        });
+
+        const { calls, previous } = trackPrevious();
+        await transformerComposer.transformer()(previous, {
+            method: "getMe",
+            payload: {},
+        });
+
+        assertEquals(scopedCalls, 0);
+        assertEquals(calls, ["getMe"]);
+    });
+
+    it("should match .on methods exactly rather than by substring", async () => {
+        // `copyMessages` contains `copyMessage`, so matching the two strings
+        // with `String#includes` instead of comparing them would match here
+        const transformerComposer = new TransformerComposer();
+        const scoped = transformerComposer.on("copyMessages");
+        let scopedCalls = 0;
+        scoped.use((prev, data, signal) => {
+            scopedCalls++;
+            return prev(data, signal);
+        });
+
+        const { calls, previous } = trackPrevious();
+        await transformerComposer.transformer()(previous, {
+            method: "copyMessage",
+            payload: { chat_id: 1, from_chat_id: 2, message_id: 3 },
+        });
+
+        assertEquals(scopedCalls, 0);
+        assertEquals(calls, ["copyMessage"]);
+    });
+
     it("should pass data rejected by .filter to the previous transformer", async () => {
         const transformerComposer = new TransformerComposer();
         const scoped = transformerComposer.filter(() => false);
