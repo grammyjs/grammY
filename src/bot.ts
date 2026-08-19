@@ -580,14 +580,10 @@ a known bot info object.",
             };
             controller?.abort();
             const offset = this.lastTriedUpdateId + 1;
-            try {
-                this.api.getUpdates({ offset, limit: 1 }).then(
-                    () => finish(false),
-                    (error) => finish(true, error),
-                );
-            } catch (error) {
-                finish(true, error);
-            }
+            this.api.getUpdates({ offset, limit: 1 }).then(
+                () => finish(false),
+                (error) => finish(true, error),
+            );
             await stopPromise;
         } else if (this.pollingStartAbortController !== undefined) {
             debug("Stopping bot before startup");

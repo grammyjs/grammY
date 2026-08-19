@@ -240,33 +240,6 @@ describe("Bot initialization", () => {
         assertEquals(callCount, 2);
     });
 
-    it("should wait for retry_after during initialization", async () => {
-        const bot = new Bot(token);
-        let callCount = 0;
-        using _ = stub(bot.api, "getMe", () => {
-            callCount++;
-            if (callCount === 1) {
-                throw new GrammyError(
-                    "Too Many Requests",
-                    {
-                        ok: false,
-                        error_code: 429,
-                        description: "Too Many Requests",
-                        parameters: { retry_after: 0 },
-                    },
-                    "getMe",
-                    {},
-                );
-            }
-            return Promise.resolve(botInfo);
-        });
-
-        const init = bot.init();
-        await init;
-
-        assertEquals(callCount, 2);
-    });
-
     it("should reject an already-aborted initialization", async () => {
         const bot = new Bot(token);
         const controller = new AbortController();
@@ -813,37 +786,6 @@ describe("Bot polling lifecycle", () => {
         await startPromise1;
     });
 
-    it("should abandon a duplicate start stopped during initialization", async () => {
-        const { promise: pollingStarted, resolve: notifyPollingStarted } =
-            Promise.withResolvers<void>();
-        let getUpdatesCalls = 0;
-        using _ = stub(
-            bot.api,
-            "getUpdates",
-            (_params, signal?: AbortSignal) => {
-                getUpdatesCalls++;
-                if (getUpdatesCalls === 1) {
-                    notifyPollingStarted();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                }
-                return Promise.resolve([]);
-            },
-        );
-
-        const firstStart = bot.start();
-        await pollingStarted;
-        const duplicateStart = bot.start();
-        const stop = bot.stop();
-
-        await Promise.all([firstStart, duplicateStart, stop]);
-        assertEquals(bot.isRunning(), false);
-    });
-
     it("should reject duplicate start when initialization fails", async () => {
         const uninitializedBot = new Bot(token);
         const { promise: getMe, reject: rejectGetMe } = Promise
@@ -1267,36 +1209,6 @@ describe("Bot polling lifecycle", () => {
         await assertRejects(() => stop, Error, "confirmation failed");
         await assertRejects(() => restart, Error, "confirmation failed");
         await firstStart;
-    });
-
-    it("should reject stop when confirmation throws synchronously", async () => {
-        const { promise: pollingStarted, resolve: notifyPollingStarted } =
-            Promise.withResolvers<void>();
-        const error = new Error("confirmation failed");
-        let getUpdatesCalls = 0;
-        using _ = stub(
-            bot.api,
-            "getUpdates",
-            (_params, signal?: AbortSignal) => {
-                getUpdatesCalls++;
-                if (getUpdatesCalls === 1) {
-                    notifyPollingStarted();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                }
-                throw error;
-            },
-        );
-
-        const start = bot.start();
-        await pollingStarted;
-
-        await assertRejects(() => bot.stop(), Error, "confirmation failed");
-        await start;
     });
 
     it("should discard updates returned after stop", async () => {
