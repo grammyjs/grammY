@@ -162,6 +162,35 @@ describe("Bot initialization", () => {
         assertEquals(callCount, 2);
     });
 
+    it("should back off in milliseconds between retries", async () => {
+        using time = new FakeTime();
+        const bot = new Bot(token);
+        let callCount = 0;
+        using _ = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount <= 2) {
+                return Promise.reject(
+                    new HttpError("Network error", { error: "ECONNREFUSED" }),
+                );
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        const initPromise = bot.init();
+        // The first retry is immediate, so no timer is involved yet
+        await time.runMicrotasks();
+        assertEquals(callCount, 2);
+
+        // The second retry waits for the initial delay, which is 100 ms
+        await time.tickAsync(100);
+        await time.nextAsync();
+        // Initial attempt + 2 retries
+        assertEquals(callCount, 3);
+
+        await initPromise;
+        assertEquals(bot.isInited(), true);
+    });
+
     it("should retry on 5xx errors during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;

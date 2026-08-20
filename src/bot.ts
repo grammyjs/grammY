@@ -627,8 +627,8 @@ a known bot info object.",
  *
  * Otherwise, if the first attempt at running the task fails, the task is
  * retried immediately. If second attempt fails, too, waits for 100 ms, and then
- * doubles this delay for every subsequent attempt. Never waits longer than 1
- * hour before retrying.
+ * doubles this delay for every subsequent attempt. Never waits longer than 20
+ * minutes before retrying.
  *
  * @param task Async task to perform
  * @param signal Optional `AbortSignal` to prevent further retries
@@ -673,7 +673,9 @@ async function withRetries<T>(
         if (delay) {
             // Do not sleep for the first retry
             if (lastDelay !== INITIAL_DELAY) {
-                await sleep(lastDelay, signal);
+                // `sleep` expects seconds, but the backoff is tracked in
+                // milliseconds, so it has to be converted here
+                await sleep(lastDelay / 1000, signal);
             }
             const TWENTY_MINUTES = 20 * 60 * 1000; // ms
             lastDelay = Math.min(TWENTY_MINUTES, 2 * lastDelay);
