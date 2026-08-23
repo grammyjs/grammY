@@ -77,6 +77,11 @@ export class Keyboard {
      * Placeholder to be shown in the input field when the keyboard is active.
      */
     public input_field_placeholder?: string;
+    /**
+     * The reply interface will be shown to the user, as if they had manually
+     * selected the bot's message and tapped 'Reply'.
+     */
+    public force_reply?: boolean;
 
     /**
      * Initialize a new `Keyboard` with an optional two-dimensional array of
@@ -534,6 +539,16 @@ export class Keyboard {
         return this;
     }
     /**
+     * Force a reply markup when this keyboard is sent. See
+     * https://grammy.dev/guide/basics#force-reply for details.
+     *
+     * @param isEnabled `true` if the reply markup should be forced, and `false` otherwise
+     */
+    forceReply(isEnabled = true) {
+        this.force_reply = isEnabled;
+        return this;
+    }
+    /**
      * Creates a new keyboard that contains the transposed grid of buttons of
      * this keyboard. This means that the resulting keyboard has the rows and
      * columns flipped.
@@ -694,6 +709,12 @@ type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
  * inline keyboards in grammY.
  */
 export class InlineKeyboard {
+    /**
+     * The reply interface will be shown to the user, as if they had manually
+     * selected the bot's message and tapped 'Reply'. The value of the field
+     * can't be changed when the inline keyboard is edited.
+     */
+    public force_reply?: boolean;
     /**
      * Initialize a new `InlineKeyboard` with an optional two-dimensional array
      * of `InlineKeyboardButton` objects. This is the nested array that holds
@@ -865,6 +886,26 @@ export class InlineKeyboard {
         return typeof text === "string"
             ? { text, login_url }
             : { ...text, login_url };
+    }
+    /**
+     * Adds a new disabled button. It does nothing.
+     *
+     * @param text The text to display, and optional styling information
+     */
+    disabled(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
+        return this.add(InlineKeyboard.disabled(text));
+    }
+    /**
+     * Creates a new disabled button. It does nothing.
+     *
+     * @param text The text to display, and optional styling information
+     */
+    static disabled(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): InlineKeyboardButton.DisabledButtonButton {
+        return typeof text === "string"
+            ? { text, disabled: {} }
+            : { ...text, disabled: {} };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -1172,6 +1213,16 @@ export class InlineKeyboard {
             throw new Error("Need to add a button before adding an icon!");
         }
         lastRow[cols - 1].icon_custom_emoji_id = icon;
+        return this;
+    }
+    /**
+     * Force a reply markup when this keyboard is sent. See
+     * https://grammy.dev/guide/basics#force-reply for details.
+     *
+     * @param isEnabled `true` if the reply markup should be forced, and `false` otherwise
+     */
+    forceReply(isEnabled = true) {
+        this.force_reply = isEnabled;
         return this;
     }
     /**

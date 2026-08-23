@@ -20,7 +20,6 @@ import {
     type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
-    type InputMediaWithoutUpload,
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
@@ -452,6 +451,10 @@ export class Context implements RenamedUpdate {
     get guestMessage() {
         return this.update.guest_message;
     }
+    /** Alias for `ctx.update.stopped_message_generation` */
+    get stoppedMessageGeneration() {
+        return this.update.stopped_message_generation;
+    }
     /** Alias for `ctx.update.message_reaction` */
     get messageReaction() {
         return this.update.message_reaction;
@@ -544,15 +547,17 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
-     * this.deletedBusinessMessages ?? this.messageReaction ??
-     * this.messageReactionCount ?? this.myChatMember ??  this.chatMember ??
-     * this.chatJoinRequest ?? this.chatBoost ??  this.removedChatBoost)?.chat`.
+     * this.deletedBusinessMessages ?? this.stoppedMessageGeneration ??
+     * this.messageReaction ?? this.messageReactionCount ?? this.myChatMember ??
+     * this.chatMember ?? this.chatJoinRequest ?? this.chatBoost ??
+     * this.removedChatBoost)?.chat`.
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
                 this.deletedBusinessMessages ??
+                this.stoppedMessageGeneration ??
                 this.messageReaction ??
                 this.messageReactionCount ??
                 this.myChatMember ??
@@ -3410,16 +3415,16 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editEphemeralMessageText`. Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * Context-aware alias for `api.editEphemeralMessageText`. Use this method to edit an ephemeral text or rich message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
      *
-     * @param text New text of the message, 1-4096 characters after entity parsing
+     * @param text_or_rich_message New text or rich content of the message, a string maps to the `text` parameter and an object maps to the `rich_message` parameter
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagetext
      */
     editEphemeralMessageText(
-        text: string,
+        text_or_rich_message: string | InputRichMessage,
         other?: Other<
             "editEphemeralMessageText",
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
@@ -3431,7 +3436,7 @@ export class Context implements RenamedUpdate {
             msg.chat.id,
             orThrow(msg.receiver_user, "editEphemeralMessageText").id,
             orThrow(msg.ephemeral_message_id, "editEphemeralMessageText"),
-            text,
+            text_or_rich_message,
             other,
             signal,
         );
@@ -3440,14 +3445,14 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.editEphemeralMessageMedia`. Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
      *
-     * @param media An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * @param media An object for the new media content of the message
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagemedia
      */
     editEphemeralMessageMedia(
-        media: InputMediaWithoutUpload,
+        media: InputMedia,
         other?: Other<
             "editEphemeralMessageMedia",
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "media"

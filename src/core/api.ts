@@ -12,7 +12,6 @@ import {
     type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
-    type InputMediaWithoutUpload,
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
@@ -2636,12 +2635,12 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * Use this method to edit an ephemeral text or rich message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param receiver_user_id Identifier of the user who received the message
      * @param ephemeral_message_id Identifier of the ephemeral message to edit
-     * @param text New text of the message, 1-4096 characters after entity parsing
+     * @param text_or_rich_message New text or rich content of the message, a string maps to the `text` parameter and an object maps to the `rich_message` parameter
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2651,7 +2650,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         receiver_user_id: number,
         ephemeral_message_id: number,
-        text: string,
+        text_or_rich_message: string | InputRichMessage,
         other?: Other<
             R,
             "editEphemeralMessageText",
@@ -2660,7 +2659,21 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editEphemeralMessageText(
-            { chat_id, receiver_user_id, ephemeral_message_id, text, ...other },
+            typeof text_or_rich_message === "string"
+                ? {
+                    chat_id,
+                    receiver_user_id,
+                    ephemeral_message_id,
+                    text: text_or_rich_message,
+                    ...other,
+                }
+                : {
+                    chat_id,
+                    receiver_user_id,
+                    ephemeral_message_id,
+                    rich_message: text_or_rich_message,
+                    ...other,
+                },
             signal,
         );
     }
@@ -2671,7 +2684,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param receiver_user_id Identifier of the user who received the message
      * @param ephemeral_message_id Identifier of the ephemeral message to edit
-     * @param media An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * @param media An object for the new media content of the message
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2681,7 +2694,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         receiver_user_id: number,
         ephemeral_message_id: number,
-        media: InputMediaWithoutUpload,
+        media: InputMedia,
         other?: Other<
             R,
             "editEphemeralMessageMedia",
