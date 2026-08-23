@@ -189,11 +189,12 @@ describe("Bot initialization", () => {
     });
 
     it("should handle 429 without retry_after parameter", async () => {
+        using time = new FakeTime();
         const bot = new Bot(token);
         let callCount = 0;
         using _ = stub(bot.api, "getMe", () => {
             callCount++;
-            if (callCount === 1) {
+            if (callCount <= 2) {
                 throw new GrammyError(
                     "Too Many Requests",
                     {
@@ -210,10 +211,13 @@ describe("Bot initialization", () => {
         });
 
         const initPromise = bot.init();
+        await time.tickAsync(99);
+        assertEquals(callCount, 2); // first retry after 0 ms, second retry after 100 ms
+        await time.tickAsync(1);
         await initPromise;
         assertEquals(bot.isInited(), true);
-        // Initial attempt + 1 retry
-        assertEquals(callCount, 2);
+        // Initial attempt + 2 retries
+        assertEquals(callCount, 3);
     });
 });
 
