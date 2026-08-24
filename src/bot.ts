@@ -615,7 +615,7 @@ a known bot info object.",
         debugErr(
             `Call to getUpdates failed, retrying in ${sleepSeconds} seconds ...`,
         );
-        await sleep(sleepSeconds);
+        await sleep(1000 * sleepSeconds);
     }
 }
 
@@ -658,10 +658,10 @@ async function withRetries<T>(
                 delay = true;
                 strategy = "retry";
             } else if (error.error_code === 429) {
-                const retryAfter = error.parameters.retry_after;
-                if (typeof retryAfter === "number") {
+                const retryAfterSeconds = error.parameters.retry_after;
+                if (typeof retryAfterSeconds === "number") {
                     // ignore the backoff for sleep, then reset it
-                    await sleep(retryAfter, signal);
+                    await sleep(1000 * retryAfterSeconds, signal);
                     lastDelay = INITIAL_DELAY;
                 } else {
                     delay = true;
@@ -702,10 +702,10 @@ async function withRetries<T>(
 }
 
 /**
- * Returns a new promise that resolves after the specified number of seconds, or
- * rejects as soon as the given signal is aborted.
+ * Returns a new promise that resolves after the specified number of
+ * milliseconds, or rejects as soon as the given signal is aborted.
  */
-async function sleep(seconds: number, signal?: AbortSignal) {
+async function sleep(milliseconds: number, signal?: AbortSignal) {
     let handle: Parameters<typeof clearTimeout>[0];
     let reject: ((err: Error) => void) | undefined;
     function abort() {
@@ -720,7 +720,7 @@ async function sleep(seconds: number, signal?: AbortSignal) {
                 return;
             }
             signal?.addEventListener("abort", abort);
-            handle = setTimeout(res, 1000 * seconds);
+            handle = setTimeout(res, milliseconds);
         });
     } finally {
         signal?.removeEventListener("abort", abort);
