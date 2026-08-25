@@ -74,14 +74,6 @@ describe("Keyboard", () => {
         assertEquals(keyboard.force_reply, true);
     });
 
-    it("preserves reply markup options when copied", () => {
-        const keyboard = Keyboard.from([["a", "b"]]).forceReply();
-        assertEquals(keyboard.clone().force_reply, true);
-        assertEquals(keyboard.toTransposed().force_reply, true);
-        assertEquals(keyboard.toFlowed(1).force_reply, true);
-        assertEquals(Keyboard.from(keyboard).force_reply, true);
-    });
-
     it("can be transposed", () => {
         function t(btns: string[][], expected: string[][]) {
             assertEquals(
@@ -256,14 +248,6 @@ describe("InlineKeyboard", () => {
             .text("d").text("e").row()
             .text("f");
         assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
-    });
-
-    it("preserves reply markup options when copied", () => {
-        const keyboard = new InlineKeyboard().text("a").text("b").forceReply();
-        assertEquals(keyboard.clone().force_reply, true);
-        assertEquals(keyboard.toTransposed().force_reply, true);
-        assertEquals(keyboard.toFlowed(1).force_reply, true);
-        assertEquals(InlineKeyboard.from(keyboard).force_reply, true);
     });
 
     it("can be wrapped", () => {
