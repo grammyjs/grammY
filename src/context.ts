@@ -3427,7 +3427,11 @@ export class Context implements RenamedUpdate {
         text_or_rich_message: string | InputRichMessage,
         other?: Other<
             "editEphemeralMessageText",
-            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
+            | "chat_id"
+            | "receiver_user_id"
+            | "ephemeral_message_id"
+            | "text"
+            | "rich_message"
         >,
         signal?: AbortSignal,
     ) {

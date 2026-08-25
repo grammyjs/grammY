@@ -58,17 +58,20 @@ describe("Keyboard", () => {
         assertEquals(keyboard.one_time_keyboard, undefined);
         assertEquals(keyboard.resize_keyboard, undefined);
         assertEquals(keyboard.input_field_placeholder, undefined);
+        assertEquals(keyboard.force_reply, undefined);
         keyboard
             .persistent()
             .selected(false)
             .oneTime(true)
             .resized(false)
-            .placeholder("placeholder");
+            .placeholder("placeholder")
+            .forceReply();
         assertEquals(keyboard.is_persistent, true);
         assertEquals(keyboard.selective, false);
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
         assertEquals(keyboard.input_field_placeholder, "placeholder");
+        assertEquals(keyboard.force_reply, true);
     });
 
     it("can be transposed", () => {
