@@ -58,17 +58,28 @@ describe("Keyboard", () => {
         assertEquals(keyboard.one_time_keyboard, undefined);
         assertEquals(keyboard.resize_keyboard, undefined);
         assertEquals(keyboard.input_field_placeholder, undefined);
+        assertEquals(keyboard.force_reply, undefined);
         keyboard
             .persistent()
             .selected(false)
             .oneTime(true)
             .resized(false)
-            .placeholder("placeholder");
+            .placeholder("placeholder")
+            .forceReply();
         assertEquals(keyboard.is_persistent, true);
         assertEquals(keyboard.selective, false);
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
         assertEquals(keyboard.input_field_placeholder, "placeholder");
+        assertEquals(keyboard.force_reply, true);
+    });
+
+    it("preserves reply markup options when copied", () => {
+        const keyboard = Keyboard.from([["a", "b"]]).forceReply();
+        assertEquals(keyboard.clone().force_reply, true);
+        assertEquals(keyboard.toTransposed().force_reply, true);
+        assertEquals(keyboard.toFlowed(1).force_reply, true);
+        assertEquals(Keyboard.from(keyboard).force_reply, true);
     });
 
     it("can be transposed", () => {
@@ -245,6 +256,14 @@ describe("InlineKeyboard", () => {
             .text("d").text("e").row()
             .text("f");
         assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
+    });
+
+    it("preserves reply markup options when copied", () => {
+        const keyboard = new InlineKeyboard().text("a").text("b").forceReply();
+        assertEquals(keyboard.clone().force_reply, true);
+        assertEquals(keyboard.toTransposed().force_reply, true);
+        assertEquals(keyboard.toFlowed(1).force_reply, true);
+        assertEquals(InlineKeyboard.from(keyboard).force_reply, true);
     });
 
     it("can be wrapped", () => {

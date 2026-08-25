@@ -636,6 +636,7 @@ export class Keyboard {
         clone.one_time_keyboard = this.one_time_keyboard;
         clone.resize_keyboard = this.resize_keyboard;
         clone.input_field_placeholder = this.input_field_placeholder;
+        clone.force_reply = this.force_reply;
         return clone;
     }
     /**
@@ -1258,7 +1259,7 @@ export class InlineKeyboard {
     toTransposed() {
         const original = this.inline_keyboard;
         const transposed = transpose(original);
-        return new InlineKeyboard(transposed);
+        return this.clone(transposed);
     }
     /**
      * Creates a new inline keyboard with the same buttons but reflowed into a
@@ -1298,15 +1299,23 @@ export class InlineKeyboard {
     toFlowed(columns: number, options: FlowOptions = {}) {
         const original = this.inline_keyboard;
         const flowed = reflow(original, columns, options);
-        return new InlineKeyboard(flowed);
+        return this.clone(flowed);
     }
     /**
      * Creates and returns a deep copy of this inline keyboard.
+     *
+     * Optionally takes a new grid of buttons to replace the current buttons. If
+     * specified, only the options will be cloned, and the given buttons will be
+     * used instead.
      */
-    clone() {
-        return new InlineKeyboard(
-            this.inline_keyboard.map((row) => row.slice()),
+    clone(
+        inline_keyboard: InlineKeyboardButton[][] = this.inline_keyboard,
+    ) {
+        const clone = new InlineKeyboard(
+            inline_keyboard.map((row) => row.slice()),
         );
+        clone.force_reply = this.force_reply;
+        return clone;
     }
     /**
      * Appends the buttons of the given inline keyboards to this keyboard.

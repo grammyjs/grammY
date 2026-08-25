@@ -269,3 +269,35 @@ describe("ctx update shortcuts", () => {
         });
     });
 });
+
+describe("exclusive method arguments", () => {
+    it("should omit rich_message from edit options", () => {
+        type ContextOptions = NonNullable<
+            Parameters<Context["editEphemeralMessageText"]>[1]
+        >;
+        type ApiOptions = NonNullable<
+            Parameters<Context["api"]["editEphemeralMessageText"]>[4]
+        >;
+        assertType<
+            IsExact<
+                "rich_message" extends keyof ContextOptions ? true : false,
+                false
+            >
+        >(true);
+        assertType<
+            IsExact<
+                "rich_message" extends keyof ApiOptions ? true : false,
+                false
+            >
+        >(true);
+
+        const c = new Composer<Context>();
+        c.use((ctx) => {
+            const richMessage = { html: "<b>rich</b>" };
+            ctx.editEphemeralMessageText("text");
+            ctx.editEphemeralMessageText(richMessage);
+            ctx.api.editEphemeralMessageText(1, 2, 3, "text");
+            ctx.api.editEphemeralMessageText(1, 2, 3, richMessage);
+        });
+    });
+});

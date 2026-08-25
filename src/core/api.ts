@@ -2654,7 +2654,11 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "editEphemeralMessageText",
-            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
+            | "chat_id"
+            | "receiver_user_id"
+            | "ephemeral_message_id"
+            | "text"
+            | "rich_message"
         >,
         signal?: AbortSignal,
     ) {
