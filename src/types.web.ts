@@ -44,10 +44,10 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v5.0.0/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.0.0/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v5.0.0/mod.ts";
+export * from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.0.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
