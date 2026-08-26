@@ -77,6 +77,11 @@ export class Keyboard {
      * Placeholder to be shown in the input field when the keyboard is active.
      */
     public input_field_placeholder?: string;
+    /**
+     * The reply interface will be shown to the user, as if they had manually
+     * selected the bot's message and tapped 'Reply'.
+     */
+    public force_reply?: boolean;
 
     /**
      * Initialize a new `Keyboard` with an optional two-dimensional array of
@@ -534,6 +539,16 @@ export class Keyboard {
         return this;
     }
     /**
+     * Force a reply markup when this keyboard is sent. See
+     * https://grammy.dev/guide/basics#force-reply for details.
+     *
+     * @param isEnabled `true` if the reply markup should be forced, and `false` otherwise
+     */
+    forceReply(isEnabled = true) {
+        this.force_reply = isEnabled;
+        return this;
+    }
+    /**
      * Creates a new keyboard that contains the transposed grid of buttons of
      * this keyboard. This means that the resulting keyboard has the rows and
      * columns flipped.
@@ -621,6 +636,7 @@ export class Keyboard {
         clone.one_time_keyboard = this.one_time_keyboard;
         clone.resize_keyboard = this.resize_keyboard;
         clone.input_field_placeholder = this.input_field_placeholder;
+        clone.force_reply = this.force_reply;
         return clone;
     }
     /**
@@ -694,6 +710,12 @@ type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
  * inline keyboards in grammY.
  */
 export class InlineKeyboard {
+    /**
+     * The reply interface will be shown to the user, as if they had manually
+     * selected the bot's message and tapped 'Reply'. The value of the field
+     * can't be changed when the inline keyboard is edited.
+     */
+    public force_reply?: boolean;
     /**
      * Initialize a new `InlineKeyboard` with an optional two-dimensional array
      * of `InlineKeyboardButton` objects. This is the nested array that holds
@@ -865,6 +887,26 @@ export class InlineKeyboard {
         return typeof text === "string"
             ? { text, login_url }
             : { ...text, login_url };
+    }
+    /**
+     * Adds a new disabled button. It does nothing.
+     *
+     * @param text The text to display, and optional styling information
+     */
+    disabled(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
+        return this.add(InlineKeyboard.disabled(text));
+    }
+    /**
+     * Creates a new disabled button. It does nothing.
+     *
+     * @param text The text to display, and optional styling information
+     */
+    static disabled(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): InlineKeyboardButton.DisabledButtonButton {
+        return typeof text === "string"
+            ? { text, disabled: {} }
+            : { ...text, disabled: {} };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -1175,6 +1217,16 @@ export class InlineKeyboard {
         return this;
     }
     /**
+     * Force a reply markup when this keyboard is sent. See
+     * https://grammy.dev/guide/basics#force-reply for details.
+     *
+     * @param isEnabled `true` if the reply markup should be forced, and `false` otherwise
+     */
+    forceReply(isEnabled = true) {
+        this.force_reply = isEnabled;
+        return this;
+    }
+    /**
      * Creates a new inline keyboard that contains the transposed grid of
      * buttons of this inline keyboard. This means that the resulting inline
      * keyboard has the rows and columns flipped.
@@ -1207,7 +1259,7 @@ export class InlineKeyboard {
     toTransposed() {
         const original = this.inline_keyboard;
         const transposed = transpose(original);
-        return new InlineKeyboard(transposed);
+        return this.clone(transposed);
     }
     /**
      * Creates a new inline keyboard with the same buttons but reflowed into a
@@ -1247,15 +1299,23 @@ export class InlineKeyboard {
     toFlowed(columns: number, options: FlowOptions = {}) {
         const original = this.inline_keyboard;
         const flowed = reflow(original, columns, options);
-        return new InlineKeyboard(flowed);
+        return this.clone(flowed);
     }
     /**
      * Creates and returns a deep copy of this inline keyboard.
+     *
+     * Optionally takes a new grid of buttons to replace the current buttons. If
+     * specified, only the options will be cloned, and the given buttons will be
+     * used instead.
      */
-    clone() {
-        return new InlineKeyboard(
-            this.inline_keyboard.map((row) => row.slice()),
+    clone(
+        inline_keyboard: InlineKeyboardButton[][] = this.inline_keyboard,
+    ) {
+        const clone = new InlineKeyboard(
+            inline_keyboard.map((row) => row.slice()),
         );
+        clone.force_reply = this.force_reply;
+        return clone;
     }
     /**
      * Appends the buttons of the given inline keyboards to this keyboard.
