@@ -200,7 +200,12 @@ export class TransformerComposer<
         const then = Array.isArray(trueTransformer)
             ? new TransformerComposer(...trueTransformer)
             : new TransformerComposer(trueTransformer);
-        const otherwise = Array.isArray(falseTransformer)
+        // No fallback given: unmatched calls pass through untouched.
+        // (Composing `undefined` would build a one-element chain whose
+        // flatten step crashes reading `.transformer` of undefined.)
+        const otherwise = falseTransformer === undefined
+            ? new TransformerComposer<R, D>()
+            : Array.isArray(falseTransformer)
             ? new TransformerComposer(...falseTransformer)
             : new TransformerComposer(falseTransformer);
         this.lazy(async (data, signal) => {
