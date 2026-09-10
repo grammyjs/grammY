@@ -76,7 +76,7 @@ export class TransformerComposer<
     }
 
     on<M extends D["method"]>(
-        method: M,
+        method: M | readonly M[],
         ...transformers: Array<Transformer<R, Extract<D, { method: M }>>>
     ): TransformerComposer<R, Extract<D, { method: M }>> {
         return Array.isArray(method)
