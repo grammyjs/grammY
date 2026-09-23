@@ -1,6 +1,6 @@
 import { type MiddlewareFn } from "../composer.ts";
 import { type Context } from "../context.ts";
-import { debug as d } from "../platform.deno.ts";
+import { debug as d, gunzip, gzip } from "../platform.deno.ts";
 const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
@@ -510,6 +510,24 @@ export interface MigrationOptions<T> {
      * data expires.
      */
     millisecondsToLive?: number;
+    /** Whether to compress the session data, see {@link CompressionOptions} */
+    compress?: false;
+}
+/** Options for enhanced sessions that compress the session data */
+export interface CompressionOptions
+    extends Omit<MigrationOptions<never>, "storage" | "compress"> {
+    /**
+     * The original storage adapter that will be enhanced. It has to be able
+     * to store binary data because the session data will be compressed.
+     */
+    storage: StorageAdapter<Uint8Array>;
+    /**
+     * Whether to compress the session data using gzip.
+     *
+     * Note that all data in the storage adapter must be compressed. Reading
+     * data that was stored without compression will throw an error.
+     */
+    compress: true;
 }
 /**
  * A mapping from version numbers to session migration functions. Each entry in
@@ -532,7 +550,7 @@ export interface Migrations {
 /**
  * You can use this function to transform an existing storage adapter, and add
  * more features to it. Currently, you can add session migrations and expiry
- * dates.
+ * dates, and compress the session data.
  *
  * You can use this function like so:
  * ```ts
@@ -541,13 +559,25 @@ export interface Migrations {
  * bot.use(session({ storage: enhanced }))
  * ```
  *
+ * If you want to compress the session data, the storage adapter must be able
+ * to store binary data. The type of the session data cannot be inferred from
+ * such a storage adapter, so you need to specify it explicitly:
+ * ```ts
+ * const storage: StorageAdapter<Uint8Array> = ... // define your storage adapter
+ * const enhanced = enhanceStorage<SessionData>({ storage, compress: true })
+ * bot.use(session({ storage: enhanced }))
+ * ```
+ *
  * @param options Session enhancing options
  * @returns The enhanced storage adapter
  */
 export function enhanceStorage<T>(
-    options: MigrationOptions<T>,
+    options: MigrationOptions<T> | CompressionOptions,
 ): StorageAdapter<T> {
-    let { storage, millisecondsToLive, migrations } = options;
+    const { millisecondsToLive, migrations } = options;
+    let storage: StorageAdapter<Enhance<T>> = options.compress
+        ? compressStorage<T>(options.storage)
+        : options.storage;
     storage = compatStorage(storage);
     if (millisecondsToLive !== undefined) {
         storage = timeoutStorage(storage, millisecondsToLive);
@@ -556,6 +586,24 @@ export function enhanceStorage<T>(
         storage = migrationStorage(storage, migrations);
     }
     return wrapStorage(storage);
+}
+
+function compressStorage<T>(
+    storage: StorageAdapter<Uint8Array>,
+): StorageAdapter<Enhance<T>> {
+    return {
+        read: async (k) => {
+            const bytes = await storage.read(k);
+            if (bytes === undefined) return undefined;
+            const json = new TextDecoder().decode(await gunzip(bytes));
+            return JSON.parse(json);
+        },
+        write: async (k, v) => {
+            const bytes = new TextEncoder().encode(JSON.stringify(v));
+            await storage.write(k, await gzip(bytes));
+        },
+        delete: (k) => storage.delete(k),
+    };
 }
 
 function compatStorage<T>(

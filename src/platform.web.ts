@@ -21,3 +21,25 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) => {
 export const baseFetchConfig = (_apiRoot: string) => ({ duplex: "half" });
 
 export const defaultAdapter = "cloudflare";
+
+// === Compression
+
+function transform(
+    data: Uint8Array,
+    stream: CompressionStream | DecompressionStream,
+): Promise<Uint8Array> {
+    // copy the data into a fresh `Uint8Array<ArrayBuffer>` because `data`
+    // may be backed by a `SharedArrayBuffer`, which cannot be turned into a
+    // `Blob`
+    const bytes = new Uint8Array(data.byteLength);
+    bytes.set(data);
+    return new Response(new Blob([bytes]).stream().pipeThrough(stream))
+        .arrayBuffer()
+        .then((buffer) => new Uint8Array(buffer));
+}
+
+export const gzip = (data: Uint8Array): Promise<Uint8Array> =>
+    transform(data, new CompressionStream("gzip"));
+
+export const gunzip = (data: Uint8Array): Promise<Uint8Array> =>
+    transform(data, new DecompressionStream("gzip"));
