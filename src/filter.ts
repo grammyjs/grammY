@@ -74,7 +74,7 @@ export function preprocess(filter: string[]): string[][] {
             if (l2 === undefined) return expanded;
             // only filter out invalid expansions if we don't do this later
             if (l2 in L2_SHORTCUTS && (l2 || l3)) return expanded;
-            // filter out invalid expansions, e.g. `channel_post:new_chat_member` for empty L1
+            // filter out invalid expansions, e.g. `channel_post:new_chat_members` for empty L1
             return expanded.filter(([s]) => !!valid[s]?.[l2]);
         })
         // expand L2
@@ -322,7 +322,7 @@ const COMMON_MESSAGE_KEYS = {
     giveaway_completed: {},
     gift: GIFT_INFO_KEYS,
     gift_upgrade_sent: GIFT_INFO_KEYS,
-    unique_gift: { transfer_star_count: {} },
+    unique_gift: { transfer_star_count: {}, text: {}, is_private: {} },
     paid_message_price_changed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
@@ -338,6 +338,7 @@ const MESSAGE_KEYS = {
     chat_owner_left: { new_owner: {} },
     chat_owner_changed: {},
     new_chat_members: USER_KEYS,
+    community_chat_joined: {},
     left_chat_member: USER_KEYS,
     group_chat_created: {},
     supergroup_chat_created: {},
@@ -407,6 +408,7 @@ const UPDATE_KEYS = {
     edited_business_message: MESSAGE_KEYS,
     deleted_business_messages: {},
     guest_message: MESSAGE_KEYS,
+    stopped_message_generation: {},
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
@@ -607,6 +609,9 @@ interface Shortcuts<U extends Update> {
         : undefined;
     guestMessage: [U["guest_message"]] extends [object] ? U["guest_message"]
         : undefined;
+    stoppedMessageGeneration: [U["stopped_message_generation"]] extends [object]
+        ? U["stopped_message_generation"]
+        : undefined;
     messageReaction: [U["message_reaction"]] extends [object]
         ? U["message_reaction"]
         : undefined;
@@ -662,6 +667,8 @@ interface Shortcuts<U extends Update> {
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
         : [U["deleted_business_messages"]] extends [object]
             ? U["deleted_business_messages"]["chat"]
+        : [U["stopped_message_generation"]] extends [object]
+            ? U["stopped_message_generation"]["chat"]
         : [U["message_reaction"]] extends [object]
             ? U["message_reaction"]["chat"]
         : [U["message_reaction_count"]] extends [object]

@@ -35,6 +35,7 @@ export const DEFAULT_UPDATE_TYPES = [
     "edited_business_message",
     "deleted_business_messages",
     "guest_message",
+    "stopped_message_generation",
     "inline_query",
     "chosen_inline_result",
     "callback_query",
