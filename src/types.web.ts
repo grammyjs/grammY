@@ -57,15 +57,6 @@ interface URLLike {
      */
     url: string;
 }
-/** Something that looks like a `Response` object of the Fetch API. */
-interface ResponseLike extends URLLike {
-    /** Whether the response was successful */
-    ok: boolean;
-    /** HTTP status code of the response */
-    status: number;
-    /** Stream of the response body, or `null` if there is none */
-    body: AsyncIterable<Uint8Array> | null;
-}
 
 // === InputFile handling and File augmenting
 /**
@@ -95,8 +86,8 @@ export class InputFile {
     constructor(
         file:
             | Blob
+            | Response
             | URL
-            | ResponseLike
             | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
@@ -130,14 +121,14 @@ export class InputFile {
         const data = this.fileData;
         // Handle local files
         if (data instanceof Blob) return data.stream();
-        // Upload the body of Response and ResponseLike objects directly if we
-        // can read it, otherwise fall back to fetching their URL below
-        if ("body" in data && "ok" in data && isByteSource(data.body)) {
+        // Handle Response objects
+        if (data instanceof Response) {
             if (!data.ok) {
                 throw new Error(
                     `Cannot upload response with HTTP status ${data.status}!`,
                 );
             }
+            if (data.body === null) throw new Error(`No response body!`);
             this.consumed = true;
             return data.body;
         }
@@ -154,14 +145,6 @@ export class InputFile {
     }
 }
 
-/** Checks if a response body can be uploaded as-is */
-function isByteSource(
-    body: unknown,
-): body is Uint8Array | AsyncIterable<Uint8Array> {
-    return body instanceof Uint8Array ||
-        (typeof body === "object" && body !== null &&
-            Symbol.asyncIterator in body);
-}
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const controller = new AbortController();
     const { ok, status, body } = await fetch(url, {
