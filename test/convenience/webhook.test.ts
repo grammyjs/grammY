@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-unversioned-import no-import-prefix
-import type { Hono } from "jsr:@hono/hono";
+import { Hono } from "jsr:@hono/hono";
 import type { NHttp } from "jsr:@nhttp/nhttp";
 import type { Application } from "jsr:@oak/oak";
 import type { createServer } from "node:http";
@@ -418,6 +418,80 @@ describe("webhook functionality", () => {
     });
 
     describe("webhook reply handling", () => {
+        describe("adapter serialization", () => {
+            const webhookReply =
+                '{"method":"sendMessage","chat_id":1,"text":"hello"}';
+
+            const createReplyingBot = () => {
+                const bot = createTestBot();
+                bot.handleUpdate = spy(async (_update, envelope) => {
+                    await envelope?.send?.(webhookReply);
+                });
+                return bot;
+            };
+
+            it("stdHttp should preserve serialized webhook replies", async () => {
+                const handler = webhookAdapters.stdHttp(createReplyingBot());
+                const response = await handler(
+                    new Request("https://grammy.dev", {
+                        method: "POST",
+                        body: JSON.stringify(testUpdate),
+                    }),
+                );
+
+                assertEquals(await response.text(), webhookReply);
+            });
+
+            it("Hono should preserve serialized webhook replies", async () => {
+                const app = new Hono();
+                app.post("/", webhookAdapters.hono(createReplyingBot()));
+
+                const response = await app.request("/", {
+                    method: "POST",
+                    body: JSON.stringify(testUpdate),
+                });
+
+                assertEquals(await response.text(), webhookReply);
+            });
+
+            it("Next.js should preserve serialized webhook replies", async () => {
+                class MockNextResponse {
+                    body?: string;
+
+                    end() {
+                        return this;
+                    }
+
+                    status(_code: number) {
+                        return this;
+                    }
+
+                    // NextApiResponse.json serializes its argument before
+                    // sending it.
+                    json(value: unknown) {
+                        this.body = JSON.stringify(value);
+                        return this;
+                    }
+
+                    send(value: string) {
+                        this.body = value;
+                        return this;
+                    }
+                }
+
+                const response = new MockNextResponse();
+                const handler = webhookAdapters.nextJs(createReplyingBot());
+                await handler({
+                    body: testUpdate,
+                    headers: {},
+                    method: "POST",
+                    url: "/",
+                }, response);
+
+                assertEquals(response.body, webhookReply);
+            });
+        });
+
         it("should call respond when webhook reply is used", async () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(async (_update, envelope) => {
