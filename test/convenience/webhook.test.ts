@@ -214,6 +214,54 @@ describe("webhook", () => {
 
             assertEquals(res.status, 400);
         });
+
+        it("http should respond with 400 for malformed JSON bodies", async () => {
+            class MockRequest {
+                headers: Record<string, string | string[] | undefined> = {};
+                dataListeners: Array<(chunk: unknown) => void> = [];
+                endListeners: Array<() => void> = [];
+                errorListeners: Array<() => void> = [];
+
+                on(event: string, listener: (chunk: unknown) => void) {
+                    if (event === "data") this.dataListeners.push(listener);
+                    return this;
+                }
+
+                once(event: string, listener: () => void) {
+                    if (event === "end") this.endListeners.push(listener);
+                    if (event === "error") this.errorListeners.push(listener);
+                    return this;
+                }
+            }
+
+            class MockResponse {
+                status?: number;
+
+                writeHead(
+                    status: number,
+                    _headers?: Record<string, string>,
+                ) {
+                    this.status = status;
+                    return this;
+                }
+
+                end(_json?: string) {}
+            }
+
+            const req = new MockRequest();
+            const res = new MockResponse();
+            const handler = webhookAdapters.http(bot);
+            const request = handler(req, res);
+
+            await Promise.resolve();
+            req.dataListeners.forEach((listener) =>
+                listener(new TextEncoder().encode("{"))
+            );
+            req.endListeners.forEach((listener) => listener());
+
+            await request;
+            assertEquals(res.status, 400);
+        });
     });
 });
 
