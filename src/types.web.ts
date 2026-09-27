@@ -86,6 +86,7 @@ export class InputFile {
     constructor(
         file:
             | Blob
+            | Response
             | URL
             | URLLike
             | Uint8Array
@@ -120,6 +121,17 @@ export class InputFile {
         const data = this.fileData;
         // Handle local files
         if (data instanceof Blob) return data.stream();
+        // Handle Response objects
+        if (data instanceof Response) {
+            if (!data.ok) {
+                throw new Error(
+                    `Cannot upload response with HTTP status ${data.status}!`,
+                );
+            }
+            if (data.body === null) throw new Error(`No response body!`);
+            this.consumed = true;
+            return data.body;
+        }
         // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
@@ -134,7 +146,16 @@ export class InputFile {
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
-    const { body } = await fetch(url);
+    const controller = new AbortController();
+    const { ok, status, body } = await fetch(url, {
+        signal: controller.signal,
+    });
+    if (!ok) {
+        controller.abort();
+        throw new Error(
+            `Download failed, received HTTP status ${status} from '${url}'`,
+        );
+    }
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }

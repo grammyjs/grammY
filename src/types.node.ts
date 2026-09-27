@@ -42,6 +42,7 @@ import {
     type Opts as OptsF,
 } from "@grammyjs/types";
 import { createReadStream, type ReadStream } from "fs";
+import { AbortController } from "abort-controller";
 import fetch from "node-fetch";
 import { basename } from "path";
 import { debug as d } from "./platform.node";
@@ -60,6 +61,15 @@ interface URLLike {
      * URL constructor.
      */
     url: string;
+}
+/** Something that looks like a `Response` object of the Fetch API. */
+interface ResponseLike extends URLLike {
+    /** Whether the response was successful */
+    ok: boolean;
+    /** HTTP status code of the response */
+    status: number;
+    /** Stream of the response body, or `null` if there is none */
+    body: AsyncIterable<Uint8Array> | null;
 }
 
 // === InputFile handling and File augmenting
@@ -91,6 +101,7 @@ export class InputFile {
         file: MaybeSupplier<
             | string
             | URL
+            | ResponseLike
             | URLLike
             | Uint8Array
             | ReadStream
@@ -144,6 +155,22 @@ export class InputFile {
                 ? createReadStream(data.pathname)
                 : fetchFile(data);
         }
+        // Reuse streams from fetch responses, otherwise fetch their URL below.
+        // Technically breaking: user-constructed Responses can pass this check
+        // but yield non-Uint8Array chunks; we do not expect this use case.
+        if (
+            "body" in data && "ok" in data &&
+            typeof data.body?.[Symbol.asyncIterator] === "function"
+        ) {
+            if (!data.ok) {
+                throw new Error(
+                    `Cannot upload response with HTTP status ${data.status}!`,
+                );
+            }
+            if (data.body === null) throw new Error(`No response body!`);
+            this.consumed = true;
+            return data.body;
+        }
         if ("url" in data) return fetchFile(data.url);
         // Return buffers as-is
         if (data instanceof Uint8Array) return data;
@@ -161,7 +188,16 @@ export class InputFile {
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
-    const { body } = await fetch(url);
+    const controller = new AbortController();
+    const { ok, status, body } = await fetch(url, {
+        signal: controller.signal,
+    });
+    if (!ok) {
+        controller.abort();
+        throw new Error(
+            `Download failed, received HTTP status ${status} from '${url}'`,
+        );
+    }
     for await (const chunk of body) {
         if (typeof chunk === "string") {
             throw new Error(
