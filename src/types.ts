@@ -433,6 +433,7 @@ async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
     if (url.protocol === "file") return await readFile(url.pathname);
     const response = await fetch(url);
     if (!response.ok || response.body === null) {
+        await response.body?.cancel();
         throw new ResponseError(response);
     }
     return response.body;
@@ -8415,7 +8416,9 @@ export class InputFile {
         } else if ("path" in data) {
             yield* await readFile(data.path);
         } else if (data instanceof Response) {
-            if (data.body === null) throw new ResponseError(data);
+            if (!data.ok || data.body === null) {
+                throw new ResponseError(data);
+            }
             this.consumed = true;
             yield* data.body;
         } else if (data instanceof URL) {
