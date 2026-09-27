@@ -167,6 +167,7 @@ export class InputFile {
                     `Cannot upload response with HTTP status ${data.status}!`,
                 );
             }
+            if (data.body === null) throw new Error(`No response body!`);
             this.consumed = true;
             return data.body;
         }
