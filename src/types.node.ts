@@ -45,7 +45,6 @@ import { createReadStream, type ReadStream } from "fs";
 import { AbortController } from "abort-controller";
 import fetch from "node-fetch";
 import { basename } from "path";
-import { Readable } from "stream";
 import { debug as d } from "./platform.node";
 
 const debug = d("grammy:warn");
@@ -70,7 +69,7 @@ interface ResponseLike extends URLLike {
     /** HTTP status code of the response */
     status: number;
     /** Stream of the response body, or `null` if there is none */
-    body: Readable | ReadableStream<Uint8Array> | null;
+    body: AsyncIterable<Uint8Array> | null;
 }
 
 // === InputFile handling and File augmenting
@@ -161,9 +160,7 @@ export class InputFile {
         // but yield non-Uint8Array chunks; we do not expect this use case.
         if (
             "body" in data && "ok" in data &&
-            (data.body instanceof Readable ||
-                (typeof ReadableStream !== "undefined" &&
-                    data.body instanceof ReadableStream))
+            typeof data.body?.[Symbol.asyncIterator] === "function"
         ) {
             if (!data.ok) {
                 throw new Error(
