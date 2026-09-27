@@ -45,6 +45,7 @@ import { createReadStream, type ReadStream } from "fs";
 import { AbortController } from "abort-controller";
 import fetch from "node-fetch";
 import { basename } from "path";
+import { Readable } from "stream";
 import { debug as d } from "./platform.node";
 
 const debug = d("grammy:warn");
@@ -69,7 +70,7 @@ interface ResponseLike extends URLLike {
     /** HTTP status code of the response */
     status: number;
     /** Stream of the response body, or `null` if there is none */
-    body: AsyncIterable<Uint8Array> | null;
+    body: Readable | ReadableStream<Uint8Array> | null;
 }
 
 // === InputFile handling and File augmenting
@@ -155,9 +156,15 @@ export class InputFile {
                 ? createReadStream(data.pathname)
                 : fetchFile(data);
         }
-        // Upload the body of Response and ResponseLike objects directly if we
-        // can read it, otherwise fall back to fetching their URL below
-        if ("body" in data && "ok" in data && isByteSource(data.body)) {
+        // Reuse streams from fetch responses, otherwise fetch their URL below.
+        // Technically breaking: user-constructed Responses can pass this check
+        // but yield non-Uint8Array chunks; we do not expect this use case.
+        if (
+            "body" in data && "ok" in data &&
+            (data.body instanceof Readable ||
+                (typeof ReadableStream !== "undefined" &&
+                    data.body instanceof ReadableStream))
+        ) {
             if (!data.ok) {
                 throw new Error(
                     `Cannot upload response with HTTP status ${data.status}!`,
@@ -182,14 +189,6 @@ export class InputFile {
     }
 }
 
-/** Checks if a response body can be uploaded as-is */
-function isByteSource(
-    body: unknown,
-): body is Uint8Array | AsyncIterable<Uint8Array> {
-    return body instanceof Uint8Array ||
-        (typeof body === "object" && body !== null &&
-            Symbol.asyncIterator in body);
-}
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const controller = new AbortController();
     const { ok, status, body } = await fetch(url, {
