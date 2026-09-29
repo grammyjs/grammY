@@ -76,20 +76,18 @@ export class TransformerComposer<
     }
 
     on<M extends D["method"]>(
-        method: M,
+        method: MaybeArray<M>,
         ...transformers: Array<Transformer<R, Extract<D, { method: M }>>>
     ): TransformerComposer<R, Extract<D, { method: M }>> {
-        return Array.isArray(method)
-            ? this.filter(
-                (data): data is Extract<D, { method: M }> =>
-                    method.includes(data.method),
-                ...transformers,
-            )
-            : this.filter(
-                (data): data is Extract<D, { method: M }> =>
-                    data.method === method,
-                ...transformers,
-            );
+        const methods: Array<D["method"]> = Array.isArray(method)
+            ? method
+            : [method];
+
+        return this.filter(
+            (data): data is Extract<D, { method: M }> =>
+                methods.includes(data.method),
+            ...transformers,
+        );
     }
 
     filter<E extends D>(
