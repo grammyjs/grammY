@@ -96,7 +96,14 @@ export type AzureAdapterV4 = (
         headers: { get(name: string): string | null };
         json(): Promise<unknown>;
     },
-) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
+) => ReqResHandler<
+    | {
+        status: number;
+        body?: string;
+        headers?: Record<string, string>;
+    }
+    | { jsonBody: string }
+>;
 
 export type BunAdapter = (request: {
     headers: Headers;
@@ -158,11 +165,12 @@ export type HonoAdapter = (c: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
     };
+    header: (name: string, value: string) => void;
     body(data: string): Response;
     body(data: null, status: 204): Response;
     // deno-lint-ignore no-explicit-any
     status: (status: any) => void;
-    json: (json: string) => Response;
+    json?: (json: string) => Response;
 }) => ReqResHandler<Response>;
 
 export type HttpAdapter = (req: {
@@ -198,9 +206,13 @@ export type NextAdapter = (req: {
     end: (cb?: () => void) => typeof res;
     status: (code: number) => typeof res;
     // deno-lint-ignore no-explicit-any
-    json: (json: string) => any;
+    json?: (json: string) => any;
     // deno-lint-ignore no-explicit-any
     send: (json: string) => any;
+    setHeader?: (
+        name: string,
+        value: string | number | readonly string[],
+    ) => typeof res | void;
 }) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
@@ -210,6 +222,7 @@ export type NHttpAdapter = (rev: {
     };
     response: {
         sendStatus: (status: number) => void;
+        setHeader?: (header: string, value: string) => void;
         status: (status: number) => {
             send: (json: string) => void;
         };
@@ -254,7 +267,11 @@ export type WorktopAdapter = (req: {
     };
 }, res: {
     end: (data: BodyInit | null) => void;
-    send: (status: number, json: string) => void;
+    send: (
+        status: number,
+        json: string,
+        headers?: Record<string, string>,
+    ) => void;
 }) => ReqResHandler;
 
 /** AWS lambda serverless functions */
@@ -308,11 +325,26 @@ const azure: AzureAdapter = (context, request) => ({
         body: "",
     }),
     respond: (json) => {
-        context.res?.set?.("Content-Type", "application/json");
-        context.res?.send?.(json);
+        if (typeof context.res?.send === "function") {
+            context.res?.set?.("Content-Type", "application/json");
+            context.res.send(json);
+        } else {
+            context.res = {
+                status: 200,
+                headers: { "Content-Type": "application/json" },
+                body: json,
+            };
+        }
     },
     unauthorized: () => {
-        context.res?.send?.(401, WRONG_TOKEN_ERROR);
+        if (typeof context.res?.send === "function") {
+            context.res.send(401, WRONG_TOKEN_ERROR);
+        } else {
+            context.res = {
+                status: 401,
+                body: WRONG_TOKEN_ERROR,
+            };
+        }
     },
 });
 const azureV4: AzureAdapterV4 = (request) => {
@@ -326,7 +358,12 @@ const azureV4: AzureAdapterV4 = (request) => {
         },
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => resolveResponse({ status: 204 }),
-        respond: (json) => resolveResponse({ jsonBody: json }),
+        respond: (json) =>
+            resolveResponse({
+                status: 200,
+                headers: { "Content-Type": "application/json" },
+                body: json,
+            }),
         unauthorized: () =>
             resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
         handlerReturn: new Promise<Res>((resolve) => resolveResponse = resolve),
@@ -440,7 +477,8 @@ const hono: HonoAdapter = (c) => {
             resolveResponse(c.body(""));
         },
         respond: (json) => {
-            resolveResponse(c.json(json));
+            c.header("Content-Type", "application/json");
+            resolveResponse(c.body(json));
         },
         unauthorized: () => {
             c.status(401);
@@ -510,7 +548,11 @@ const nextJs: NextAdapter = (request, response) => ({
     },
     header: request.headers[SECRET_HEADER_LOWERCASE] as string,
     end: () => response.end(),
-    respond: (json) => response.status(200).json(json),
+    respond: (json) => {
+        response.status(200);
+        response.setHeader?.("Content-Type", "application/json");
+        response.send(json);
+    },
     unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
 });
 
@@ -521,7 +563,10 @@ const nhttp: NHttpAdapter = (rev) => ({
     },
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
-    respond: (json) => rev.response.status(200).send(json),
+    respond: (json) => {
+        rev.response.setHeader?.("content-type", "application/json");
+        return rev.response.status(200).send(json);
+    },
     unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
 });
 
@@ -602,7 +647,8 @@ const worktop: WorktopAdapter = (req, res) => ({
     },
     header: req.headers.get(SECRET_HEADER) ?? undefined,
     end: () => res.end(null),
-    respond: (json) => res.send(200, json),
+    respond: (json) =>
+        res.send(200, json, { "content-type": "application/json" }),
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 

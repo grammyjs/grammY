@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-unversioned-import no-import-prefix
 
-import type { Hono } from "jsr:@hono/hono";
+import { Hono } from "jsr:@hono/hono";
 import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
@@ -358,6 +358,195 @@ describe("webhook functionality", () => {
     });
 
     describe("webhook reply handling", () => {
+        describe("adapter serialization", () => {
+            const webhookReply =
+                '{"method":"sendMessage","chat_id":1,"text":"hello"}';
+
+            const createReplyingBot = () => {
+                const bot = createTestBot();
+                bot.handleUpdate = spy(async (_update, envelope) => {
+                    await envelope?.send?.(webhookReply);
+                });
+                return bot;
+            };
+
+            it("std/http should preserve serialized webhook replies", async () => {
+                const handler = webhookCallback(
+                    createReplyingBot(),
+                    "std/http",
+                );
+                const response = await handler(
+                    new Request("https://grammy.dev", {
+                        method: "POST",
+                        body: JSON.stringify(testUpdate),
+                    }),
+                );
+
+                assertEquals(await response.text(), webhookReply);
+                assertEquals(
+                    response.headers.get("content-type"),
+                    "application/json",
+                );
+            });
+
+            it("Hono should preserve serialized webhook replies", async () => {
+                const app = new Hono();
+                app.post("/", webhookCallback(createReplyingBot(), "hono"));
+
+                const response = await app.request("/", {
+                    method: "POST",
+                    body: JSON.stringify(testUpdate),
+                });
+
+                assertEquals(await response.text(), webhookReply);
+                assertEquals(
+                    response.headers.get("content-type"),
+                    "application/json",
+                );
+            });
+
+            it("Next.js should preserve serialized webhook replies", async () => {
+                class MockNextResponse {
+                    body?: string;
+                    headers = new Map<string, string>();
+
+                    end() {
+                        return this;
+                    }
+
+                    status(_code: number) {
+                        return this;
+                    }
+
+                    setHeader(name: string, value: string) {
+                        this.headers.set(name.toLowerCase(), value);
+                        return this;
+                    }
+
+                    // NextApiResponse.json serializes its argument before
+                    // sending it, which would cause double-encoding.
+                    json(value: unknown) {
+                        this.body = JSON.stringify(value);
+                        return this;
+                    }
+
+                    send(value: string) {
+                        this.body = value;
+                        return this;
+                    }
+                }
+
+                const response = new MockNextResponse();
+                const handler = webhookCallback(createReplyingBot(), "next-js");
+                await handler(
+                    {
+                        body: testUpdate,
+                        headers: {},
+                    } as unknown as NextApiRequest,
+                    response as unknown as NextApiResponse,
+                );
+
+                assertEquals(response.body, webhookReply);
+                assertEquals(
+                    response.headers.get("content-type"),
+                    "application/json",
+                );
+            });
+
+            it("azure should handle webhook replies", async () => {
+                const context: {
+                    res?: {
+                        status?: number;
+                        headers?: Record<string, string>;
+                        body?: string;
+                    };
+                } = {};
+                const request = {
+                    body: testUpdate,
+                    headers: {},
+                };
+                const handler = webhookCallback(createReplyingBot(), "azure");
+                await handler(context, request);
+
+                assertEquals(context.res, {
+                    status: 200,
+                    headers: { "Content-Type": "application/json" },
+                    body: webhookReply,
+                });
+            });
+
+            it("azure-v4 should preserve serialized webhook replies", async () => {
+                const handler = webhookCallback(
+                    createReplyingBot(),
+                    "azure-v4",
+                );
+                const result = await handler({
+                    headers: new Headers(),
+                    json: () => Promise.resolve(testUpdate),
+                });
+
+                assertEquals(result, {
+                    status: 200,
+                    headers: { "Content-Type": "application/json" },
+                    body: webhookReply,
+                });
+            });
+
+            it("nhttp should set application/json for webhook replies", async () => {
+                let sentBody: string | undefined;
+                let headerSet: string | undefined;
+                const rev = {
+                    body: testUpdate,
+                    headers: new Headers(),
+                    response: {
+                        sendStatus: () => {},
+                        setHeader: (name: string, value: string) => {
+                            if (name.toLowerCase() === "content-type") {
+                                headerSet = value;
+                            }
+                        },
+                        status: (_status: number) => ({
+                            send: (json: string) => {
+                                sentBody = json;
+                            },
+                        }),
+                    },
+                };
+                const handler = webhookCallback(createReplyingBot(), "nhttp");
+                await handler(rev);
+
+                assertEquals(sentBody, webhookReply);
+                assertEquals(headerSet, "application/json");
+            });
+
+            it("worktop should set application/json for webhook replies", async () => {
+                let sentBody: string | undefined;
+                let sentHeaders: Record<string, string> | undefined;
+                const req = {
+                    json: () => Promise.resolve(testUpdate),
+                    headers: new Headers(),
+                };
+                const res = {
+                    end: () => {},
+                    send: (
+                        _status: number,
+                        json: string,
+                        headers?: Record<string, string>,
+                    ) => {
+                        sentBody = json;
+                        sentHeaders = headers;
+                    },
+                };
+                const handler = webhookCallback(createReplyingBot(), "worktop");
+                await handler(req, res);
+
+                assertEquals(sentBody, webhookReply);
+                assertEquals(sentHeaders, {
+                    "content-type": "application/json",
+                });
+            });
+        });
+
         it("should call respond when webhook reply is used", async () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(async (_update, envelope) => {
