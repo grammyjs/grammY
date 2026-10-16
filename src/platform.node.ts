@@ -2,6 +2,8 @@
 import { Agent as HttpAgent } from "http";
 import { Agent as HttpsAgent } from "https";
 import { Readable } from "stream";
+import { promisify } from "util";
+import { gunzip as gunzipNode, gzip as gzipNode } from "zlib";
 
 // === Export debug
 export { debug } from "debug";
@@ -47,3 +49,16 @@ export function baseFetchConfig(apiRoot: string) {
 
 // === Default webhook adapter
 export const defaultAdapter = "express";
+
+// === Compression
+const gzipAsync = promisify(gzipNode);
+const gunzipAsync = promisify(gunzipNode);
+// convert `Buffer` to `Uint8Array` because the types are incompatible in
+// older versions of `@types/node`
+const toBytes = (buffer: Buffer): Uint8Array =>
+    new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+
+export const gzip = (data: Uint8Array): Promise<Uint8Array> =>
+    gzipAsync(data).then(toBytes);
+export const gunzip = (data: Uint8Array): Promise<Uint8Array> =>
+    gunzipAsync(data).then(toBytes);
