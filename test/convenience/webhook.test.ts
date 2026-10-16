@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-unversioned-import no-import-prefix
 
-import type { Hono } from "jsr:@hono/hono";
+import { Hono } from "jsr:@hono/hono";
 import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
