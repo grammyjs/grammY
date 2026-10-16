@@ -1808,6 +1808,16 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "1kailas",
+      "name": "Kailasnath T",
+      "avatar_url": "https://avatars.githubusercontent.com/u/174798231?v=4",
+      "profile": "http://kailaz.in",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
