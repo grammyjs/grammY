@@ -8,6 +8,7 @@ import {
     type SessionFlavor,
 } from "../../src/convenience/session.ts";
 import { Composer, type Context, type MiddlewareFn } from "../../src/mod.ts";
+import { gunzip, gzip } from "../../src/platform.deno.ts";
 import {
     assert,
     assertEquals,
@@ -951,6 +952,78 @@ describe("enhanceStorage", () => {
         });
         storage.write("k", 0 as unknown as Enhance<number>);
         assertEquals(await enhanced.read("k"), 400);
+        await time.tickAsync(2 * TICK_MS);
+        assertEquals(await enhanced.read("k"), undefined);
+        await enhanced.write("k", 42);
+        assertEquals(await enhanced.read("k"), 42);
+        await time.runAllAsync();
+    });
+
+    it("should compress session data", async () => {
+        const storage = new MemorySessionStorage<Uint8Array>();
+        const enhanced = enhanceStorage<{ answer: number }>({
+            storage,
+            compress: true,
+        });
+        assertEquals(await enhanced.read("k"), undefined);
+        await enhanced.write("k", { answer: 42 });
+        const stored = storage.read("k");
+        assert(stored instanceof Uint8Array);
+        // gzip magic bytes
+        assertEquals(stored[0], 0x1f);
+        assertEquals(stored[1], 0x8b);
+        const json = new TextDecoder().decode(await gunzip(stored));
+        assertEquals(JSON.parse(json), { __d: { answer: 42 } });
+        assertEquals(await enhanced.read("k"), { answer: 42 });
+    });
+
+    it("should read compressed session data", async () => {
+        const storage = new MemorySessionStorage<Uint8Array>();
+        const enhanced = enhanceStorage<number>({ storage, compress: true });
+        const encode = (value: unknown) =>
+            gzip(new TextEncoder().encode(JSON.stringify(value)));
+        storage.write("enhanced", await encode({ __d: 42 }));
+        assertEquals(await enhanced.read("enhanced"), 42);
+        // data that was stored without enhanceStorage
+        storage.write("plain", await encode(42));
+        assertEquals(await enhanced.read("plain"), 42);
+    });
+
+    it("should not compress session data by default", async () => {
+        const storage = new MemorySessionStorage<Enhance<number>>();
+        const enhanced = enhanceStorage({ storage, compress: false });
+        await enhanced.write("k", 42);
+        assertEquals(storage.read("k"), { __d: 42 });
+        assertEquals(await enhanced.read("k"), 42);
+    });
+
+    it("should not modify delete calls when compressing", async () => {
+        const storage = {
+            read: spy((_key: string) => undefined),
+            write: spy((_key: string, _value: Uint8Array) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({ storage, compress: true });
+        await enhanced.delete("key");
+        assertEquals(storage.delete.calls[0].args, ["key"]);
+    });
+
+    it("should be able to combine compression, timeouts, and migrations", async () => {
+        using time = new FakeTime();
+        const storage = new MemorySessionStorage<Uint8Array>();
+        const enhanced = enhanceStorage<number>({
+            storage,
+            compress: true,
+            millisecondsToLive: TICK_MS,
+            migrations: {
+                3: (old: number) => old *= 2,
+                12: (old: number) => old **= 2,
+                1: (old: number) => old += 10,
+            },
+        });
+        storage.write("k", await gzip(new TextEncoder().encode("0")));
+        assertEquals(await enhanced.read("k"), 400);
+        assert(storage.read("k") instanceof Uint8Array);
         await time.tickAsync(2 * TICK_MS);
         assertEquals(await enhanced.read("k"), undefined);
         await enhanced.write("k", 42);
