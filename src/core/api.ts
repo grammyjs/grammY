@@ -227,7 +227,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send text messages. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -235,7 +235,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendmessage
      */
     sendMessage(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         text: string,
         other?: Other<R, "sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
@@ -246,7 +246,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format \@username
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param rich_message The message to be sent
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -254,7 +254,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendrichmessage
      */
     sendRichMessage(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         rich_message: InputRichMessage,
         other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
         signal?: AbortSignal,
@@ -324,7 +324,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, widget messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format `@username`)
@@ -352,7 +352,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, widget messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
@@ -384,7 +384,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send photos. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -392,7 +392,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendphoto
      */
     sendPhoto(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         photo: InputFile | string,
         other?: Other<R, "sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
@@ -403,7 +403,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send live photos. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param live_photo Live photo video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
      * @param photo The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
      * @param other Optional remaining parameters, confer the official reference below
@@ -412,7 +412,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
      */
     sendLivePhoto(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         live_photo: InputFile | string,
         photo: InputFile | string,
         other?: Other<R, "sendLivePhoto", "chat_id" | "live_photo" | "photo">,
@@ -429,7 +429,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * For sending voice messages, use the sendVoice method instead.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -437,7 +437,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendaudio
      */
     sendAudio(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         audio: InputFile | string,
         other?: Other<R, "sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
@@ -448,7 +448,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -456,7 +456,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#senddocument
      */
     sendDocument(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         document: InputFile | string,
         other?: Other<R, "sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
@@ -467,7 +467,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -475,7 +475,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvideo
      */
     sendVideo(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         video: InputFile | string,
         other?: Other<R, "sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
@@ -486,7 +486,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -494,7 +494,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendanimation
      */
     sendAnimation(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         animation: InputFile | string,
         other?: Other<R, "sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
@@ -505,7 +505,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -513,7 +513,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvoice
      */
     sendVoice(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         voice: InputFile | string,
         other?: Other<R, "sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
@@ -525,7 +525,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send video messages. On success, the sent Message is returned.
      * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -533,7 +533,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
      */
     sendVideoNote(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         video_note: InputFile | string,
         other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
@@ -595,9 +595,50 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to send a message with an HTML widget. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param html HTML code of the widget, 1-32768 bytes. The code must not exceed 4096 bytes when compressed by zlib with the maximum compression level.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendwidget
+     */
+    sendWidget(
+        chat_id: number | string,
+        html: string,
+        other?: Other<R, "sendWidget", "chat_id" | "html">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendWidget({ chat_id, html, ...other }, signal);
+    }
+
+    /**
+     * Use this method to send again a shared widget created by the bot. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param widget_id Unique identifier of the shared widget
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendsharedwidget
+     */
+    sendSharedWidget(
+        chat_id: number | string,
+        widget_id: string,
+        other?: Other<R, "sendSharedWidget", "chat_id" | "widget_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendSharedWidget(
+            { chat_id, widget_id, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to send point on the map. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param latitude Latitude of the location
      * @param longitude Longitude of the location
      * @param other Optional remaining parameters, confer the official reference below
@@ -606,7 +647,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendlocation
      */
     sendLocation(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         latitude: number,
         longitude: number,
         other?: Other<R, "sendLocation", "chat_id" | "latitude" | "longitude">,
@@ -737,7 +778,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send information about a venue. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param latitude Latitude of the venue
      * @param longitude Longitude of the venue
      * @param title Name of the venue
@@ -748,7 +789,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvenue
      */
     sendVenue(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         latitude: number,
         longitude: number,
         title: string,
@@ -769,7 +810,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send phone contacts. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param phone_number Contact's phone number
      * @param first_name Contact's first name
      * @param other Optional remaining parameters, confer the official reference below
@@ -778,7 +819,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendcontact
      */
     sendContact(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         phone_number: string,
         first_name: string,
         other?: Other<
@@ -1790,6 +1831,19 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get the list of backdrops, which can be used as the background of a theme of the screen for sharing a link to a user or a chat. Requires no parameters. Returns a ChatShareThemeBackdrops object.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatsharethemebackdrops
+     */
+    getChatShareThemeBackdrops(
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getChatShareThemeBackdrops(signal);
+    }
+
+    /**
      * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
@@ -2108,6 +2162,26 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.unpinAllGeneralForumTopicMessages({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to send an answer to a query from a widget. The query must be answered within 15 seconds. The answer is received only by the widget that sent the query and doesn't change data of the widget; use editMessageWidgetData or editSharedWidgetData to change it. On success, True is returned.
+     *
+     * @param widget_query_id Unique identifier for the query to be answered
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerwidgetquery
+     */
+    answerWidgetQuery(
+        widget_query_id: string,
+        other?: Other<R, "answerWidgetQuery", "widget_query_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.answerWidgetQuery(
+            { widget_query_id, ...other },
+            signal,
+        );
     }
 
     /**
@@ -2459,6 +2533,79 @@ export class Api<R extends RawApi = RawApi> {
                 },
             signal,
         );
+    }
+
+    /**
+     * Use this method to edit data of a widget in a message sent by the bot or via the bot (for inline bots). Public data of a shared widget can be changed at most once per second. On success, True is returned.
+     *
+     * @param chat_id Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target supergroup in the format @username.
+     * @param message_id Required if inline_message_id is not specified. Identifier of the message with the widget.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagewidgetdata
+     */
+    editMessageWidgetData(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<
+            R,
+            "editMessageWidgetData",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editMessageWidgetData(
+            { chat_id, message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to edit data of a widget in a message sent by the bot or via the bot (for inline bots). Public data of a shared widget can be changed at most once per second. On success, True is returned.
+     *
+     * @param inline_message_id Required if chat_id and message_id are not specified. Identifier of the inline message.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagewidgetdata
+     */
+    editMessageWidgetDataInline(
+        inline_message_id: string,
+        other?: Other<
+            R,
+            "editMessageWidgetData",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editMessageWidgetData(
+            { inline_message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to edit public data of a shared widget created by the bot. A shared widget can be edited at most once per second. On success, True is returned.
+     *
+     * @param widget_id Unique identifier of the shared widget
+     * @param public_data New public data of the widget, 0-1024 bytes; pass an empty string to remove the public data
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editsharedwidgetdata
+     */
+    editSharedWidgetData(
+        widget_id: string,
+        public_data: string,
+        other?: Other<R, "editSharedWidgetData", "widget_id" | "public_data">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editSharedWidgetData({
+            widget_id,
+            public_data,
+            ...other,
+        }, signal);
     }
 
     /**
@@ -3172,6 +3319,26 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Requires the can_convert_gifts_to_stars business bot right. The gift can be deleted only if it isn't limited (the field total_count of the Gift is omitted) and wasn't refunded. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessaccountgift
+     */
+    deleteBusinessAccountGift(
+        business_connection_id: string,
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteBusinessAccountGift({
+            business_connection_id,
+            owned_gift_id,
+        }, signal);
+    }
+
+    /**
      * Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
      *
      * @param business_connection_id Unique identifier of the business connection
@@ -3358,7 +3525,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format @username; required unless the message is sent as an ephemeral reply to a callback query
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3366,7 +3533,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendsticker
      */
     sendSticker(
-        chat_id: number | string,
+        chat_id: number | string | undefined,
         sticker: InputFile | string,
         other?: Other<R, "sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
@@ -3661,6 +3828,21 @@ export class Api<R extends RawApi = RawApi> {
      */
     getAvailableGifts(signal?: AbortSignal) {
         return this.raw.getAvailableGifts(signal);
+    }
+
+    /**
+     * Use this method to get information about a unique gift by its name. Returns a UniqueGift object on success.
+     *
+     * @param name Unique name of the gift
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuniquegift
+     */
+    getUniqueGift(
+        name: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getUniqueGift({ name }, signal);
     }
 
     /**

@@ -224,6 +224,8 @@ const ENTITY_KEYS = {
     url: {},
     email: {},
     phone_number: {},
+    ton_address: {},
+    bank_card_number: {},
     bold: {},
     italic: {},
     underline: {},
@@ -329,11 +331,14 @@ const COMMON_MESSAGE_KEYS = {
     video_chat_ended: {},
     video_chat_participants_invited: {},
     web_app_data: {},
+    widget: { id: {}, public_data: {}, chat_data: {} },
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
 
     direct_messages_topic: {},
+    ton_wallet_transfer: {},
+    paid_messages_waived: {},
 
     chat_owner_left: { new_owner: {} },
     chat_owner_changed: {},
@@ -412,6 +417,21 @@ const UPDATE_KEYS = {
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
+    widget_query: {
+        from: USER_KEYS,
+        chat: {},
+        message_id: {},
+        inline_message_id: {},
+        type: { data: {}, sign_data: {}, sent_transaction: {} },
+        data: {},
+        widget_id: {},
+    },
+    shared_widget_query: {
+        from: USER_KEYS,
+        type: { data: {}, sign_data: {}, sent_transaction: {} },
+        data: {},
+        widget_id: {},
+    },
     shipping_query: {},
     pre_checkout_query: {},
     poll: {},
@@ -623,6 +643,11 @@ interface Shortcuts<U extends Update> {
     chosenInlineResult: [U["chosen_inline_result"]] extends [object]
         ? U["chosen_inline_result"]
         : undefined;
+    widgetQuery: [U["widget_query"]] extends [object] ? U["widget_query"]
+        : undefined;
+    sharedWidgetQuery: [U["shared_widget_query"]] extends [object]
+        ? U["shared_widget_query"]
+        : undefined;
     callbackQuery: [U["callback_query"]] extends [object] ? U["callback_query"]
         : undefined;
     shippingQuery: [U["shipping_query"]] extends [object] ? U["shipping_query"]
@@ -662,8 +687,9 @@ interface Shortcuts<U extends Update> {
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
-    chat: [U["callback_query"]] extends [object]
-        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
+    chat: [U["widget_query"]] extends [object] ? U["widget_query"]["chat"]
+        : [U["callback_query"]] extends [object]
+            ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
         : [U["deleted_business_messages"]] extends [object]
             ? U["deleted_business_messages"]["chat"]
@@ -694,6 +720,9 @@ interface Shortcuts<U extends Update> {
         : [U["removed_chat_boost"]] extends [object]
             ? U["removed_chat_boost"]["source"]["user"]
         : [U["subscription"]] extends [object] ? U["subscription"]["user"]
+        : [U["widget_query"]] extends [object] ? U["widget_query"]["from"]
+        : [U["shared_widget_query"]] extends [object]
+            ? U["shared_widget_query"]["from"]
         : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
@@ -707,16 +736,21 @@ interface Shortcuts<U extends Update> {
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
-    msgId: [U["callback_query"]] extends [object] ? number | undefined
+    msgId: [U["widget_query"]] extends [object]
+        ? U["widget_query"]["message_id"]
+        : [U["callback_query"]] extends [object] ? number | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? number
         : [U["message_reaction"]] extends [object] ? number
         : [U["message_reaction_count"]] extends [object] ? number
         : undefined;
-    chatId: [U["callback_query"]] extends [object] ? number | undefined
+    chatId: [U["widget_query"]] extends [object]
+        ? [U["widget_query"]["chat"]] extends [object] ? number
+        : number | undefined
+        : [U["callback_query"]] extends [object] ? number | undefined
         : [Shortcuts<U>["chat"]] extends [object] ? number
         : [U["business_connection"]] extends [object] ? number
         : undefined;
-    // inlineMessageId: disregarded here because always optional on both types
+    // inlineMessageId: disregarded here because always optional on all source types
     businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
