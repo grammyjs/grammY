@@ -4,7 +4,6 @@ import {
     type Message,
     type MessageEntity,
     type Update,
-    type WidgetQuery,
     type WidgetQueryType,
 } from "./types.ts";
 
@@ -197,13 +196,7 @@ function arborist(tree: LTree): Pred {
                         return testMaybeArray(obj, (u) => u.id === me);
                     }
                     : (obj) =>
-                        testMaybeArray(
-                            obj,
-                            (e) =>
-                                typeof e === "string"
-                                    ? e === l3
-                                    : e[l3] || e.type === l3,
-                        );
+                        testMaybeArray(obj, (e) => e[l3] || e.type === l3);
                 return l3Pred;
             });
             return l3Predicates.length === 0
@@ -417,20 +410,12 @@ const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
     reactions: REACTION_KEYS,
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
-const WIDGET_QUERY_CHAT_TYPE_KEYS = {
-    sender: {},
-    private: {},
-    group: {},
-    supergroup: {},
-    channel: {},
-} satisfies Record<NonNullable<WidgetQuery["chat_type"]>, NestedObj>;
 const WIDGET_QUERY_TYPE_KEYS = {
     data: {},
     sign_data: {},
     sent_transaction: {},
 } as const satisfies Record<WidgetQueryType["type"], NestedObj>;
 const WIDGET_QUERY_KEYS = {
-    chat_type: WIDGET_QUERY_CHAT_TYPE_KEYS,
     type: WIDGET_QUERY_TYPE_KEYS,
     widget_id: {},
 } as const;
