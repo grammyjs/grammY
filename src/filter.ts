@@ -1,6 +1,12 @@
 // deno-lint-ignore-file camelcase no-explicit-any
 import { type Context } from "./context.ts";
-import { type Message, type MessageEntity, type Update } from "./types.ts";
+import {
+    type Message,
+    type MessageEntity,
+    type Update,
+    type WidgetQuery,
+    type WidgetQueryType,
+} from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
@@ -191,7 +197,13 @@ function arborist(tree: LTree): Pred {
                         return testMaybeArray(obj, (u) => u.id === me);
                     }
                     : (obj) =>
-                        testMaybeArray(obj, (e) => e[l3] || e.type === l3);
+                        testMaybeArray(
+                            obj,
+                            (e) =>
+                                typeof e === "string"
+                                    ? e === l3
+                                    : e[l3] || e.type === l3,
+                        );
                 return l3Pred;
             });
             return l3Predicates.length === 0
@@ -224,6 +236,8 @@ const ENTITY_KEYS = {
     url: {},
     email: {},
     phone_number: {},
+    bank_card_number: {},
+    ton_address: {},
     bold: {},
     italic: {},
     underline: {},
@@ -265,6 +279,11 @@ const GIFT_INFO_KEYS = {
     is_upgrade_separate: {},
     is_private: {},
 };
+const WIDGET_KEYS = {
+    id: {},
+    public_data: {},
+    chat_data: {},
+};
 
 // L2
 const COMMON_MESSAGE_KEYS = {
@@ -287,6 +306,7 @@ const COMMON_MESSAGE_KEYS = {
     video: {},
     video_note: {},
     voice: {},
+    widget: WIDGET_KEYS,
     contact: {},
     dice: {},
     game: {},
@@ -320,10 +340,12 @@ const COMMON_MESSAGE_KEYS = {
     giveaway: { only_new_members: {}, has_public_winners: {} },
     giveaway_winners: { only_new_members: {}, was_refunded: {} },
     giveaway_completed: {},
+    ton_wallet_transfer: {},
     gift: GIFT_INFO_KEYS,
     gift_upgrade_sent: GIFT_INFO_KEYS,
     unique_gift: { transfer_star_count: {}, text: {}, is_private: {} },
     paid_message_price_changed: {},
+    paid_messages_waived: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -395,6 +417,23 @@ const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
     reactions: REACTION_KEYS,
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
+const WIDGET_QUERY_CHAT_TYPE_KEYS = {
+    sender: {},
+    private: {},
+    group: {},
+    supergroup: {},
+    channel: {},
+} satisfies Record<NonNullable<WidgetQuery["chat_type"]>, NestedObj>;
+const WIDGET_QUERY_TYPE_KEYS = {
+    data: {},
+    sign_data: {},
+    sent_transaction: {},
+} as const satisfies Record<WidgetQueryType["type"], NestedObj>;
+const WIDGET_QUERY_KEYS = {
+    chat_type: WIDGET_QUERY_CHAT_TYPE_KEYS,
+    type: WIDGET_QUERY_TYPE_KEYS,
+    widget_id: {},
+} as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
 
 // L1
@@ -412,6 +451,8 @@ const UPDATE_KEYS = {
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
+    widget_query: WIDGET_QUERY_KEYS,
+    shared_widget_query: { type: WIDGET_QUERY_TYPE_KEYS },
     shipping_query: {},
     pre_checkout_query: {},
     poll: {},
@@ -625,6 +666,11 @@ interface Shortcuts<U extends Update> {
         : undefined;
     callbackQuery: [U["callback_query"]] extends [object] ? U["callback_query"]
         : undefined;
+    widgetQuery: [U["widget_query"]] extends [object] ? U["widget_query"]
+        : undefined;
+    sharedWidgetQuery: [U["shared_widget_query"]] extends [object]
+        ? U["shared_widget_query"]
+        : undefined;
     shippingQuery: [U["shipping_query"]] extends [object] ? U["shipping_query"]
         : undefined;
     preCheckoutQuery: [U["pre_checkout_query"]] extends [object]
@@ -665,6 +711,7 @@ interface Shortcuts<U extends Update> {
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+        : [U["widget_query"]] extends [object] ? U["widget_query"]["chat"]
         : [U["deleted_business_messages"]] extends [object]
             ? U["deleted_business_messages"]["chat"]
         : [U["stopped_message_generation"]] extends [object]
@@ -695,6 +742,9 @@ interface Shortcuts<U extends Update> {
             ? U["removed_chat_boost"]["source"]["user"]
         : [U["subscription"]] extends [object] ? U["subscription"]["user"]
         : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
+        : [U["widget_query"]] extends [object] ? U["widget_query"]["from"]
+        : [U["shared_widget_query"]] extends [object]
+            ? U["shared_widget_query"]["from"]
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
         : [U["chosen_inline_result"]] extends [object]
@@ -709,14 +759,16 @@ interface Shortcuts<U extends Update> {
         : undefined;
     msgId: [U["callback_query"]] extends [object] ? number | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? number
+        : [U["widget_query"]] extends [object] ? number | undefined
         : [U["message_reaction"]] extends [object] ? number
         : [U["message_reaction_count"]] extends [object] ? number
         : undefined;
     chatId: [U["callback_query"]] extends [object] ? number | undefined
         : [Shortcuts<U>["chat"]] extends [object] ? number
+        : [U["widget_query"]] extends [object] ? number | undefined
         : [U["business_connection"]] extends [object] ? number
         : undefined;
-    // inlineMessageId: disregarded here because always optional on both types
+    // inlineMessageId: disregarded here because always optional on all types
     businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
