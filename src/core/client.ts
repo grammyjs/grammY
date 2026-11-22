@@ -382,7 +382,8 @@ export function createRawApi<R extends RawApi>(
                         m === "logOut" ||
                         m === "close" ||
                         m === "getMyStarBalance" ||
-                        m === "removeMyProfilePhoto"
+                        m === "removeMyProfilePhoto" ||
+                        m === "getChatShareThemeBackdrops"
                 ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },
