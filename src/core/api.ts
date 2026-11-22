@@ -235,12 +235,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendmessage
      */
     sendMessage(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         text: string,
         other?: Other<R, "sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal);
+    }
+
+    sendMessageEphemeral(
+        callback_query_id: string,
+        text: string,
+        other?: Other<R, "sendMessage", "text">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendMessage(
+            { text, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -254,13 +270,29 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendrichmessage
      */
     sendRichMessage(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         rich_message: InputRichMessage,
         other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendRichMessage(
             { chat_id, rich_message, ...other },
+            signal,
+        );
+    }
+
+    sendRichMessageEphemeral(
+        callback_query_id: string,
+        rich_message: InputRichMessage,
+        other?: Other<R, "sendRichMessage", "rich_message">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendRichMessage(
+            { rich_message, ...other, ephemeral_message_parameters },
             signal,
         );
     }
@@ -392,12 +424,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendphoto
      */
     sendPhoto(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         photo: InputFile | string,
         other?: Other<R, "sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendPhoto({ chat_id, photo, ...other }, signal);
+    }
+
+    sendPhotoEphemeral(
+        callback_query_id: string,
+        photo: InputFile | string,
+        other?: Other<R, "sendPhoto", "photo">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendPhoto(
+            { photo, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -412,7 +460,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
      */
     sendLivePhoto(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         live_photo: InputFile | string,
         photo: InputFile | string,
         other?: Other<R, "sendLivePhoto", "chat_id" | "live_photo" | "photo">,
@@ -420,6 +468,23 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.sendLivePhoto(
             { chat_id, live_photo, photo, ...other },
+            signal,
+        );
+    }
+
+    sendLivePhotoEphemeral(
+        callback_query_id: string,
+        live_photo: InputFile | string,
+        photo: InputFile | string,
+        other?: Other<R, "sendLivePhoto", "live_photo" | "photo">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendLivePhoto(
+            { live_photo, photo, ...other, ephemeral_message_parameters },
             signal,
         );
     }
@@ -437,12 +502,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendaudio
      */
     sendAudio(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         audio: InputFile | string,
         other?: Other<R, "sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendAudio({ chat_id, audio, ...other }, signal);
+    }
+
+    sendAudioEphemeral(
+        callback_query_id: string,
+        audio: InputFile | string,
+        other?: Other<R, "sendAudio", "audio">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendAudio(
+            { audio, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -456,12 +537,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#senddocument
      */
     sendDocument(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         document: InputFile | string,
         other?: Other<R, "sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendDocument({ chat_id, document, ...other }, signal);
+    }
+
+    sendDocumentEphemeral(
+        callback_query_id: string,
+        document: InputFile | string,
+        other?: Other<R, "sendDocument", "document">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendDocument(
+            { document, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -475,12 +572,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvideo
      */
     sendVideo(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         video: InputFile | string,
         other?: Other<R, "sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVideo({ chat_id, video, ...other }, signal);
+    }
+
+    sendVideoEphemeral(
+        callback_query_id: string,
+        video: InputFile | string,
+        other?: Other<R, "sendVideo", "video">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendVideo(
+            { video, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -494,12 +607,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendanimation
      */
     sendAnimation(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         animation: InputFile | string,
         other?: Other<R, "sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendAnimation({ chat_id, animation, ...other }, signal);
+    }
+
+    sendAnimationEphemeral(
+        callback_query_id: string,
+        animation: InputFile | string,
+        other?: Other<R, "sendAnimation", "animation">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendAnimation(
+            { animation, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -513,12 +642,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvoice
      */
     sendVoice(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         voice: InputFile | string,
         other?: Other<R, "sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVoice({ chat_id, voice, ...other }, signal);
+    }
+
+    sendVoiceEphemeral(
+        callback_query_id: string,
+        voice: InputFile | string,
+        other?: Other<R, "sendVoice", "voice">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendVoice(
+            { voice, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
@@ -532,13 +677,29 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
      */
     sendVideoNote(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         video_note: InputFile | string,
         other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVideoNote(
             { chat_id, video_note, ...other },
+            signal,
+        );
+    }
+
+    sendVideoNoteEphemeral(
+        callback_query_id: string,
+        video_note: InputFile | string,
+        other?: Other<R, "sendVideoNote", "video_note">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendVideoNote(
+            { video_note, ...other, ephemeral_message_parameters },
             signal,
         );
     }
@@ -646,7 +807,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendlocation
      */
     sendLocation(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         latitude: number,
         longitude: number,
         other?: Other<R, "sendLocation", "chat_id" | "latitude" | "longitude">,
@@ -654,6 +815,23 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.sendLocation(
             { chat_id, latitude, longitude, ...other },
+            signal,
+        );
+    }
+
+    sendLocationEphemeral(
+        callback_query_id: string,
+        latitude: number,
+        longitude: number,
+        other?: Other<R, "sendLocation", "latitude" | "longitude">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendLocation(
+            { latitude, longitude, ...other, ephemeral_message_parameters },
             signal,
         );
     }
@@ -788,7 +966,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendvenue
      */
     sendVenue(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         latitude: number,
         longitude: number,
         title: string,
@@ -806,6 +984,36 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
+    sendVenueEphemeral(
+        callback_query_id: string,
+        latitude: number,
+        longitude: number,
+        title: string,
+        address: string,
+        other?: Other<
+            R,
+            "sendVenue",
+            "latitude" | "longitude" | "title" | "address"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendVenue(
+            {
+                latitude,
+                longitude,
+                title,
+                address,
+                ...other,
+                ephemeral_message_parameters,
+            },
+            signal,
+        );
+    }
+
     /**
      * Use this method to send phone contacts. On success, the sent Message is returned.
      *
@@ -818,7 +1026,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendcontact
      */
     sendContact(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         phone_number: string,
         first_name: string,
         other?: Other<
@@ -830,6 +1038,28 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.sendContact(
             { chat_id, phone_number, first_name, ...other },
+            signal,
+        );
+    }
+
+    sendContactEphemeral(
+        callback_query_id: string,
+        phone_number: string,
+        first_name: string,
+        other?: Other<R, "sendContact", "phone_number" | "first_name">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendContact(
+            {
+                phone_number,
+                first_name,
+                ...other,
+                ephemeral_message_parameters,
+            },
             signal,
         );
     }
@@ -3542,12 +3772,28 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendsticker
      */
     sendSticker(
-        chat_id: number | string | undefined,
+        chat_id: number | string,
         sticker: InputFile | string,
         other?: Other<R, "sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendSticker({ chat_id, sticker, ...other }, signal);
+    }
+
+    sendStickerEphemeral(
+        callback_query_id: string,
+        sticker: InputFile | string,
+        other?: Other<R, "sendSticker", "sticker">,
+        signal?: AbortSignal,
+    ) {
+        const ephemeral_message_parameters = {
+            callback_query_id,
+            ...(other?.ephemeral_message_parameters ?? {}),
+        };
+        return this.raw.sendSticker(
+            { sticker, ...other, ephemeral_message_parameters },
+            signal,
+        );
     }
 
     /**
