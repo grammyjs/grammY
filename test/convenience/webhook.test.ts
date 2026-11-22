@@ -30,7 +30,7 @@ import {
 
 describe("webhook", () => {
     const bot = new Bot("dummy", {
-        botInfo: {} as unknown as BotFullInfo & { username: string },
+        botInfo: {} as unknown as BotFullInfo,
     });
 
     it("AWS Lambda should be compatible with grammY adapter", () => {
@@ -164,7 +164,7 @@ describe("webhook", () => {
 describe("webhook functionality", () => {
     const createTestBot = () =>
         new Bot("test-token", {
-            botInfo: {} as unknown as BotFullInfo & { username: string },
+            botInfo: {} as unknown as BotFullInfo,
         });
     const testUpdate: Update = {
         update_id: 1,

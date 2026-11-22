@@ -239,8 +239,9 @@ const checker: StaticHas = {
                 }
                 const index = cmd.indexOf("@");
                 if (index === -1) return false;
+                const username = ctx.me.username?.toLowerCase();
+                if (username === undefined) return false;
                 const atTarget = cmd.substring(index + 1).toLowerCase();
-                const username = ctx.me.username.toLowerCase();
                 if (atTarget !== username) return false;
                 const atCommand = cmd.substring(0, index);
                 if (noAtCommands.has(atCommand)) {
@@ -443,7 +444,7 @@ export class Context implements RenamedUpdate {
         /**
          * Information about the bot itself.
          */
-        public readonly me: BotFullInfo & { username: string },
+        public readonly me: BotFullInfo,
     ) {}
 
     // UPDATE SHORTCUTS

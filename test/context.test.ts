@@ -92,9 +92,7 @@ describe("Context", () => {
         subscription: s,
     } as unknown as Update;
     const api = new Api("dummy-token");
-    const me = { id: 42, username: "bot" } as BotFullInfo & {
-        username: string;
-    };
+    const me = { id: 42, username: "bot" } as BotFullInfo;
 
     it("provide basic properties", () => {
         const ctx = new Context(update, api, me);

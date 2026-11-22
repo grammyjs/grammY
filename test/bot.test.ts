@@ -18,7 +18,7 @@ import {
 } from "./deps.test.ts";
 
 const token = "test-token";
-const botInfo: BotFullInfo & { username: string } = {
+const botInfo: BotFullInfo = {
     id: 123456789,
     is_bot: true,
     first_name: "Test Bot",
