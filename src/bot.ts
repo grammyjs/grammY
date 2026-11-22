@@ -96,9 +96,7 @@ export interface PollingOptions {
      * When this function is invoked, the bot already signals that it is
      * running. In other words, `bot.isRunning()` already returns true.
      */
-    onStart?: (
-        botInfo: BotFullInfo,
-    ) => void | Promise<void>;
+    onStart?: (botInfo: BotFullInfo) => void | Promise<void>;
 }
 
 export { BotError };
