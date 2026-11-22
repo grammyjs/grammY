@@ -316,13 +316,7 @@ export class Bot<
             );
             let me: BotFullInfo;
             try {
-                const { username, ...rest } = await this.mePromise;
-                if (username === undefined) {
-                    throw new Error(
-                        "grammY does not support bots without a username",
-                    );
-                }
-                me = { username, ...rest };
+                me = await this.mePromise;
             } finally {
                 this.mePromise = undefined;
             }
