@@ -2767,7 +2767,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmysettings
      */
-    setMySettings(other: Other<R, "setMySettings">, signal?: AbortSignal) {
+    setMySettings(other?: Other<R, "setMySettings">, signal?: AbortSignal) {
         return this.raw.setMySettings({ ...other }, signal);
     }
 
