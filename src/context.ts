@@ -1503,10 +1503,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendWidget", "chat_id" | "html">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendWidget(
             orThrow(this.chatId, "sendWidget"),
             html,
-            other,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
+                ...other,
+            },
             signal,
         );
     }
@@ -1525,10 +1531,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendSharedWidget", "chat_id" | "widget_id">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendSharedWidget(
             orThrow(this.chatId, "sendSharedWidget"),
             widget_id,
-            other,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
+                ...other,
+            },
             signal,
         );
     }
