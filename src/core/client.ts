@@ -354,18 +354,17 @@ class ApiClient<R extends RawApi> {
     }
 }
 
-type MethodsWithoutPayload = Exclude<Methods<RawApi>, MethodsWithPayload>;
-const methodsWithoutPayload = {
-    getMe: true,
-    getWebhookInfo: true,
-    getForumTopicIconStickers: true,
-    getAvailableGifts: true,
-    logOut: true,
-    close: true,
-    getMyStarBalance: true,
-    removeMyProfilePhoto: true,
-    getChatShareThemeBackdrops: true,
-} satisfies Record<MethodsWithoutPayload, true>;
+const methodsWithoutPayload: string[] = [
+    "getMe",
+    "getWebhookInfo",
+    "getForumTopicIconStickers",
+    "getAvailableGifts",
+    "logOut",
+    "close",
+    "getMyStarBalance",
+    "removeMyProfilePhoto",
+    "getChatShareThemeBackdrops",
+] satisfies Array<Exclude<Methods<RawApi>, MethodsWithPayload>>;
 
 /**
  * Creates a new transformable API, i.e. an object that lets you perform raw API
@@ -393,7 +392,7 @@ export function createRawApi<R extends RawApi>(
                 ? "__internal"
                 // Methods with zero parameters are called without any payload,
                 // so we have to manually inject an empty payload.
-                : Object.prototype.hasOwnProperty.call(methodsWithoutPayload, m)
+                : methodsWithoutPayload.includes(m)
                 ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },
