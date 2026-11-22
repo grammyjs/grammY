@@ -11,7 +11,6 @@ import {
     type AcceptedGiftTypes,
     type Chat,
     type ChatPermissions,
-    type EphemeralMessageParameters,
     type InlineQueryResult,
     type InputChecklist,
     type InputFile,
@@ -1078,19 +1077,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendMessage(
-            getChatIdForReply(this.chatId, "sendMessage", other),
-            text,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendMessageEphemeral(
+                callbackQueryId,
+                text,
+                options,
+                signal,
+            )
+            : this.api.sendMessage(
+                orThrow(this.chatId, "sendMessage"),
+                text,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1108,19 +1119,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendRichMessage(
-            getChatIdForReply(this.chatId, "sendRichMessage", other),
-            rich_message,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendRichMessageEphemeral(
+                callbackQueryId,
+                rich_message,
+                options,
+                signal,
+            )
+            : this.api.sendRichMessage(
+                orThrow(this.chatId, "sendRichMessage"),
+                rich_message,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1259,19 +1282,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendPhoto(
-            getChatIdForReply(this.chatId, "sendPhoto", other),
-            photo,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendPhotoEphemeral(
+                callbackQueryId,
+                photo,
+                options,
+                signal,
+            )
+            : this.api.sendPhoto(
+                orThrow(this.chatId, "sendPhoto"),
+                photo,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1291,20 +1326,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendLivePhoto(
-            getChatIdForReply(this.chatId, "sendLivePhoto", other),
-            live_photo,
-            photo,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendLivePhotoEphemeral(
+                callbackQueryId,
+                live_photo,
+                photo,
+                options,
+                signal,
+            )
+            : this.api.sendLivePhoto(
+                orThrow(this.chatId, "sendLivePhoto"),
+                live_photo,
+                photo,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1324,19 +1372,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendAudio(
-            getChatIdForReply(this.chatId, "sendAudio", other),
-            audio,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendAudioEphemeral(
+                callbackQueryId,
+                audio,
+                options,
+                signal,
+            )
+            : this.api.sendAudio(
+                orThrow(this.chatId, "sendAudio"),
+                audio,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1354,19 +1414,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendDocument(
-            getChatIdForReply(this.chatId, "sendDocument", other),
-            document,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendDocumentEphemeral(
+                callbackQueryId,
+                document,
+                options,
+                signal,
+            )
+            : this.api.sendDocument(
+                orThrow(this.chatId, "sendDocument"),
+                document,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1384,19 +1456,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVideo(
-            getChatIdForReply(this.chatId, "sendVideo", other),
-            video,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVideoEphemeral(
+                callbackQueryId,
+                video,
+                options,
+                signal,
+            )
+            : this.api.sendVideo(
+                orThrow(this.chatId, "sendVideo"),
+                video,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1414,19 +1498,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendAnimation(
-            getChatIdForReply(this.chatId, "sendAnimation", other),
-            animation,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendAnimationEphemeral(
+                callbackQueryId,
+                animation,
+                options,
+                signal,
+            )
+            : this.api.sendAnimation(
+                orThrow(this.chatId, "sendAnimation"),
+                animation,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1444,19 +1540,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVoice(
-            getChatIdForReply(this.chatId, "sendVoice", other),
-            voice,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVoiceEphemeral(
+                callbackQueryId,
+                voice,
+                options,
+                signal,
+            )
+            : this.api.sendVoice(
+                orThrow(this.chatId, "sendVoice"),
+                voice,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1474,19 +1582,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVideoNote(
-            getChatIdForReply(this.chatId, "sendVideoNote", other),
-            video_note,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVideoNoteEphemeral(
+                callbackQueryId,
+                video_note,
+                options,
+                signal,
+            )
+            : this.api.sendVideoNote(
+                orThrow(this.chatId, "sendVideoNote"),
+                video_note,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1638,20 +1758,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendLocation(
-            getChatIdForReply(this.chatId, "sendLocation", other),
-            latitude,
-            longitude,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendLocationEphemeral(
+                callbackQueryId,
+                latitude,
+                longitude,
+                options,
+                signal,
+            )
+            : this.api.sendLocation(
+                orThrow(this.chatId, "sendLocation"),
+                latitude,
+                longitude,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1750,22 +1883,37 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVenue(
-            getChatIdForReply(this.chatId, "sendVenue", other),
-            latitude,
-            longitude,
-            title,
-            address,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVenueEphemeral(
+                callbackQueryId,
+                latitude,
+                longitude,
+                title,
+                address,
+                options,
+                signal,
+            )
+            : this.api.sendVenue(
+                orThrow(this.chatId, "sendVenue"),
+                latitude,
+                longitude,
+                title,
+                address,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1785,20 +1933,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendContact(
-            getChatIdForReply(this.chatId, "sendContact", other),
-            phone_number,
-            first_name,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendContactEphemeral(
+                callbackQueryId,
+                phone_number,
+                first_name,
+                options,
+                signal,
+            )
+            : this.api.sendContact(
+                orThrow(this.chatId, "sendContact"),
+                phone_number,
+                first_name,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -4360,19 +4521,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendSticker(
-            getChatIdForReply(this.chatId, "sendSticker", other),
-            sticker,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendStickerEphemeral(
+                callbackQueryId,
+                sticker,
+                options,
+                signal,
+            )
+            : this.api.sendSticker(
+                orThrow(this.chatId, "sendSticker"),
+                sticker,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -5037,19 +5210,6 @@ interface ChatFrom<T extends Chat["type"]> {
 }
 
 // === Util functions
-function getChatIdForReply(
-    chatId: number | undefined,
-    method: string,
-    other?: { ephemeral_message_parameters?: EphemeralMessageParameters },
-): number | undefined {
-    if (chatId !== undefined) return chatId;
-    const ephemeral = other?.ephemeral_message_parameters;
-    if (
-        ephemeral?.callback_query_id !== undefined &&
-        ephemeral.receiver_user_id === undefined
-    ) return undefined;
-    return orThrow(chatId, method);
-}
 function orThrow<T>(value: T | undefined, method: string): T {
     if (value === undefined) {
         throw new Error(`Missing information for API call to ${method}`);
