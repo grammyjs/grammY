@@ -312,14 +312,17 @@ export type InputRichBlockListItem = InputRichBlockListItemF<InputFile>;
 - InputRichBlockAnchor
 - InputRichBlockList
 - InputRichBlockBlockQuotation
+- InputRichBlockExpandableBlockQuotation
 - InputRichBlockPullQuotation
 - InputRichBlockCollage
 - InputRichBlockSlideshow
 - InputRichBlockTable
 - InputRichBlockDetails
 - InputRichBlockMap
+- InputRichBlockButtons
 - InputRichBlockAnimation
 - InputRichBlockAudio
+- InputRichBlockDocument
 - InputRichBlockPhoto
 - InputRichBlockVideo
 - InputRichBlockVoiceNote
