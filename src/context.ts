@@ -124,6 +124,25 @@ interface StaticHas {
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is CallbackQueryContext<C>;
     /**
+     * Generates a predicate that matches widget query data against a string or
+     * regular expression. This uses the same logic as `bot.widgetQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    widgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is WidgetQueryContext<C>;
+    /**
+     * Generates a predicate that matches shared widget query data against a
+     * string or regular expression. This uses the same logic as
+     * `bot.sharedWidgetQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    sharedWidgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is SharedWidgetQueryContext<C>;
+    /**
      * Generates a predicate function that can test context objects for
      * containing the given game query, or for the game name to match the given
      * regular expression. This uses the same logic as `bot.gameQuery`.
@@ -309,6 +328,21 @@ const checker: StaticHas = {
         return <C extends Context>(ctx: C): ctx is CallbackQueryContext<C> =>
             hasCallbackQuery(ctx) && match(ctx, ctx.callbackQuery.data, trg);
     },
+    widgetQuery(trigger) {
+        const hasWidgetQuery = checker.filterQuery("widget_query");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is WidgetQueryContext<C> =>
+            hasWidgetQuery(ctx) && match(ctx, ctx.widgetQuery.data, trg);
+    },
+    sharedWidgetQuery(trigger) {
+        const hasSharedWidgetQuery = checker.filterQuery("shared_widget_query");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(
+            ctx: C,
+        ): ctx is SharedWidgetQueryContext<C> =>
+            hasSharedWidgetQuery(ctx) &&
+            match(ctx, ctx.sharedWidgetQuery.data, trg);
+    },
     gameQuery(trigger) {
         const hasGameQuery = checker.filterQuery(
             "callback_query:game_short_name",
@@ -475,6 +509,14 @@ export class Context implements RenamedUpdate {
     get callbackQuery() {
         return this.update.callback_query;
     }
+    /** Alias for `ctx.update.widget_query` */
+    get widgetQuery() {
+        return this.update.widget_query;
+    }
+    /** Alias for `ctx.update.shared_widget_query` */
+    get sharedWidgetQuery() {
+        return this.update.shared_widget_query;
+    }
     /** Alias for `ctx.update.shipping_query` */
     get shippingQuery() {
         return this.update.shipping_query;
@@ -547,15 +589,17 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
-     * this.deletedBusinessMessages ?? this.stoppedMessageGeneration ??
-     * this.messageReaction ?? this.messageReactionCount ?? this.myChatMember ??
-     * this.chatMember ?? this.chatJoinRequest ?? this.chatBoost ??
+     * this.widgetQuery ?? this.deletedBusinessMessages ??
+     * this.stoppedMessageGeneration ?? this.messageReaction ??
+     * this.messageReactionCount ?? this.myChatMember ?? this.chatMember ??
+     * this.chatJoinRequest ?? this.chatBoost ??
      * this.removedChatBoost)?.chat`.
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
+                this.widgetQuery ??
                 this.deletedBusinessMessages ??
                 this.stoppedMessageGeneration ??
                 this.messageReaction ??
@@ -578,8 +622,10 @@ export class Context implements RenamedUpdate {
     /**
      * Get the user object from wherever possible. Alias for
      * `(this.businessConnection ?? this.messageReaction ?? this.managedBot ??
-     * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
-     * (this.callbackQuery ?? this.msg ?? this.inlineQuery ??
+     * (this.chatBoost?.boost ?? this.removedChatBoost)?.source ??
+     * this.subscription)?.user ??
+     * (this.callbackQuery ?? this.widgetQuery ?? this.sharedWidgetQuery ??
+     * this.msg ?? this.inlineQuery ??
      * this.chosenInlineResult ?? this.shippingQuery ?? this.preCheckoutQuery ??
      * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest ??
      * this.purchasedPaidMedia)?.from`.
@@ -595,6 +641,8 @@ export class Context implements RenamedUpdate {
         )?.user ??
             (
                 this.callbackQuery ??
+                    this.widgetQuery ??
+                    this.sharedWidgetQuery ??
                     this.msg ??
                     this.inlineQuery ??
                     this.chosenInlineResult ??
@@ -609,12 +657,13 @@ export class Context implements RenamedUpdate {
 
     /**
      * Get the message identifier from wherever possible. Alias for
-     * `this.msg?.message_id ?? this.messageReaction?.message_id ??
-     * this.messageReactionCount?.message_id`.
+     * `this.msg?.message_id ?? this.widgetQuery?.message_id ??
+     * this.messageReaction?.message_id ?? this.messageReactionCount?.message_id`.
      */
     get msgId(): number | undefined {
         // Keep in sync with types in `filter.ts`.
-        return this.msg?.message_id ?? this.messageReaction?.message_id ??
+        return this.msg?.message_id ?? this.widgetQuery?.message_id ??
+            this.messageReaction?.message_id ??
             this.messageReactionCount?.message_id;
     }
     /**
@@ -627,11 +676,14 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get the inline message identifier from wherever possible. Alias for
-     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`.
+     * `this.callbackQuery?.inline_message_id ??
+     * this.widgetQuery?.inline_message_id ??
+     * this.chosenInlineResult?.inline_message_id`.
      */
     get inlineMessageId(): string | undefined {
         return (
             this.callbackQuery?.inline_message_id ??
+                this.widgetQuery?.inline_message_id ??
                 this.chosenInlineResult?.inline_message_id
         );
     }
@@ -923,6 +975,28 @@ export class Context implements RenamedUpdate {
         return Context.has.callbackQuery(trigger)(this);
     }
     /**
+     * Returns whether the widget query data matches the given string or regular
+     * expression. This uses the same logic as `bot.widgetQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    hasWidgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is WidgetQueryContextCore {
+        return Context.has.widgetQuery(trigger)(this);
+    }
+    /**
+     * Returns whether the shared widget query data matches the given string or
+     * regular expression. This uses the same logic as `bot.sharedWidgetQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    hasSharedWidgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is SharedWidgetQueryContextCore {
+        return Context.has.sharedWidgetQuery(trigger)(this);
+    }
+    /**
      * Returns `true` if this context object contains the given game query, or
      * if the contained game query matches the given regular expression. It
      * returns `false` otherwise. This uses the same logic as `bot.gameQuery`.
@@ -1003,19 +1077,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendMessage(
-            orThrow(this.chatId, "sendMessage"),
-            text,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendMessageEphemeralForCallback(
+                callbackQueryId,
+                text,
+                options,
+                signal,
+            )
+            : this.api.sendMessage(
+                orThrow(this.chatId, "sendMessage"),
+                text,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1033,19 +1119,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendRichMessage(
-            orThrow(this.chatId, "sendRichMessage"),
-            rich_message,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendRichMessageEphemeralForCallback(
+                callbackQueryId,
+                rich_message,
+                options,
+                signal,
+            )
+            : this.api.sendRichMessage(
+                orThrow(this.chatId, "sendRichMessage"),
+                rich_message,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1111,7 +1209,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_ids is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
@@ -1138,7 +1236,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessages`. Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
+     * Context-aware alias for `api.copyMessages`. Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_ids is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
@@ -1184,19 +1282,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendPhoto(
-            orThrow(this.chatId, "sendPhoto"),
-            photo,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendPhotoEphemeralForCallback(
+                callbackQueryId,
+                photo,
+                options,
+                signal,
+            )
+            : this.api.sendPhoto(
+                orThrow(this.chatId, "sendPhoto"),
+                photo,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1216,20 +1326,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendLivePhoto(
-            orThrow(this.chatId, "sendLivePhoto"),
-            live_photo,
-            photo,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendLivePhotoEphemeralForCallback(
+                callbackQueryId,
+                live_photo,
+                photo,
+                options,
+                signal,
+            )
+            : this.api.sendLivePhoto(
+                orThrow(this.chatId, "sendLivePhoto"),
+                live_photo,
+                photo,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1249,19 +1372,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendAudio(
-            orThrow(this.chatId, "sendAudio"),
-            audio,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendAudioEphemeralForCallback(
+                callbackQueryId,
+                audio,
+                options,
+                signal,
+            )
+            : this.api.sendAudio(
+                orThrow(this.chatId, "sendAudio"),
+                audio,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1279,19 +1414,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendDocument(
-            orThrow(this.chatId, "sendDocument"),
-            document,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendDocumentEphemeralForCallback(
+                callbackQueryId,
+                document,
+                options,
+                signal,
+            )
+            : this.api.sendDocument(
+                orThrow(this.chatId, "sendDocument"),
+                document,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1309,19 +1456,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVideo(
-            orThrow(this.chatId, "sendVideo"),
-            video,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVideoEphemeralForCallback(
+                callbackQueryId,
+                video,
+                options,
+                signal,
+            )
+            : this.api.sendVideo(
+                orThrow(this.chatId, "sendVideo"),
+                video,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1339,19 +1498,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendAnimation(
-            orThrow(this.chatId, "sendAnimation"),
-            animation,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendAnimationEphemeralForCallback(
+                callbackQueryId,
+                animation,
+                options,
+                signal,
+            )
+            : this.api.sendAnimation(
+                orThrow(this.chatId, "sendAnimation"),
+                animation,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1369,24 +1540,35 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVoice(
-            orThrow(this.chatId, "sendVoice"),
-            voice,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVoiceEphemeralForCallback(
+                callbackQueryId,
+                voice,
+                options,
+                signal,
+            )
+            : this.api.sendVoice(
+                orThrow(this.chatId, "sendVoice"),
+                voice,
+                options,
+                signal,
+            );
     }
 
     /**
-     * Context-aware alias for `api.sendVideoNote`. Use this method to send video messages. On success, the sent Message is returned.
-     * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
+     * Context-aware alias for `api.sendVideoNote`. Use this method to send a rounded square MPEG4 video of up to 1 minute long. On success, the sent Message is returned.
      *
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
      * @param other Optional remaining parameters, confer the official reference below
@@ -1400,15 +1582,83 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVideoNote(
-            orThrow(this.chatId, "sendVideoNote"),
-            video_note,
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVideoNoteEphemeralForCallback(
+                callbackQueryId,
+                video_note,
+                options,
+                signal,
+            )
+            : this.api.sendVideoNote(
+                orThrow(this.chatId, "sendVideoNote"),
+                video_note,
+                options,
+                signal,
+            );
+    }
+
+    /**
+     * Context-aware alias for `api.sendWidget`. Use this method to send a message with an HTML widget. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned.
+     *
+     * @param html HTML code of the widget, 1-32768 bytes. The code must not exceed 4096 bytes when compressed by zlib with the maximum compression level.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendwidget
+     */
+    replyWithWidget(
+        html: string,
+        other?: Other<"sendWidget", "chat_id" | "html">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendWidget(
+            orThrow(this.chatId, "sendWidget"),
+            html,
             {
-                business_connection_id: this.businessConnectionId,
                 ...(msg?.is_topic_message
                     ? { message_thread_id: msg.message_thread_id }
                     : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendSharedWidget`. Use this method to send again a shared widget created by the bot. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned.
+     *
+     * @param widget_id Unique identifier of the shared widget
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendsharedwidget
+     */
+    replyWithSharedWidget(
+        widget_id: string,
+        other?: Other<"sendSharedWidget", "chat_id" | "widget_id">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendSharedWidget(
+            orThrow(this.chatId, "sendSharedWidget"),
+            widget_id,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
@@ -1508,20 +1758,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendLocation(
-            orThrow(this.chatId, "sendLocation"),
-            latitude,
-            longitude,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendLocationEphemeralForCallback(
+                callbackQueryId,
+                latitude,
+                longitude,
+                options,
+                signal,
+            )
+            : this.api.sendLocation(
+                orThrow(this.chatId, "sendLocation"),
+                latitude,
+                longitude,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1620,22 +1883,37 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendVenue(
-            orThrow(this.chatId, "sendVenue"),
-            latitude,
-            longitude,
-            title,
-            address,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendVenueEphemeralForCallback(
+                callbackQueryId,
+                latitude,
+                longitude,
+                title,
+                address,
+                options,
+                signal,
+            )
+            : this.api.sendVenue(
+                orThrow(this.chatId, "sendVenue"),
+                latitude,
+                longitude,
+                title,
+                address,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -1655,20 +1933,33 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendContact(
-            orThrow(this.chatId, "sendContact"),
-            phone_number,
-            first_name,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendContactEphemeralForCallback(
+                callbackQueryId,
+                phone_number,
+                first_name,
+                options,
+                signal,
+            )
+            : this.api.sendContact(
+                orThrow(this.chatId, "sendContact"),
+                phone_number,
+                first_name,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -2961,7 +3252,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object.
+     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. In the case of a private chat, a link to the topic can be created in the format `https://t.me/<bot_username>/<message_thread_id>`; the link opens the topic only for the user. Returns information about the created topic as a ForumTopic object.
      *
      * @param name Topic name, 1-128 characters
      * @param other Optional remaining parameters, confer the official reference below
@@ -3166,6 +3457,28 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.answerWidgetQuery`. Use this method to send an answer to a query from a widget. The query must be answered within 15 seconds. The answer is received only by the widget that sent the query and doesn't change data of the widget; use editMessageWidgetData or editSharedWidgetData to change it. On success, True is returned.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerwidgetquery
+     */
+    answerWidgetQuery(
+        other?: Other<"answerWidgetQuery", "widget_query_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.answerWidgetQuery(
+            orThrow(
+                this.widgetQuery?.id ?? this.sharedWidgetQuery?.id,
+                "answerWidgetQuery",
+            ),
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `ctx.answerGuestQuery`. Use this method to reply to a received guest message. On success, a SentGuestMessage object is returned.
      *
      * @param result An object describing the message to be sent
@@ -3273,11 +3586,7 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageText(
                 orThrow(this.chatId, "editMessageText"),
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "editMessageText",
-                ),
+                orThrow(this.msgId, "editMessageText"),
                 text,
                 { business_connection_id: this.businessConnectionId, ...other },
                 signal,
@@ -3308,11 +3617,7 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageCaption(
                 orThrow(this.chatId, "editMessageCaption"),
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "editMessageCaption",
-                ),
+                orThrow(this.msgId, "editMessageCaption"),
                 { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
@@ -3345,15 +3650,68 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageMedia(
                 orThrow(this.chatId, "editMessageMedia"),
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "editMessageMedia",
-                ),
+                orThrow(this.msgId, "editMessageMedia"),
                 media,
                 { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
+    }
+
+    /**
+     * Context-aware alias for `api.editMessageWidgetData`. Use this method to edit data of a widget in a message sent by the bot or via the bot (for inline bots). Public data of a shared widget can be changed at most once per second. On success, True is returned.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagewidgetdata
+     */
+    editMessageWidgetData(
+        other?: Other<
+            "editMessageWidgetData",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const inlineId = this.inlineMessageId;
+        return inlineId !== undefined
+            ? this.api.editMessageWidgetDataInline(
+                inlineId,
+                other,
+                signal,
+            )
+            : this.api.editMessageWidgetData(
+                orThrow(this.chatId, "editMessageWidgetData"),
+                orThrow(this.msgId, "editMessageWidgetData"),
+                other,
+                signal,
+            );
+    }
+
+    /**
+     * Context-aware alias for `api.editSharedWidgetData`. Use this method to edit public data of a shared widget created by the bot. A shared widget can be edited at most once per second. On success, True is returned.
+     *
+     * @param public_data New public data of the widget, 0-1024 bytes; pass an empty string to remove the public data
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editsharedwidgetdata
+     */
+    editSharedWidgetData(
+        public_data: string,
+        other?: Other<"editSharedWidgetData", "widget_id" | "public_data">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.editSharedWidgetData(
+            orThrow(
+                this.widgetQuery?.widget_id ??
+                    this.sharedWidgetQuery?.widget_id ??
+                    this.msg?.widget?.id,
+                "editSharedWidgetData",
+            ),
+            public_data,
+            other,
+            signal,
+        );
     }
 
     /**
@@ -3380,11 +3738,7 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chatId, "editMessageReplyMarkup"),
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "editMessageReplyMarkup",
-                ),
+                orThrow(this.msgId, "editMessageReplyMarkup"),
                 { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
@@ -3404,11 +3758,7 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.stopPoll(
             orThrow(this.chatId, "stopPoll"),
-            orThrow(
-                this.msg?.message_id ?? this.messageReaction?.message_id ??
-                    this.messageReactionCount?.message_id,
-                "stopPoll",
-            ),
+            orThrow(this.msgId, "stopPoll"),
             { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
@@ -3552,11 +3902,7 @@ export class Context implements RenamedUpdate {
     deleteMessage(signal?: AbortSignal) {
         return this.api.deleteMessage(
             orThrow(this.chatId, "deleteMessage"),
-            orThrow(
-                this.msg?.message_id ?? this.messageReaction?.message_id ??
-                    this.messageReactionCount?.message_id,
-                "deleteMessage",
-            ),
+            orThrow(this.msgId, "deleteMessage"),
             signal,
         );
     }
@@ -4039,6 +4385,25 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.deleteBusinessAccountGift`. Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Requires the can_convert_gifts_to_stars business bot right. The gift can be deleted only if it isn't limited (the field total_count of the Gift is omitted) and wasn't refunded. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessaccountgift
+     */
+    deleteBusinessAccountGift(
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.api.deleteBusinessAccountGift(
+            orThrow(this.businessConnectionId, "deleteBusinessAccountGift"),
+            owned_gift_id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.postStory`. Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
      *
      * @param content Content of the story
@@ -4156,19 +4521,31 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         const msg = this.msg;
-        return this.api.sendSticker(
-            orThrow(this.chatId, "sendSticker"),
-            sticker,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
-                ...other,
-            },
-            signal,
-        );
+        const options = {
+            business_connection_id: this.businessConnectionId,
+            ...(msg?.is_topic_message
+                ? { message_thread_id: msg.message_thread_id }
+                : {}),
+            direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+            ...other,
+        };
+        const ephemeral = other?.ephemeral_message_parameters;
+        const callbackQueryId = ephemeral?.receiver_user_id === undefined
+            ? ephemeral?.callback_query_id
+            : undefined;
+        return callbackQueryId !== undefined
+            ? this.api.sendStickerEphemeralForCallback(
+                callbackQueryId,
+                sticker,
+                options,
+                signal,
+            )
+            : this.api.sendSticker(
+                orThrow(this.chatId, "sendSticker"),
+                sticker,
+                options,
+                signal,
+            );
     }
 
     /**
@@ -4656,6 +5033,38 @@ export type CallbackQueryContext<C extends Context> = Filter<
     "callback_query:data"
 >;
 
+type WidgetQueryContextCore =
+    & FilterCore<"widget_query">
+    & NarrowMatchCore<string | RegExpMatchArray>;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.widgetQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way
+ * `bot.widgetQuery` does it. That way, you can annotate context objects in
+ * handlers defined in separate files and still have the correct types.
+ */
+export type WidgetQueryContext<C extends Context> = Filter<
+    NarrowMatch<C, string | RegExpMatchArray>,
+    "widget_query"
+>;
+
+type SharedWidgetQueryContextCore =
+    & FilterCore<"shared_widget_query">
+    & NarrowMatchCore<string | RegExpMatchArray>;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.sharedWidgetQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way
+ * `bot.sharedWidgetQuery` does it. That way, you can annotate context objects
+ * in handlers defined in separate files and still have the correct types.
+ */
+export type SharedWidgetQueryContext<C extends Context> = Filter<
+    NarrowMatch<C, string | RegExpMatchArray>,
+    "shared_widget_query"
+>;
+
 type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
 /**
  * Type of the context object that is available inside the handlers for
@@ -4775,6 +5184,7 @@ type ChatTypeUpdate<T extends Chat["type"]> =
         | "edited_message"
         | "channel_post"
         | "edited_channel_post"
+        | "widget_query"
         | "my_chat_member"
         | "chat_member"
         | "chat_join_request",

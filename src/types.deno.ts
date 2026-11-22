@@ -44,13 +44,13 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.0.0/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.1.0/mod.ts";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.0.0/mod.ts";
+export * from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.1.0/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);

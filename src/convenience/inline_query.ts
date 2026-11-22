@@ -25,8 +25,10 @@ import {
     type InputLocationMessageContent,
     type InputRichMessageContent,
     type InputRichMessageWithoutUpload,
+    type InputSharedWidgetMessageContent,
     type InputTextMessageContent,
     type InputVenueMessageContent,
+    type InputWidgetMessageContent,
     type LabeledPrice,
 } from "../types.ts";
 
@@ -127,6 +129,26 @@ function inputMessageMethods<R extends InlineQueryResult>(
                 provider_token,
                 currency,
                 prices,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        widget(
+            html: string,
+            options: OptionalFields<InputWidgetMessageContent> = {},
+        ) {
+            const content: InputWidgetMessageContent = {
+                html,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        sharedWidget(
+            widget_id: string,
+            options: OptionalFields<InputSharedWidgetMessageContent> = {},
+        ) {
+            const content: InputSharedWidgetMessageContent = {
+                widget_id,
                 ...options,
             };
             return { ...queryTemplate, input_message_content: content } as R;

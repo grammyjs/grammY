@@ -19,6 +19,8 @@ export {
     type HearsContext,
     type InlineQueryContext,
     type ReactionContext,
+    type SharedWidgetQueryContext,
+    type WidgetQueryContext,
 } from "./context.ts";
 
 // Convenience stuff, built-in plugins, and helpers
@@ -43,6 +45,8 @@ export {
     type MiddlewareObj,
     type NextFunction,
     type ReactionMiddleware,
+    type SharedWidgetQueryMiddleware,
+    type WidgetQueryMiddleware,
 } from "./composer.ts";
 
 export { type Filter, type FilterQuery, matchFilter } from "./filter.ts";

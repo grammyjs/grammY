@@ -31,12 +31,17 @@ export type RawApi = {
         ) => Promise<ReturnType<Telegram[M]>>;
 };
 
-export type Payload<M extends Methods<R>, R extends RawApi> = M extends unknown
-    ? R[M] extends (signal?: AbortSignal) => unknown // deno-lint-ignore ban-types
+type MethodsWithPayload = {
+    [M in keyof Telegram]: Parameters<Telegram[M]>[0] extends undefined ? never
+        : M;
+}[keyof Telegram];
+
+export type Payload<M extends Methods<R>, R extends RawApi> = M extends
+    MethodsWithPayload ? Parameters<R[M]>[0]
+    : R[M] extends (signal?: AbortSignal) => unknown // deno-lint-ignore ban-types
         ? {} // deno-lint-ignore no-explicit-any
     : R[M] extends (args: any, signal?: AbortSignal) => unknown
         ? Parameters<R[M]>[0]
-    : never
     : never;
 
 /**
@@ -349,6 +354,19 @@ class ApiClient<R extends RawApi> {
     }
 }
 
+type MethodsWithoutPayload = Exclude<Methods<RawApi>, MethodsWithPayload>;
+const methodsWithoutPayload = {
+    getMe: true,
+    getWebhookInfo: true,
+    getForumTopicIconStickers: true,
+    getAvailableGifts: true,
+    logOut: true,
+    close: true,
+    getMyStarBalance: true,
+    removeMyProfilePhoto: true,
+    getChatShareThemeBackdrops: true,
+} satisfies Record<MethodsWithoutPayload, true>;
+
 /**
  * Creates a new transformable API, i.e. an object that lets you perform raw API
  * calls to the Telegram Bot API server but pass the calls through a stack of
@@ -375,14 +393,7 @@ export function createRawApi<R extends RawApi>(
                 ? "__internal"
                 // Methods with zero parameters are called without any payload,
                 // so we have to manually inject an empty payload.
-                : m === "getMe" ||
-                        m === "getWebhookInfo" ||
-                        m === "getForumTopicIconStickers" ||
-                        m === "getAvailableGifts" ||
-                        m === "logOut" ||
-                        m === "close" ||
-                        m === "getMyStarBalance" ||
-                        m === "removeMyProfilePhoto"
+                : Object.prototype.hasOwnProperty.call(methodsWithoutPayload, m)
                 ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },

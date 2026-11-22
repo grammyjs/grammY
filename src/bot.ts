@@ -39,6 +39,8 @@ export const DEFAULT_UPDATE_TYPES = [
     "inline_query",
     "chosen_inline_result",
     "callback_query",
+    "widget_query",
+    "shared_widget_query",
     "shipping_query",
     "pre_checkout_query",
     "purchased_paid_media",
