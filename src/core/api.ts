@@ -246,7 +246,7 @@ export class Api<R extends RawApi = RawApi> {
     sendMessageEphemeral(
         callback_query_id: string,
         text: string,
-        other?: Other<R, "sendMessage", "text">,
+        other?: Other<R, "sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -284,7 +284,7 @@ export class Api<R extends RawApi = RawApi> {
     sendRichMessageEphemeral(
         callback_query_id: string,
         rich_message: InputRichMessage,
-        other?: Other<R, "sendRichMessage", "rich_message">,
+        other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -435,7 +435,7 @@ export class Api<R extends RawApi = RawApi> {
     sendPhotoEphemeral(
         callback_query_id: string,
         photo: InputFile | string,
-        other?: Other<R, "sendPhoto", "photo">,
+        other?: Other<R, "sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -476,7 +476,7 @@ export class Api<R extends RawApi = RawApi> {
         callback_query_id: string,
         live_photo: InputFile | string,
         photo: InputFile | string,
-        other?: Other<R, "sendLivePhoto", "live_photo" | "photo">,
+        other?: Other<R, "sendLivePhoto", "chat_id" | "live_photo" | "photo">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -513,7 +513,7 @@ export class Api<R extends RawApi = RawApi> {
     sendAudioEphemeral(
         callback_query_id: string,
         audio: InputFile | string,
-        other?: Other<R, "sendAudio", "audio">,
+        other?: Other<R, "sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -548,7 +548,7 @@ export class Api<R extends RawApi = RawApi> {
     sendDocumentEphemeral(
         callback_query_id: string,
         document: InputFile | string,
-        other?: Other<R, "sendDocument", "document">,
+        other?: Other<R, "sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -583,7 +583,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVideoEphemeral(
         callback_query_id: string,
         video: InputFile | string,
-        other?: Other<R, "sendVideo", "video">,
+        other?: Other<R, "sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -618,7 +618,7 @@ export class Api<R extends RawApi = RawApi> {
     sendAnimationEphemeral(
         callback_query_id: string,
         animation: InputFile | string,
-        other?: Other<R, "sendAnimation", "animation">,
+        other?: Other<R, "sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -653,7 +653,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVoiceEphemeral(
         callback_query_id: string,
         voice: InputFile | string,
-        other?: Other<R, "sendVoice", "voice">,
+        other?: Other<R, "sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -691,7 +691,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVideoNoteEphemeral(
         callback_query_id: string,
         video_note: InputFile | string,
-        other?: Other<R, "sendVideoNote", "video_note">,
+        other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -823,7 +823,7 @@ export class Api<R extends RawApi = RawApi> {
         callback_query_id: string,
         latitude: number,
         longitude: number,
-        other?: Other<R, "sendLocation", "latitude" | "longitude">,
+        other?: Other<R, "sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
@@ -993,7 +993,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "sendVenue",
-            "latitude" | "longitude" | "title" | "address"
+            "chat_id" | "latitude" | "longitude" | "title" | "address"
         >,
         signal?: AbortSignal,
     ) {
@@ -1046,7 +1046,11 @@ export class Api<R extends RawApi = RawApi> {
         callback_query_id: string,
         phone_number: string,
         first_name: string,
-        other?: Other<R, "sendContact", "phone_number" | "first_name">,
+        other?: Other<
+            R,
+            "sendContact",
+            "chat_id" | "phone_number" | "first_name"
+        >,
         signal?: AbortSignal,
     ) {
         const ephemeral_message_parameters = {
