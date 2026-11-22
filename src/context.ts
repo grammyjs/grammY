@@ -1090,7 +1090,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendMessageEphemeral(
+            ? this.api.sendMessageEphemeralForCallback(
                 callbackQueryId,
                 text,
                 options,
@@ -1132,7 +1132,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendRichMessageEphemeral(
+            ? this.api.sendRichMessageEphemeralForCallback(
                 callbackQueryId,
                 rich_message,
                 options,
@@ -1295,7 +1295,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendPhotoEphemeral(
+            ? this.api.sendPhotoEphemeralForCallback(
                 callbackQueryId,
                 photo,
                 options,
@@ -1339,7 +1339,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendLivePhotoEphemeral(
+            ? this.api.sendLivePhotoEphemeralForCallback(
                 callbackQueryId,
                 live_photo,
                 photo,
@@ -1385,7 +1385,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendAudioEphemeral(
+            ? this.api.sendAudioEphemeralForCallback(
                 callbackQueryId,
                 audio,
                 options,
@@ -1427,7 +1427,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendDocumentEphemeral(
+            ? this.api.sendDocumentEphemeralForCallback(
                 callbackQueryId,
                 document,
                 options,
@@ -1469,7 +1469,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendVideoEphemeral(
+            ? this.api.sendVideoEphemeralForCallback(
                 callbackQueryId,
                 video,
                 options,
@@ -1511,7 +1511,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendAnimationEphemeral(
+            ? this.api.sendAnimationEphemeralForCallback(
                 callbackQueryId,
                 animation,
                 options,
@@ -1553,7 +1553,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendVoiceEphemeral(
+            ? this.api.sendVoiceEphemeralForCallback(
                 callbackQueryId,
                 voice,
                 options,
@@ -1595,7 +1595,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendVideoNoteEphemeral(
+            ? this.api.sendVideoNoteEphemeralForCallback(
                 callbackQueryId,
                 video_note,
                 options,
@@ -1771,7 +1771,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendLocationEphemeral(
+            ? this.api.sendLocationEphemeralForCallback(
                 callbackQueryId,
                 latitude,
                 longitude,
@@ -1896,7 +1896,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendVenueEphemeral(
+            ? this.api.sendVenueEphemeralForCallback(
                 callbackQueryId,
                 latitude,
                 longitude,
@@ -1946,7 +1946,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendContactEphemeral(
+            ? this.api.sendContactEphemeralForCallback(
                 callbackQueryId,
                 phone_number,
                 first_name,
@@ -4534,7 +4534,7 @@ export class Context implements RenamedUpdate {
             ? ephemeral?.callback_query_id
             : undefined;
         return callbackQueryId !== undefined
-            ? this.api.sendStickerEphemeral(
+            ? this.api.sendStickerEphemeralForCallback(
                 callbackQueryId,
                 sticker,
                 options,

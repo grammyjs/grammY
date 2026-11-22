@@ -243,7 +243,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal);
     }
 
-    sendMessageEphemeral(
+    /**
+     * Use this method to send ephemeral text messages in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessage
+     */
+    sendMessageEphemeralForCallback(
         callback_query_id: string,
         text: string,
         other?: Other<R, "sendMessage", "chat_id" | "text">,
@@ -281,7 +291,17 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendRichMessageEphemeral(
+    /**
+     * Use this method to send ephemeral rich messages in reply to a callback query. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param rich_message The message to be sent
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendrichmessage
+     */
+    sendRichMessageEphemeralForCallback(
         callback_query_id: string,
         rich_message: InputRichMessage,
         other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
@@ -432,7 +452,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendPhoto({ chat_id, photo, ...other }, signal);
     }
 
-    sendPhotoEphemeral(
+    /**
+     * Use this method to send ephemeral photos in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendphoto
+     */
+    sendPhotoEphemeralForCallback(
         callback_query_id: string,
         photo: InputFile | string,
         other?: Other<R, "sendPhoto", "chat_id" | "photo">,
@@ -472,7 +502,18 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendLivePhotoEphemeral(
+    /**
+     * Use this method to send ephemeral live photos in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param live_photo Live photo video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param photo The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
+     */
+    sendLivePhotoEphemeralForCallback(
         callback_query_id: string,
         live_photo: InputFile | string,
         photo: InputFile | string,
@@ -510,7 +551,19 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendAudio({ chat_id, audio, ...other }, signal);
     }
 
-    sendAudioEphemeral(
+    /**
+     * Use this method to send ephemeral audio files in reply to a callback query, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * For sending voice messages, use the sendVoice method instead.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendaudio
+     */
+    sendAudioEphemeralForCallback(
         callback_query_id: string,
         audio: InputFile | string,
         other?: Other<R, "sendAudio", "chat_id" | "audio">,
@@ -545,7 +598,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendDocument({ chat_id, document, ...other }, signal);
     }
 
-    sendDocumentEphemeral(
+    /**
+     * Use this method to send ephemeral general files in reply to a callback query. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddocument
+     */
+    sendDocumentEphemeralForCallback(
         callback_query_id: string,
         document: InputFile | string,
         other?: Other<R, "sendDocument", "chat_id" | "document">,
@@ -580,7 +643,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendVideo({ chat_id, video, ...other }, signal);
     }
 
-    sendVideoEphemeral(
+    /**
+     * Use this method to send ephemeral video files in reply to a callback query, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvideo
+     */
+    sendVideoEphemeralForCallback(
         callback_query_id: string,
         video: InputFile | string,
         other?: Other<R, "sendVideo", "chat_id" | "video">,
@@ -615,7 +688,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendAnimation({ chat_id, animation, ...other }, signal);
     }
 
-    sendAnimationEphemeral(
+    /**
+     * Use this method to send ephemeral animation files (GIF or H.264/MPEG-4 AVC video without sound) in reply to a callback query. On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendanimation
+     */
+    sendAnimationEphemeralForCallback(
         callback_query_id: string,
         animation: InputFile | string,
         other?: Other<R, "sendAnimation", "chat_id" | "animation">,
@@ -650,7 +733,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendVoice({ chat_id, voice, ...other }, signal);
     }
 
-    sendVoiceEphemeral(
+    /**
+     * Use this method to send ephemeral audio files in reply to a callback query, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvoice
+     */
+    sendVoiceEphemeralForCallback(
         callback_query_id: string,
         voice: InputFile | string,
         other?: Other<R, "sendVoice", "chat_id" | "voice">,
@@ -688,7 +781,17 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendVideoNoteEphemeral(
+    /**
+     * Use this method to send an ephemeral rounded square MPEG4 video of up to 1 minute long in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
+     */
+    sendVideoNoteEphemeralForCallback(
         callback_query_id: string,
         video_note: InputFile | string,
         other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
@@ -819,7 +922,18 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendLocationEphemeral(
+    /**
+     * Use this method to send ephemeral point on the map in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param latitude Latitude of the location
+     * @param longitude Longitude of the location
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendlocation
+     */
+    sendLocationEphemeralForCallback(
         callback_query_id: string,
         latitude: number,
         longitude: number,
@@ -984,7 +1098,20 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendVenueEphemeral(
+    /**
+     * Use this method to send ephemeral information about a venue in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param latitude Latitude of the venue
+     * @param longitude Longitude of the venue
+     * @param title Name of the venue
+     * @param address Address of the venue
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvenue
+     */
+    sendVenueEphemeralForCallback(
         callback_query_id: string,
         latitude: number,
         longitude: number,
@@ -1042,7 +1169,18 @@ export class Api<R extends RawApi = RawApi> {
         );
     }
 
-    sendContactEphemeral(
+    /**
+     * Use this method to send ephemeral phone contacts in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param phone_number Contact's phone number
+     * @param first_name Contact's first name
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendcontact
+     */
+    sendContactEphemeralForCallback(
         callback_query_id: string,
         phone_number: string,
         first_name: string,
@@ -3784,7 +3922,17 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.sendSticker({ chat_id, sticker, ...other }, signal);
     }
 
-    sendStickerEphemeral(
+    /**
+     * Use this method to send ephemeral static .WEBP, animated .TGS, or video .WEBM stickers in reply to a callback query. On success, the sent Message is returned.
+     *
+     * @param callback_query_id Identifier of the callback query which triggered the message
+     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendsticker
+     */
+    sendStickerEphemeralForCallback(
         callback_query_id: string,
         sticker: InputFile | string,
         other?: Other<R, "sendSticker", "sticker">,
