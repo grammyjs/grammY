@@ -2546,7 +2546,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
+     * Use this method to send answers to callback queries sent from inline keyboards or rich messages. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
@@ -2757,6 +2757,18 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setMyProfilePhoto({ photo }, signal);
+    }
+
+    /**
+     * Use this method to change settings of the bot. Settings that aren't specified remain unchanged. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmysettings
+     */
+    setMySettings(other: Other<R, "setMySettings">, signal?: AbortSignal) {
+        return this.raw.setMySettings({ ...other }, signal);
     }
 
     /**
