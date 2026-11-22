@@ -29,9 +29,7 @@ import {
 } from "../deps.test.ts";
 
 describe("webhook", () => {
-    const bot = new Bot("dummy", {
-        botInfo: {} as unknown as BotFullInfo,
-    });
+    const bot = new Bot("dummy", { botInfo: {} as unknown as BotFullInfo });
 
     it("AWS Lambda should be compatible with grammY adapter", () => {
         ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
@@ -163,9 +161,7 @@ describe("webhook", () => {
 
 describe("webhook functionality", () => {
     const createTestBot = () =>
-        new Bot("test-token", {
-            botInfo: {} as unknown as BotFullInfo,
-        });
+        new Bot("test-token", { botInfo: {} as unknown as BotFullInfo });
     const testUpdate: Update = {
         update_id: 1,
         message: {
