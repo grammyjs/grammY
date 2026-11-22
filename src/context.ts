@@ -9,6 +9,7 @@ import {
 } from "./filter.ts";
 import {
     type AcceptedGiftTypes,
+    type BotFullInfo,
     type Chat,
     type ChatPermissions,
     type InlineQueryResult,
@@ -35,7 +36,6 @@ import {
     type ReactionTypeEmoji,
     type Update,
     type User,
-    type UserFromGetMe,
 } from "./types.ts";
 
 // === Util types
@@ -239,8 +239,9 @@ const checker: StaticHas = {
                 }
                 const index = cmd.indexOf("@");
                 if (index === -1) return false;
+                const username = ctx.me.username?.toLowerCase();
+                if (username === undefined) return false;
                 const atTarget = cmd.substring(index + 1).toLowerCase();
-                const username = ctx.me.username.toLowerCase();
                 if (atTarget !== username) return false;
                 const atCommand = cmd.substring(0, index);
                 if (noAtCommands.has(atCommand)) {
@@ -443,7 +444,7 @@ export class Context implements RenamedUpdate {
         /**
          * Information about the bot itself.
          */
-        public readonly me: UserFromGetMe,
+        public readonly me: BotFullInfo,
     ) {}
 
     // UPDATE SHORTCUTS
@@ -3436,7 +3437,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.answerCallbackQuery`. Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
+     * Context-aware alias for `api.answerCallbackQuery`. Use this method to send answers to callback queries sent from inline keyboards or rich messages. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *

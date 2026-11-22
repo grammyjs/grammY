@@ -31,6 +31,8 @@ import {
     type InputRichBlockCollage as InputRichBlockCollageF,
     type InputRichBlockDetails as InputRichBlockDetailsF,
     type InputRichBlockDocument as InputRichBlockDocumentF,
+    type InputRichBlockExpandableBlockQuotation
+        as InputRichBlockExpandableBlockQuotationF,
     type InputRichBlockList as InputRichBlockListF,
     type InputRichBlockListItem as InputRichBlockListItemF,
     type InputRichBlockPhoto as InputRichBlockPhotoF,
@@ -44,10 +46,10 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.1.0/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.2.0/mod.ts";
 
 // === Export all API types
-export * from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.1.0/mod.ts";
+export * from "https://cdn.jsdelivr.net/gh/grammyjs/types@5.2.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -269,14 +271,17 @@ export type InputRichBlockListItem = InputRichBlockListItemF<InputFile>;
 - InputRichBlockAnchor
 - InputRichBlockList
 - InputRichBlockBlockQuotation
+- InputRichBlockExpandableBlockQuotation
 - InputRichBlockPullQuotation
 - InputRichBlockCollage
 - InputRichBlockSlideshow
 - InputRichBlockTable
 - InputRichBlockDetails
 - InputRichBlockMap
+- InputRichBlockButtons
 - InputRichBlockAnimation
 - InputRichBlockAudio
+- InputRichBlockDocument
 - InputRichBlockPhoto
 - InputRichBlockVideo
 - InputRichBlockVoiceNote
@@ -288,6 +293,9 @@ export type InputRichBlockList = InputRichBlockListF<InputFile>;
 export type InputRichBlockBlockQuotation = InputRichBlockBlockQuotationF<
     InputFile
 >;
+/** A block quotation, corresponding to the HTML tag \<blockquote> with custom attribute "expandable". */
+export type InputRichBlockExpandableBlockQuotation =
+    InputRichBlockExpandableBlockQuotationF<InputFile>;
 /** A collage, corresponding to the custom HTML tag \<tg-collage>. */
 export type InputRichBlockCollage = InputRichBlockCollageF<InputFile>;
 /** A slideshow, corresponding to the custom HTML tag \<tg-slideshow>. */

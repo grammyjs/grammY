@@ -15,7 +15,7 @@ import type Koa from "npm:@types/koa";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, webhookCallback } from "../../src/mod.ts";
-import type { Update, UserFromGetMe } from "../../src/types.ts";
+import type { BotFullInfo, Update } from "../../src/types.ts";
 import {
     assert,
     assertEquals,
@@ -29,7 +29,7 @@ import {
 } from "../deps.test.ts";
 
 describe("webhook", () => {
-    const bot = new Bot("dummy", { botInfo: {} as unknown as UserFromGetMe });
+    const bot = new Bot("dummy", { botInfo: {} as unknown as BotFullInfo });
 
     it("AWS Lambda should be compatible with grammY adapter", () => {
         ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
@@ -161,7 +161,7 @@ describe("webhook", () => {
 
 describe("webhook functionality", () => {
     const createTestBot = () =>
-        new Bot("test-token", { botInfo: {} as unknown as UserFromGetMe });
+        new Bot("test-token", { botInfo: {} as unknown as BotFullInfo });
     const testUpdate: Update = {
         update_id: 1,
         message: {

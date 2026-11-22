@@ -1,6 +1,7 @@
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
 import {
+    type BotFullInfo,
     type BotSubscriptionUpdated,
     type BusinessConnection,
     type BusinessMessagesDeleted,
@@ -8,7 +9,6 @@ import {
     type Message,
     type Update,
     type User,
-    type UserFromGetMe,
 } from "../src/types.ts";
 import {
     assert,
@@ -92,7 +92,7 @@ describe("Context", () => {
         subscription: s,
     } as unknown as Update;
     const api = new Api("dummy-token");
-    const me = { id: 42, username: "bot" } as UserFromGetMe;
+    const me = { id: 42, username: "bot" } as BotFullInfo;
 
     it("provide basic properties", () => {
         const ctx = new Context(update, api, me);
