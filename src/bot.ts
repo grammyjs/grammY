@@ -16,10 +16,10 @@ import { GrammyError, HttpError } from "./core/error.ts";
 import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
 import {
+    type BotFullInfo,
     type ReactionType,
     type ReactionTypeEmoji,
     type Update,
-    type UserFromGetMe,
 } from "./types.ts";
 const debug = d("grammy:bot");
 const debugWarn = d("grammy:warn");
@@ -39,6 +39,8 @@ export const DEFAULT_UPDATE_TYPES = [
     "inline_query",
     "chosen_inline_result",
     "callback_query",
+    "widget_query",
+    "shared_widget_query",
     "shipping_query",
     "pre_checkout_query",
     "purchased_paid_media",
@@ -94,7 +96,7 @@ export interface PollingOptions {
      * When this function is invoked, the bot already signals that it is
      * running. In other words, `bot.isRunning()` already returns true.
      */
-    onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
+    onStart?: (botInfo: BotFullInfo) => void | Promise<void>;
 }
 
 export { BotError };
@@ -127,7 +129,7 @@ export interface BotConfig<C extends Context> {
      * values. If you use this option, grammY will not attempt to make a `getMe`
      * call but use the provided data instead.
      */
-    botInfo?: UserFromGetMe;
+    botInfo?: BotFullInfo;
     /**
      * Pass the constructor of a custom context object that will be used when
      * creating the context for each incoming update.
@@ -176,8 +178,8 @@ export class Bot<
      */
     public readonly api: A;
 
-    private me: UserFromGetMe | undefined;
-    private mePromise: Promise<UserFromGetMe> | undefined;
+    private me: BotFullInfo | undefined;
+    private mePromise: Promise<BotFullInfo> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
 
     private readonly ContextConstructor: new (
@@ -248,10 +250,10 @@ export class Bot<
      * to pass it to the configuration object of the `new Bot()` instantiation,
      * rather than assigning this property.
      */
-    public set botInfo(botInfo: UserFromGetMe) {
+    public set botInfo(botInfo: BotFullInfo) {
         this.me = botInfo;
     }
-    public get botInfo(): UserFromGetMe {
+    public get botInfo(): BotFullInfo {
         if (this.me === undefined) {
             throw new Error(
                 "Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!",
@@ -310,7 +312,7 @@ export class Bot<
                 () => this.api.getMe(signal),
                 signal,
             );
-            let me: UserFromGetMe;
+            let me: BotFullInfo;
             try {
                 me = await this.mePromise;
             } finally {

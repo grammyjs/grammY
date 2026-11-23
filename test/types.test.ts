@@ -171,3 +171,55 @@ Deno.test({
         source.restore();
     },
 });
+
+Deno.test({
+    name: "reject URL with unsuccessful HTTP status",
+    async fn() {
+        for (const status of [300, 404, 599]) {
+            let signal: AbortSignal | undefined;
+            const source = stub(globalThis, "fetch", (_url, init) => {
+                signal = init?.signal ?? undefined;
+                return Promise.resolve(new Response("error page", { status }));
+            });
+            try {
+                const file = new InputFile({ url: "https://grammy.dev" });
+                await assertRejects(
+                    () => file.toRaw(),
+                    Error,
+                    `HTTP status ${status} from 'https://grammy.dev`,
+                );
+                assertEquals(signal?.aborted, true);
+            } finally {
+                source.restore();
+            }
+        }
+    },
+});
+
+Deno.test({
+    name: "accept URL with successful HTTP status",
+    async fn() {
+        const bytes = new Uint8Array([65, 66, 67]);
+        const source = stub(
+            globalThis,
+            "fetch",
+            () => Promise.resolve(new Response(bytes, { status: 299 })),
+        );
+        try {
+            const file = new InputFile({ url: "https://grammy.dev" });
+            const data = await file.toRaw();
+            if (data instanceof Uint8Array) throw new Error("no itr");
+            assertEquals(await convertToUint8Array(data), bytes);
+        } finally {
+            source.restore();
+        }
+    },
+});
+
+Deno.test({
+    name: "reject Response with unsuccessful HTTP status",
+    async fn() {
+        const file = new InputFile(new Response("error page", { status: 404 }));
+        await assertRejects(() => file.toRaw(), Error, "HTTP status 404");
+    },
+});

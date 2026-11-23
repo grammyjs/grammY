@@ -309,8 +309,10 @@ export class Keyboard {
     }
     /**
      * Adds a new managed bot request button. The user will be asked to create
-     * and share a bot that will be managed by the current bot when the button
-     * is pressed. Available in private chats only.
+     * and share a bot that will be managed by the current bot. Available for
+     * bots that enabled management of other bots in the `@BotFather` Mini App
+     * or using the parameter can_manage_bots of the method setMySettings.
+     * Available in private chats only.
      *
      * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request
@@ -325,8 +327,10 @@ export class Keyboard {
     }
     /**
      * Creates a new managed bot request button. The user will be asked to
-     * create and share a bot that will be managed by the current bot when the
-     * button is pressed. Available in private chats only.
+     * create and share a bot that will be managed by the current bot. Available
+     * for bots that enabled management of other bots in the `@BotFather` Mini
+     * App or using the parameter can_manage_bots of the method setMySettings.
+     * Available in private chats only.
      *
      * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request

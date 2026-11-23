@@ -2,7 +2,7 @@ import { Bot } from "../src/bot.ts";
 import { BotError } from "../src/composer.ts";
 import { Context } from "../src/context.ts";
 import { GrammyError, HttpError } from "../src/core/error.ts";
-import type { Message, Update, UserFromGetMe } from "../src/types.ts";
+import type { BotFullInfo, Message, Update } from "../src/types.ts";
 import {
     afterEach,
     assertEquals,
@@ -18,18 +18,23 @@ import {
 } from "./deps.test.ts";
 
 const token = "test-token";
-const botInfo: UserFromGetMe = {
+const botInfo: BotFullInfo = {
     id: 123456789,
     is_bot: true,
     first_name: "Test Bot",
     username: "test_bot",
+    active_usernames: ["grammy_bot"],
     can_join_groups: true,
     can_read_all_group_messages: false,
+    supports_guest_queries: false,
     supports_inline_queries: false,
+    inline_query_placeholder: "type inline query here",
+    needs_inline_query_location: false,
     can_connect_to_business: false,
     has_main_web_app: false,
     has_topics_enabled: false,
     allows_users_to_create_topics: false,
+    has_topic_sidebar: false,
     can_manage_bots: false,
     supports_join_request_queries: false,
 };
@@ -102,10 +107,10 @@ describe("Bot initialization", () => {
 
     it("should handle concurrent inits with controlled resolution", async () => {
         const bot = new Bot(token);
-        const resolvers: Array<(value: UserFromGetMe) => void> = [];
+        const resolvers: Array<(value: BotFullInfo) => void> = [];
 
         using getMeStub = stub(bot.api, "getMe", () => {
-            const { promise, resolve } = Promise.withResolvers<UserFromGetMe>();
+            const { promise, resolve } = Promise.withResolvers<BotFullInfo>();
             resolvers.push(resolve);
             return promise;
         });
@@ -129,7 +134,7 @@ describe("Bot initialization", () => {
 
     it("should handle init error with pending concurrent calls", async () => {
         const bot = new Bot(token);
-        const { promise, reject } = Promise.withResolvers<UserFromGetMe>();
+        const { promise, reject } = Promise.withResolvers<BotFullInfo>();
         using getMeStub = stub(bot.api, "getMe", () => promise);
 
         const init1 = bot.init();
@@ -619,7 +624,7 @@ describe("Bot polling lifecycle", () => {
             },
         );
 
-        const onStartSpy = spy((_botInfo: UserFromGetMe) => {});
+        const onStartSpy = spy((_botInfo: BotFullInfo) => {});
 
         const startPromise = bot.start({ onStart: onStartSpy });
         // Wait for polling to actually start

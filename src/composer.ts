@@ -10,8 +10,10 @@ import {
     type MaybeArray,
     type PreCheckoutQueryContext,
     type ReactionContext,
+    type SharedWidgetQueryContext,
     type ShippingQueryContext,
     type StringWithCommandSuggestions,
+    type WidgetQueryContext,
 } from "./context.ts";
 import { type Filter, type FilterQuery } from "./filter.ts";
 import {
@@ -506,6 +508,98 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
+     * Registers some middleware for widget queries, i.e. the updates that
+     * Telegram delivers to your bot when a widget in a message sent by the bot
+     * or via the bot sends a query.
+     *
+     * This method is essentially the same as calling
+     * ```ts
+     * bot.on('widget_query', ctx => { ... })
+     * ```
+     * It also allows you to match the query data against a given text or regular
+     * expression.
+     *
+     * ```ts
+     * // Send a widget whose HTML sends 'button-payload' as query data
+     * await bot.api.sendWidget(chat_id, widget_html, { allow_queries: true })
+     * // Listen for widget queries with a specific payload
+     * bot.widgetQuery('button-payload', ctx => { ... })
+     *
+     * // Listen for any widget query
+     * bot.on('widget_query', ctx => { ... })
+     * ```
+     *
+     * Always remember to call `answerWidgetQuery`—even if you don't perform
+     * any action: https://core.telegram.org/bots/api#answerwidgetquery
+     * ```ts
+     * bot.on('widget_query', async ctx => {
+     *   await ctx.answerWidgetQuery()
+     * })
+     * ```
+     *
+     * You can pass an array of triggers. Your middleware will be executed if at
+     * least one of them matches.
+     *
+     * @param trigger The string to look for in the payload
+     * @param middleware The middleware to register
+     */
+    widgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+        ...middleware: Array<WidgetQueryMiddleware<C>>
+    ): Composer<WidgetQueryContext<C>> {
+        return this.filter(Context.has.widgetQuery(trigger), ...middleware);
+    }
+
+    /**
+     * Registers some middleware for shared widget queries, i.e. the updates
+     * that Telegram delivers to your bot when a shared widget in a forwarded
+     * message sends a query.
+     *
+     * This method is essentially the same as calling
+     * ```ts
+     * bot.on('shared_widget_query', ctx => { ... })
+     * ```
+     * It also allows you to match the query data against a given text or regular
+     * expression.
+     *
+     * ```ts
+     * // Create a shared widget whose HTML sends 'button-payload' as query data
+     * await bot.api.sendWidget(chat_id, widget_html, {
+     *   allow_queries: true,
+     *   is_shared: true
+     * })
+     * // Listen for a specific payload from a forwarded copy of a shared widget
+     * bot.sharedWidgetQuery('button-payload', ctx => { ... })
+     *
+     * // Listen for any shared widget query
+     * bot.on('shared_widget_query', ctx => { ... })
+     * ```
+     *
+     * Always remember to call `answerWidgetQuery`—even if you don't perform
+     * any action: https://core.telegram.org/bots/api#answerwidgetquery
+     * ```ts
+     * bot.on('shared_widget_query', async ctx => {
+     *   await ctx.answerWidgetQuery()
+     * })
+     * ```
+     *
+     * You can pass an array of triggers. Your middleware will be executed if at
+     * least one of them matches.
+     *
+     * @param trigger The string to look for in the payload
+     * @param middleware The middleware to register
+     */
+    sharedWidgetQuery(
+        trigger: MaybeArray<string | RegExp>,
+        ...middleware: Array<SharedWidgetQueryMiddleware<C>>
+    ): Composer<SharedWidgetQueryContext<C>> {
+        return this.filter(
+            Context.has.sharedWidgetQuery(trigger),
+            ...middleware,
+        );
+    }
+
+    /**
      * Registers some middleware for game queries, i.e. the updates that
      * Telegram delivers to your bot when a user clicks an inline button for the
      * HTML5 games platform on Telegram.
@@ -970,6 +1064,28 @@ export type ReactionMiddleware<C extends Context> = Middleware<
  */
 export type CallbackQueryMiddleware<C extends Context> = Middleware<
     CallbackQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.widgetQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.widgetQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type WidgetQueryMiddleware<C extends Context> = Middleware<
+    WidgetQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.sharedWidgetQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.sharedWidgetQuery` in a different place. For instance, this allows for
+ * more modular code where handlers are defined in separate files.
+ */
+export type SharedWidgetQueryMiddleware<C extends Context> = Middleware<
+    SharedWidgetQueryContext<C>
 >;
 /**
  * Type of the middleware that can be passed to `bot.gameQuery`.
