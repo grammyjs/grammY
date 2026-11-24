@@ -396,6 +396,9 @@ export const LanguageCodes = {
     Zulu: "zu",
 } as const;
 function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
+    if (data instanceof URL) {
+        return { url: data };
+    }
     if ("base64" in data) {
         return Uint8Array.fromBase64(data.base64, { alphabet: "base64" });
     }
@@ -407,7 +410,6 @@ function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     }
     if ("readable" in data) return data.readable;
     if (data instanceof Response || data instanceof Blob) return data;
-    if ("url" in data) return new URL(data.url);
     if ("text" in data) return new TextEncoder().encode(data.text);
     return data;
 }
@@ -428,10 +430,8 @@ async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
         globalThis.process.getBuiltinModule("node:fs").createReadStream;
     return createReadStream(path);
 }
-async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
-    // https://github.com/nodejs/undici/issues/2751
-    if (url.protocol === "file") return await readFile(url.pathname);
-    const response = await fetch(url);
+async function fetchFile(url: URL | string, init?: RequestInit) {
+    const response = await fetch(url, init);
     if (!response.ok || response.body === null) {
         await response.body?.cancel();
         throw new ResponseError(response);
@@ -453,18 +453,16 @@ export class ResponseError extends Error {
 }
 let basename: typeof import("node:path").basename | undefined;
 function guessFilename(file: ReturnType<typeof preprocess>) {
+    // https://github.com/oven-sh/bun/issues/5980#issuecomment-2317024044
+    if ("name" in file) return file.name;
     basename ??= globalThis.process.getBuiltinModule("node:path").basename;
     if ("path" in file && typeof file.path === "string") {
         return basename(file.path);
     }
-    if ("url" in file && file.url) file = new URL(file.url);
-    if (file instanceof File) return file.name;
-    if (!(file instanceof URL)) return undefined;
-    if (file.pathname !== "/") {
-        const filename = basename(file.pathname);
-        if (filename) return filename;
+    if ("url" in file && file.url) {
+        const url = new URL(file.url);
+        return basename(url.pathname) || url.hostname;
     }
-    return basename(file.hostname);
 }
 // === MAKING REQUESTS ===
 /**
@@ -8375,7 +8373,7 @@ export class InputFile {
     constructor(
         file:
             | { path: string }
-            | { url: string }
+            | { url: string | URL; headers?: RequestInit["headers"] }
             | URL
             | Blob
             | Response
@@ -8421,8 +8419,9 @@ export class InputFile {
             }
             this.consumed = true;
             yield* data.body;
-        } else if (data instanceof URL) {
-            yield* await fetchFile(data);
+        } else if ("url" in data) {
+            const { url, ...init } = data;
+            yield* await fetchFile(url, init);
         } else {
             data satisfies never;
         }
