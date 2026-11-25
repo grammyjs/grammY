@@ -204,10 +204,13 @@ function timeoutIfNecessary(
                 resolve();
             }
             const now = Date.now();
-            task.finally(() => {
+            const logCompleted = () => {
                 const diff = Date.now() - now;
                 debugErr(`Request completed ${diff} ms after timeout!`);
-            });
+            };
+            // `task.finally` would re-reject with the error of a late failure,
+            // and nothing would handle that promise
+            task.then(logCompleted, logCompleted);
         }, timeout);
         task.then(resolve)
             .catch(reject)

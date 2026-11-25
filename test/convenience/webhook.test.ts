@@ -448,6 +448,49 @@ describe("webhook functionality", () => {
             await time.runAllAsync();
         });
 
+        it("should not leave an unhandled rejection when the update fails after timeout", async () => {
+            for (const onTimeout of ["throw", "return", () => {}] as const) {
+                const bot = createTestBot();
+                bot.handleUpdate = spy(async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 30));
+                    throw new Error("Late update failure");
+                });
+
+                const handler = webhookCallback(bot, "callback", {
+                    onTimeout,
+                    timeoutMilliseconds: 10,
+                });
+
+                const unhandled: unknown[] = [];
+                const onUnhandled = (event: PromiseRejectionEvent) => {
+                    event.preventDefault();
+                    unhandled.push(event.reason);
+                };
+                globalThis.addEventListener("unhandledrejection", onUnhandled);
+                try {
+                    const promise = handler(testUpdate, () => {}, undefined);
+                    if (onTimeout === "throw") {
+                        await assertRejects(
+                            () => promise,
+                            Error,
+                            "Request timed out after 10 ms",
+                        );
+                    } else {
+                        await promise;
+                    }
+                    // Wait for the update to fail in the background
+                    await new Promise((resolve) => setTimeout(resolve, 60));
+                } finally {
+                    globalThis.removeEventListener(
+                        "unhandledrejection",
+                        onUnhandled,
+                    );
+                }
+
+                assertEquals(unhandled, []);
+            }
+        });
+
         it("should handle multiple concurrent updates with different outcomes", async () => {
             using time = new FakeTime(0);
             const bot = createTestBot();
