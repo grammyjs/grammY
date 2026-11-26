@@ -448,6 +448,52 @@ describe("webhook functionality", () => {
             await time.runAllAsync();
         });
 
+        it("should not leave an unhandled rejection when the update fails after timeout", async () => {
+            for (const onTimeout of ["throw", "return", () => {}] as const) {
+                using time = new FakeTime();
+                const bot = createTestBot();
+                bot.handleUpdate = spy(async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 150));
+                    throw new Error("Late update failure");
+                });
+
+                const handler = webhookCallback(bot, "callback", {
+                    onTimeout,
+                    timeoutMilliseconds: 50,
+                });
+
+                const unhandled: unknown[] = [];
+                const onUnhandled = (event: PromiseRejectionEvent) => {
+                    event.preventDefault();
+                    unhandled.push(event.reason);
+                };
+                globalThis.addEventListener("unhandledrejection", onUnhandled);
+                try {
+                    const promise = handler(testUpdate, () => {}, undefined);
+                    await time.nextAsync();
+                    if (onTimeout === "throw") {
+                        await assertRejects(
+                            () => promise,
+                            Error,
+                            "Request timed out after 50 ms",
+                        );
+                    } else {
+                        await promise;
+                    }
+                    // Let the update fail in the background
+                    await time.runAllAsync();
+                    await time.runMicrotasks();
+                } finally {
+                    globalThis.removeEventListener(
+                        "unhandledrejection",
+                        onUnhandled,
+                    );
+                }
+
+                assertEquals(unhandled, []);
+            }
+        });
+
         it("should handle multiple concurrent updates with different outcomes", async () => {
             using time = new FakeTime(0);
             const bot = createTestBot();
