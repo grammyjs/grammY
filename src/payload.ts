@@ -79,6 +79,7 @@ export function createFormDataPayload(
             connection: "keep-alive",
         },
         body: stream,
+        duplex: "half" as const,
     };
 }
 
