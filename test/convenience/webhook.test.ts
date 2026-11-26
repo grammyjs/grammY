@@ -450,15 +450,16 @@ describe("webhook functionality", () => {
 
         it("should not leave an unhandled rejection when the update fails after timeout", async () => {
             for (const onTimeout of ["throw", "return", () => {}] as const) {
+                using time = new FakeTime();
                 const bot = createTestBot();
                 bot.handleUpdate = spy(async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 30));
+                    await new Promise((resolve) => setTimeout(resolve, 150));
                     throw new Error("Late update failure");
                 });
 
                 const handler = webhookCallback(bot, "callback", {
                     onTimeout,
-                    timeoutMilliseconds: 10,
+                    timeoutMilliseconds: 50,
                 });
 
                 const unhandled: unknown[] = [];
@@ -469,17 +470,19 @@ describe("webhook functionality", () => {
                 globalThis.addEventListener("unhandledrejection", onUnhandled);
                 try {
                     const promise = handler(testUpdate, () => {}, undefined);
+                    await time.nextAsync();
                     if (onTimeout === "throw") {
                         await assertRejects(
                             () => promise,
                             Error,
-                            "Request timed out after 10 ms",
+                            "Request timed out after 50 ms",
                         );
                     } else {
                         await promise;
                     }
-                    // Wait for the update to fail in the background
-                    await new Promise((resolve) => setTimeout(resolve, 60));
+                    // Let the update fail in the background
+                    await time.runAllAsync();
+                    await time.runMicrotasks();
                 } finally {
                     globalThis.removeEventListener(
                         "unhandledrejection",
