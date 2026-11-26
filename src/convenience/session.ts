@@ -495,10 +495,7 @@ function isEnhance<T>(value?: T | Enhance<T>): value is Enhance<T> | undefined {
     return value === undefined ||
         typeof value === "object" && value !== null && "__d" in value;
 }
-/** Options for enhanced sessions */
-export interface MigrationOptions<T> {
-    /** The original storage adapter that will be enhanced */
-    storage: StorageAdapter<Enhance<T>>;
+interface BaseMigrationOptions {
     /**
      * A set of session migrations, defined as an object mapping from version
      * numbers to migration functions that transform data to the respective
@@ -510,25 +507,33 @@ export interface MigrationOptions<T> {
      * data expires.
      */
     millisecondsToLive?: number;
-    /** Whether to compress the session data, see {@link CompressionOptions} */
-    compress?: false;
 }
-/** Options for enhanced sessions that compress the session data */
-export interface CompressionOptions
-    extends Omit<MigrationOptions<never>, "storage" | "compress"> {
-    /**
-     * The original storage adapter that will be enhanced. It has to be able
-     * to store binary data because the session data will be compressed.
-     */
-    storage: StorageAdapter<Uint8Array>;
-    /**
-     * Whether to compress the session data using gzip.
-     *
-     * Note that all data in the storage adapter must be compressed. Reading
-     * data that was stored without compression will throw an error.
-     */
-    compress: true;
-}
+
+/** Options for enhanced sessions */
+export type MigrationOptions<T> =
+    & BaseMigrationOptions
+    & (
+        | {
+            /** The original storage adapter that will be enhanced */
+            storage: StorageAdapter<Enhance<T>>;
+            /** Leave unset or set to false to disable compression. */
+            compress?: false;
+        }
+        | {
+            /**
+             * The original storage adapter that will be enhanced. It has to be
+             * able to store binary data because the session data will be compressed.
+             */
+            storage: StorageAdapter<Uint8Array>;
+            /**
+             * Whether to compress the session data using gzip.
+             *
+             * Note that all data in the storage adapter must be compressed. Reading
+             * data that was stored without compression will throw an error.
+             */
+            compress: true;
+        }
+    );
 /**
  * A mapping from version numbers to session migration functions. Each entry in
  * this object has a version number as a key, and a function as a value.
