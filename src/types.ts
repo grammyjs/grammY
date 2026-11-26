@@ -14346,6 +14346,8 @@ export interface ApiMethods {
  * @see {@link https://core.telegram.org/bots/api#richtext}
  */
 export type RichText =
+    | string
+    | RichText[]
     | RichTextBold
     | RichTextItalic
     | RichTextUnderline
