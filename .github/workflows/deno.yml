@@ -31,3 +31,16 @@ jobs:
                   cache: true
             - uses: actions/checkout@v6
             - run: deno task test
+    node-upload-reproduction:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: denoland/setup-deno@v2
+              with:
+                  deno-version: v2.x
+                  cache: true
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 25
+            - uses: actions/checkout@v6
+            - run: deno bundle test/node-upload.repro.ts --output=/tmp/node-upload.repro.mjs
+            - run: node /tmp/node-upload.repro.mjs
