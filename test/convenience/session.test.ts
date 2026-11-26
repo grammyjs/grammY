@@ -989,6 +989,24 @@ describe("enhanceStorage", () => {
         assertEquals(await enhanced.read("plain"), 42);
     });
 
+    it("should read compressed session data from buffer views", async () => {
+        const storage = new MemorySessionStorage<Uint8Array>();
+        const enhanced = enhanceStorage<number>({ storage, compress: true });
+        const compressed = await gzip(new TextEncoder().encode("42"));
+        const size = compressed.byteLength + 2;
+        for (
+            const buffer of [
+                new ArrayBuffer(size),
+                new SharedArrayBuffer(size),
+            ]
+        ) {
+            const bytes = new Uint8Array(buffer, 1, compressed.byteLength);
+            bytes.set(compressed);
+            storage.write("k", bytes);
+            assertEquals(await enhanced.read("k"), 42);
+        }
+    });
+
     it("should not compress session data by default", async () => {
         const storage = new MemorySessionStorage<Enhance<number>>();
         const enhanced = enhanceStorage({ storage, compress: false });

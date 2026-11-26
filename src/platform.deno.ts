@@ -34,11 +34,11 @@ function transform(
     data: Uint8Array,
     stream: CompressionStream | DecompressionStream,
 ): Promise<Uint8Array> {
-    // copy the data into a fresh `Uint8Array<ArrayBuffer>` because `data`
-    // may be backed by a `SharedArrayBuffer`, which cannot be turned into a
-    // `Blob`
-    const bytes = new Uint8Array(data.byteLength);
-    bytes.set(data);
+    // Blob rejects views backed by shared or resizable buffers.
+    const { buffer, byteOffset, byteLength } = data;
+    const bytes = buffer instanceof ArrayBuffer && !buffer.resizable
+        ? new Uint8Array(buffer, byteOffset, byteLength)
+        : new Uint8Array(data);
     return new Response(new Blob([bytes]).stream().pipeThrough(stream))
         .arrayBuffer()
         .then((buffer) => new Uint8Array(buffer));
