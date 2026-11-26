@@ -37,6 +37,9 @@ export type OptionalKeys<T> = {
     [K in keyof T]-?: undefined extends T[K] ? K : never;
 };
 export type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
+type MakeFieldsOptional<T, K extends keyof T> =
+    & Omit<T, K>
+    & Partial<Pick<T, K>>;
 export type WithInputMessageMethods<R extends InlineQueryResult> = {
     text(
         message_text: string,
@@ -404,7 +407,11 @@ export interface InlineQueryResultBuilder {
     photo(
         id: string,
         photo_url: string | URL,
-        options?: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url">,
+        options?: InlineQueryResultOptions<
+            // do not require thumbnail, default to the photo itself
+            MakeFieldsOptional<InlineQueryResultPhoto, "thumbnail_url">,
+            "photo_url"
+        >,
     ): WithInputMessageMethods<InlineQueryResultPhoto>;
     /**
      * Builds an InlineQueryResultCachedPhoto object as specified by
@@ -651,19 +658,16 @@ export const InlineQueryResultBuilder: InlineQueryResultBuilder = {
             { type: "mpeg4_gif", id, mpeg4_file_id, ...options },
         );
     },
-    photo(id, photo_url, options = {
-        // do not require thumbnail, default to the photo itself
-        thumbnail_url: typeof photo_url === "string"
+    photo(id, photo_url, options = {}) {
+        const photoUrl = typeof photo_url === "string"
             ? photo_url
-            : photo_url.href,
-    }) {
+            : photo_url.href;
         return inputMessage({
             type: "photo",
             id,
-            photo_url: typeof photo_url === "string"
-                ? photo_url
-                : photo_url.href,
+            photo_url: photoUrl,
             ...options,
+            thumbnail_url: options.thumbnail_url ?? photoUrl,
         });
     },
     photoCached(id, photo_file_id, options = {}) {
