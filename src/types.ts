@@ -395,6 +395,7 @@ export const LanguageCodes = {
     /** ISO 639-1 language code for Zulu */
     Zulu: "zu",
 } as const;
+const hasOwn = Object.hasOwn as (o: object, v: "text") => o is { text: string };
 function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if (data instanceof URL) {
         return { url: data };
@@ -408,9 +409,9 @@ function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if ("hex" in data) {
         return Uint8Array.fromHex(data.hex);
     }
-    if ("readable" in data) return data.readable;
-    if (data instanceof Response || data instanceof Blob) return data;
-    if ("text" in data) return new TextEncoder().encode(data.text);
+    if (hasOwn(data, "text")) {
+        return new TextEncoder().encode(data.text);
+    }
     return data;
 }
 const isDeno = typeof Deno !== "undefined";
@@ -8379,7 +8380,6 @@ export class InputFile {
             | Response
             | Uint8Array
             | AsyncIterable<Uint8Array>
-            | { readable: AsyncIterable<Uint8Array> }
             | { text: string }
             | { base64: string }
             | { base64url: string }
